@@ -8,6 +8,8 @@
 
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="web.lib.dir" value="src/main/webapp/WEB-INF/lib" />
     <path id="QueryBuilder.classpath">
         <fileset dir="lib">
             <include name="*.jar"/>
@@ -16,6 +18,16 @@
     <target name="init">
         <mkdir dir="target/classes"/>
         <mkdir dir="target/test-classes"/>
+        <mkdir dir="${web.lib.dir}"/>
+        <copy todir="${web.lib.dir}" description="">
+            <fileset dir="${lib.dir}">
+                <exclude name="**/jasper-compiler-5.5.12.jar"/>
+                <exclude name="**/jasper-runtime-5.5.12.jar"/>
+                <exclude name="**/jsp-api-2.1.jar"/>
+                <exclude name="**/servlet-api-2.5.jar"/>
+                <exclude name="**/servlet-api-2.5-20081211.jar"/>
+            </fileset>
+        </copy>
         <copy includeemptydirs="false" todir="target/classes">
             <fileset dir="src/main/java">
                 <exclude name="**/*.java"/>
@@ -45,6 +57,7 @@
     <target depends="clean" name="cleanall"/>
     <target depends="build-project" name="build">
         <war destfile="dist/QueryBuilder.war" webxml="src/main/webapp/WEB-INF/web.xml">
+
            <fileset dir="src/main/webapp">
            </fileset>
             <classes dir="target/classes"/>
