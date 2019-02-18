@@ -1,0 +1,9 @@
+ .idea/
+        dist/
+        lib/commons-text-1.6.jar
+        out/
+        src/main/main.iml
+        src/main/webapp/WEB-INF/classes/
+        src/main/webapp/WEB-INF/lib/
+        src/main/webapp/WEB-INF/web.xml
+        target/
