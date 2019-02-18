@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
