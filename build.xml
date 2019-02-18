@@ -9,7 +9,7 @@
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
     <property name="lib.dir" value="lib"/>
-    <property name="web.lib.dir" value="webapp/WEB-INF/lib" />
+    <property name="web.lib.dir" value="src/main/webapp/WEB-INF/lib" />
     <path id="QueryBuilder.classpath">
         <fileset dir="lib">
             <include name="*.jar"/>
@@ -57,6 +57,7 @@
     <target depends="clean" name="cleanall"/>
     <target depends="build-project" name="build">
         <war destfile="dist/QueryBuilder.war" webxml="src/main/webapp/WEB-INF/web.xml">
+
            <fileset dir="src/main/webapp">
            </fileset>
             <classes dir="target/classes"/>
