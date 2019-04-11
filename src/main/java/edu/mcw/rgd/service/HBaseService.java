@@ -30,7 +30,7 @@ public class HBaseService {
 		try {
 			String hbaseKey = new StringBuilder(Pmid).reverse().toString();
 
-			URI uri = new URI("http",HBASE_REST_SERVICE_HOST, "/pubmed18/"+hbaseKey+"/"+column, null, null);
+			URI uri = new URI("http",HBASE_REST_SERVICE_HOST, "/articles/"+hbaseKey+"/"+column, null, null);
 			String hbaseQueryStr = uri.toASCIIString(); 
 			String value = BasicUtils.restGet(hbaseQueryStr, null);
 			return value;
@@ -44,7 +44,7 @@ public class HBaseService {
 	public static void setHbaseField(String Pmid, String column, String value) throws Exception {
 		try {
 			String hbaseKey = new StringBuilder(Pmid).reverse().toString();
-			URI uri = new URI("http",HBASE_REST_SERVICE_HOST, "/pubmed18/"+hbaseKey+"/"+column, null, null);
+			URI uri = new URI("http",HBASE_REST_SERVICE_HOST, "/articles/"+hbaseKey+"/"+column, null, null);
 			String xmlData = "<CellSet><Row key=\"" + Bytes.toString(Base64.encodeBase64(Bytes.toBytes(hbaseKey))) + "\"><Cell column=\""+Bytes.toString(Base64.encodeBase64(Bytes.toBytes(column)))+"\">" + Bytes.toString(Base64.encodeBase64(Bytes.toBytes(value)))+"</Cell></Row></CellSet>";
 
 			String hbaseQueryStr = uri.toASCIIString();
