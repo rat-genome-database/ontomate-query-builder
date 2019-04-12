@@ -1,7 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <tr id="condRow${rowId}"  align="center" class="ui-widget-header" >
 <td>
+  <c:if test="${rowId!=0}">
   <div class="row">
     <div class="col">
 <form:radiobutton class="form-input-check" path="queryString.qFieldConditions[${rowId}].booleanOpt" value="AND"/>AND
@@ -10,9 +13,12 @@
 <form:radiobutton class="form-input-check" path="queryString.qFieldConditions[${rowId}].booleanOpt" value="OR"/>OR
       </div>
   </div>
+  </c:if>
 </td>
 <td>
-<form:checkbox class="form-input-check" path="queryString.qFieldConditions[${rowId}].notCondition"/>
+  <c:if test="${rowId!=0}">
+<form:checkbox class="form-input-check" path="queryString.qFieldConditions[${rowId}].notCondition"/>Not
+  </c:if>
 </td>
 <td id="selOnt${rowId}">
 <form:select class="form-control" path="queryString.qFieldConditions[${rowId}].fieldName" onchange='update_autocomplete("#inTerm${rowId} input", $(this).val());'>
@@ -42,8 +48,8 @@
 <td id="inTerm${rowId}" style="padding-right:0">
 <form:input  path="queryString.qFieldConditions[${rowId}].fieldValue" class="ont-auto-complete form-control"/>
 </td>
-<td style="padding-left:0;padding-top: 10px;">
-  <span class="badge badge-secondary butRemove" style="cursor:hand;background-color: red;" onclick="removeRow('${rowId}')"><strong>x</strong></span>
+<td >
+  <span class="badge badge-secondary butRemove" style="cursor:hand;font-weight: bold;color:red" onclick="removeRow('${rowId}')">Hello</span>
 
   <!--button type="button" onclick="removeRow('$-{rowId}')" class="butRemove form-control"><span style="color:red;font-weight: bold">x</span></button-->
 </td>
