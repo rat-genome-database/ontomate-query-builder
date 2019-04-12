@@ -193,16 +193,20 @@
 
 
 <div class="container">
-
+<div class="jumbotron" style="text-align: center">
+	<h1 class="display-4">OntoMate</h1>
+	<hr class="my-4">
+	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
+</div>
 	<div class="card" id="queryForm">
 		<div class="card-body">
 			<div  class="form-group" align="center">
 
-				<h1>OntoMate</h1>
-				<p>An ontology-driven, concept-based literature search engine developed at RGD.</p>
+				<!--h1>OntoMate</h1>
+				<p>An ontology-driven, concept-based literature search engine developed at RGD.</p-->
 				<form:form id="qForm" action="/QueryBuilder/getResult/" method="get"
 						   commandName="queryString" target="_blank">
-					<table id="queryConditions" border="2" class="table stripeTable">
+					<table id="queryConditions" border="0" class="table stripeTable">
 						<thead>
 						<tr class="ui-widget-header" align="center">
 							<td>Boolean Opt.</td>
@@ -223,7 +227,7 @@
 						condition</button>
 					<p>&nbsp;</p>
 					<br>
-					<table  id="sortConditions" border="2" class="table table-striped ">
+					<table  id="sortConditions" border="0" class="table table-striped ">
 						<thead>
 						<tr  align="center">
 							<td>Sort By</td>
@@ -241,7 +245,7 @@
 					<p>&nbsp</p>
 					<a href="#" onclick="myToggleFunction()"><h3>Advanced Search Options</h3></a>
 					<p>&nbsp</p>
-					<div id="qb-options">
+					<div class="container" id="qb-options" style="width:70%; align:center">
 					<table class="table" id="fieldTable">
 						<tbody>
 						<tr>
@@ -292,14 +296,25 @@
 						</tbody>
 					</table>
 					</div>
-					<p>&nbsp</p>
+
+
 					<table border="0">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>" id="aClear"
-								   class="btn btn-light button">Clear</a></td>
-							<td width="200"></td>
+							<td>
+							<div class="row" align="center">
+								<div class="column" style="padding-right: 50px">
+									<button type="button" class="btn btn-secondary">Clear Form</button>
+								</div>
+								<div class="column">
+									<button type="button" class="btn btn-secondary" style="font-weight:bold ;">Search OntoMate</button>
+								</div>
+							</div>
+							</td>
+							<!--td colspan="2"><a href="<%=request.getContextPath()%>" id="aClear"
+								   class="btn btn-secondary form-control">Clear</a></td>
+
 							<td><button id="search"  type="submit" value="Search"
-										class="btn btn-light button">Search</button></td>
+										class="btn btn-secondary">Search</button></td-->
 						</tr>
 					</table>
 				</form:form>
