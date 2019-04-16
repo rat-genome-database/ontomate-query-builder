@@ -10,11 +10,11 @@
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="http://green.rgd.mcw.edu:8080/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
-<link rel="stylesheet" href="http://green.rgd.mcw.edu:8080/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
+<link rel="stylesheet" href="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
-<script type="text/javascript" src="http://green.rgd.mcw.edu:8080/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
+<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
 <!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script-->
 
 <style>
@@ -77,7 +77,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('https://ontomate.rgd.mcw.edu/OntoSolr/select', {
+						$(col_name).autocomplete('/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -176,7 +176,7 @@
 		$(obj_name).flushCache();
 		$(obj_name).unautocomplete();
 		//  $(obj_name).autocomplete('/OntoSolr/select', {
-		$(obj_name).autocomplete('https://ontomate.rgd.mcw.edu/OntoSolr/select', {
+		$(obj_name).autocomplete('/OntoSolr/select', {
 					extraParams:{
 						'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 						'fq': 'cat:'+ (ont_cat=="ontology"?"(NOT CUSTOM NOT HP)": ont_cat.substring(0,ont_cat.length-5).toUpperCase()),
