@@ -161,7 +161,7 @@ public class SolrQueryStringService {
 			fieldName = "gene";
 			queryString = " " +  (fieldName.equals("*") ? "(" : (fieldName + ":("))
 					+ getValueQueryString(fieldType, fieldValue) + ")";
-			queryString = ADDITIONAL_GENE_COND + queryString + ")";
+		//	queryString = ADDITIONAL_GENE_COND + queryString + ")";
 		} else if (fieldName.equals("Gene")) {
 			fieldName = "gene";
 			queryString = " " +  (fieldName.equals("*") ? "(" : (fieldName + ":("))
@@ -176,7 +176,7 @@ public class SolrQueryStringService {
 			if (fieldName.equals("gene")) {
 				queryString = "(" + queryString + "^10 OR text:("
 						+ getValueQueryString(fieldType, fieldValue) + "))";
-				queryString = ADDITIONAL_GENE_COND + queryString + ")";
+		//		queryString = ADDITIONAL_GENE_COND + queryString + ")";
 			} 
 		}
 		return queryString;

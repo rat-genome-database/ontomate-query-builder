@@ -10,6 +10,8 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +85,40 @@ public class BasicUtils {
             throw e;
         }
     }
+    public static List<String> restGet1(String url, String contentType) throws Exception {
+        try {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpGet getRequest = new HttpGet(url);
+            if (contentType != null) getRequest.addHeader("accept", contentType);
+            List<String> outputs= new ArrayList<>();
+            HttpResponse response = httpClient.execute(getRequest);
 
+            if (response.getStatusLine().getStatusCode() != 200) {
+                if (response.getStatusLine().getStatusCode() == 404) return outputs;
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + response.getStatusLine().getStatusCode());
+            }
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader((response.getEntity().getContent())));
+
+            String outputLine = "", output = "";
+            while ((outputLine = br.readLine()) != null) {
+                outputs.add(outputLine.trim());
+            }
+
+            httpClient.getConnectionManager().shutdown();
+            return outputs;
+
+        } catch (ClientProtocolException e) {
+
+            throw e;
+
+        } catch (IOException e) {
+
+            throw e;
+        }
+    }
     public static String restGet(String url) throws Exception {
         try {
             return restGet(url, "application/json");

@@ -74,7 +74,7 @@
 										'fq': 'NOT cat:(CUSTOM HP MP)',
 										'wt': 'velocity',
 										'bf': 'term_len_l^.01',
-										'v.template': 'termmatch',
+										'v.template': 'termmatch1',
 										'cacheLength': 0
 									},
 									max:20
@@ -173,7 +173,7 @@
 						'fq': 'cat:'+ (ont_cat=="ontology"?"(NOT CUSTOM NOT HP)": ont_cat.substring(0,ont_cat.length-5).toUpperCase()),
 						'bf': 'term_len_l^.003',
 						'wt': 'velocity',
-						'v.template': 'termmatch',
+						'v.template': 'termmatch1',
 						'cacheLength': 0
 					},
 					max: 20
@@ -303,10 +303,11 @@
 							<td>
 							<div class="row" align="center">
 								<div class="column" style="padding-right: 50px">
-									<button type="button" class="btn btn-secondary">Clear Form</button>
+									<a href="<%=request.getContextPath()%>" id="aClear"
+									   class="btn btn-secondary form-control" style="font-weight:bold; ">Clear Form</a>
 								</div>
 								<div class="column">
-									<button type="button" class="btn btn-secondary" style="font-weight:bold ;">Search OntoMate</button>
+									<button type="submit" value="Search" class="btn btn-secondary" style="font-weight:bold ;">Search OntoMate</button>
 								</div>
 							</div>
 							</td>

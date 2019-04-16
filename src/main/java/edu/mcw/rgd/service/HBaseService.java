@@ -27,8 +27,8 @@ public class HBaseService {
 			.getLogger(QueryFormController.class);*/
 
 
-	private static String HBASE_REST_SERVICE_HOST= getHbaseServiceProperties().getProperty("HBASE_REST_SERVICE_HOST");
-	private static String HBASE_TABLE=getHbaseServiceProperties().getProperty("HBASE_TABLE");
+	private static String HBASE_REST_SERVICE_HOST= "gray04.rgd.mcw.edu:8080";
+	private static String HBASE_TABLE="articles";
 
 
 	public static Properties getHbaseServiceProperties(){
@@ -84,7 +84,7 @@ public class HBaseService {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
-			setHbaseField(curCond.getPmId(), column, curCond.getUserKey() + "|" + curCond.getUserFullName() + "|" + dateFormat.format(cal.getTime()));
+		/*	setHbaseField(curCond.getPmId(), column, curCond.getUserKey() + "|" + curCond.getUserFullName() + "|" + dateFormat.format(cal.getTime()));*/
 			return ;
 		} catch (Exception e) {
 			e.printStackTrace();
