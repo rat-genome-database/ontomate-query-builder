@@ -21,6 +21,15 @@
 	tr.alt td {
 		background: #ecf6fc;
 	}
+	#queryForm{
+		 background:linear-gradient(to bottom, white 0%, #E3E5F5 100%);
+		margin-top:0;
+	}
+	.jumbotron{
+		background:linear-gradient(to bottom, white 0%, #E3E5F5 100%);
+		margin-bottom:2px;
+
+	}
 </style>
 <script type="text/javascript">
 
@@ -304,10 +313,10 @@
 							<div class="row" align="center">
 								<div class="column" style="padding-right: 50px">
 									<a href="<%=request.getContextPath()%>" id="aClear"
-									   class="btn btn-secondary form-control" style="font-weight:bold; ">Clear Form</a>
+									   class="btn btn-secondary form-control" style="font-weight:bold;background-color: #2865A3 ">Clear Form</a>
 								</div>
 								<div class="column">
-									<button type="submit" value="Search" class="btn btn-secondary" style="font-weight:bold ;">Search OntoMate</button>
+									<button type="submit" value="Search" class="btn btn-secondary" style="font-weight:bold;background-color: #2865A3 ;">Search OntoMate</button>
 								</div>
 							</div>
 							</td>
