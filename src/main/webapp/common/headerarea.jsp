@@ -241,7 +241,7 @@
                             <td align="center" id="search-td">
 
 
-                                <form  name="elasticSearchForm" class="form-inline" action="/rgdweb/elasticResults.html" id="elasticSearchForm" role="search" method="post">
+                                <form  name="elasticSearchForm" class="form-inline" action="https://rgd.mcw.edu/rgdweb/elasticResults.html" id="elasticSearchForm" role="search" method="post">
                                     <input type="hidden" name="log" value="true" />
                                     <table border="0">
                                         <tr>
@@ -255,7 +255,7 @@
                                                 <input class="btn btn-info btn-sm form-control" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px" type="submit" value="Search RGD"/>
 
                                             </td>
-                                            <td colspan="2"  align="center"><br><a href="/rgdweb/generator/list.html" >Advanced Search (OLGA)</a></td>
+                                            <td colspan="2"  align="center"><br><a href="https://rgd.mcw.edu/rgdweb/generator/list.html" >Advanced Search (OLGA)</a></td>
                                         </tr>
                                     </table>
 
