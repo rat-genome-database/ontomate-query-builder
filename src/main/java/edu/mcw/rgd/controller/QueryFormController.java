@@ -150,14 +150,14 @@ public class QueryFormController {
 		String sortString = "";
 		String messageLabel = ""; 
 		String tmpStr = "";
-		if (queryString.getqPMID().length() > 0) {
+		if (queryString.getqPMID()!=null && queryString.getqPMID().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("pmid",
 					FieldType.NUMERIC_FIELD, queryString.getqPMID());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqString().length() > 0){
+		if ( queryString.getqString()!=null && queryString.getqString().length() > 0){
 			tmpStr = SolrQueryStringService.getQueryString("*",
 					FieldType.TEXT_FIELD, queryString.getqString());
 			solrQString += tmpStr;
@@ -165,21 +165,21 @@ public class QueryFormController {
 		}
 			
 
-		if (queryString.getqAuthorStr().length() > 0) {
+		if (queryString.getqAuthorStr()!=null && queryString.getqAuthorStr().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("authors",
 					FieldType.TEXT_FIELD, queryString.getqAuthorStr());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqTitleStr().length() > 0){
+		if (queryString.getqTitleStr()!=null && queryString.getqTitleStr().length() > 0){
 			tmpStr = SolrQueryStringService.getQueryString("title",
 					FieldType.TEXT_FIELD, queryString.getqTitleStr());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqAbstractStr().length() > 0) {
+		if (queryString.getqAbstractStr()!=null && queryString.getqAbstractStr().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("abstract",
 					FieldType.TEXT_FIELD, queryString.getqAbstractStr());
 			solrQString += tmpStr;
@@ -187,8 +187,8 @@ public class QueryFormController {
 
 		}
 
-		if (queryString.getqDateFrom().length() > 0
-				|| queryString.getqDateTo().length() > 0)
+		if (  queryString.getqDateFrom()!=null && queryString.getqDateFrom().length() > 0
+				||queryString.getqDateTo()!=null && queryString.getqDateTo().length() > 0)
 		{
 			tmpStr = SolrQueryStringService.getQueryString(
 					"p_date",

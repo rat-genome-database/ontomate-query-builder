@@ -49,7 +49,7 @@
 <form:input  path="queryString.qFieldConditions[${rowId}].fieldValue" class="ont-auto-complete form-control"/>
 </td>
 <td >
-  <span class="badge badge-secondary butRemove" style="cursor:hand;font-weight: bold;color:red" onclick="removeRow('${rowId}')">Hello</span>
+  <span class="badge badge-secondary butRemove" style="cursor:hand;font-weight: bold;color:red" onclick="removeRow('${rowId}')">X</span>
 
   <!--button type="button" onclick="removeRow('$-{rowId}')" class="butRemove form-control"><span style="color:red;font-weight: bold">x</span></button-->
 </td>
