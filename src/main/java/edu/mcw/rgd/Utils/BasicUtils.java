@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +105,7 @@ public class BasicUtils {
 
             String outputLine = "", output = "";
             while ((outputLine = br.readLine()) != null) {
+                if(!Objects.equals(outputLine, ""))
                 outputs.add(outputLine.trim());
             }
 

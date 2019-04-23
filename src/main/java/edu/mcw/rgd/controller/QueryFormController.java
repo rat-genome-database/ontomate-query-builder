@@ -345,16 +345,42 @@ System.out.println(solrQString);
 				OntoTermIdStr termStr= (OntoTermIdStr) e.getValue();
 				String fieldName = SolrQueryStringService.getIndexTermField(termStr.getCat());
 				fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
-				messageLabel += SolrQueryStringService.getQueryString(
-						"OR", fqc.isNotCondition(),
-						SolrQueryStringService.getOntoCatLabelMap().get(termStr.getCat()), SolrQueryStringService.getHtmlValue(termStr.getTerm()));
 
-				// Try search for ont_id directly
-				String idFieldName = SolrQueryStringService
-						.getOntIDField(fqc.getFieldName());
-				String qString = SolrQueryStringService.getQueryBooleans("OR",
-						fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR ");
-				solrQString += qString;
+				if (fqc.getFieldName().equals("rgd_gene_term")) {
+					int iGeneRgdId =termStr.getId().intValue();
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
+					messageLabel +=	SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+				} else if (fqc.getFieldName().equals("mt_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				} else if (fqc.getFieldName().equals("organism_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"organism_term", fqc.getFieldValue().replaceAll("\\s",""));
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				}else {
+
+					messageLabel += SolrQueryStringService.getQueryString(
+							"OR", fqc.isNotCondition(),
+							SolrQueryStringService.getOntoCatLabelMap().get(termStr.getCat()), SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+
+					// Try search for ont_id directly
+					String idFieldName = SolrQueryStringService
+							.getOntIDField(fqc.getFieldName());
+					String qString = SolrQueryStringService.getQueryBooleans("OR",
+							fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR ");
+					solrQString += qString;
+				}
 
 			}
 
