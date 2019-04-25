@@ -329,8 +329,7 @@
 
 					</td>
 					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<a href="<%=request.getContextPath()%>"
-						  id="aClear"><button class="btn btn-outline-secondary">Clear Form</button></a>
+						<a href="<%=request.getContextPath()%>"  class="btn btn-outline-secondary" id="aClear" style="padding:6px" >Clear Form</a>
 					</td>
 					<td><button class="btn btn-primary" type="submit">
 						Search OntoMate
