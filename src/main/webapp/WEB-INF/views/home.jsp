@@ -325,7 +325,7 @@
 						condition</button></td>
 
 					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">Advanced Search</button>
+						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">More Search Options</button>
 
 					</td>
 					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
