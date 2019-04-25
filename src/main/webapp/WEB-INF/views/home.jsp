@@ -205,7 +205,7 @@
 </script>
 <div class="container-fluid">
 	<div style="text-align: center">
-	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>OntoMate </span> </p>
+	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
 	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 		</div>
 	<hr>
@@ -217,7 +217,7 @@
 			<div class="form-group col-md-4" id="selOnt0">
 
 					<form:select class="form-control form-control-lg" id="qb-ontology-select" path="qFieldConditions[0].fieldName" onchange='update_autocomplete("#qb-ac-input", $(this).val());'>
-						<option value="ontology">Any ontology</option>
+						<option value="ontology">Any ontology/Gene</option>
 						<option value="bp_term">Biological Process</option>
 						<option value="cl_term">Cell Ontology</option>
 						<option value="cc_term">Cellular Component</option>
@@ -309,7 +309,7 @@
 					<td><form:input class="form-control" path="qAuthorStr"  /></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: bottom">Abstract:</td>
+					<td style="vertical-align: bottom">Keyword:</td>
 					<td><form:input  path="qAbstractStr" class="form-control"
 					/></td>
 				</tr>
@@ -335,8 +335,6 @@
 						Search OntoMate
 					</button></td>
 				</tr>
-
-
 			</table>
 			</div>
 		</div>
