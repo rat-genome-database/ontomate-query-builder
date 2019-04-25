@@ -205,7 +205,7 @@
 </script>
 <div class="container-fluid">
 	<div style="text-align: center">
-	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;">OntoMate </span> </p>
+	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>OntoMate </span> </p>
 	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 		</div>
 	<hr>
@@ -253,7 +253,7 @@
 						</button>
 					</div>
 				</div>
-				<small class="form-text text-muted">Examples: <a href="#" >Hypertension</a>, <a href="#">Cancer</a>, <a href="">A2m</a></small>
+				<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
 			</div>
 		</div>
 		</div>
@@ -323,13 +323,18 @@
 				<tr>
 					<td><button type="button" id="addCond" class="btn btn-outline-secondary" style="">Add term
 						condition</button></td>
-					<td><button class="btn btn-outline-secondary" type="submit">
-						Search OntoMate
-					</button></td>
+
 					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
 						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">Advanced Search</button>
 
 					</td>
+					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
+						<a href="<%=request.getContextPath()%>"
+						  id="aClear"><button class="btn btn-outline-secondary">Clear Form</button></a>
+					</td>
+					<td><button class="btn btn-primary" type="submit">
+						Search OntoMate
+					</button></td>
 				</tr>
 
 
@@ -382,7 +387,7 @@
 				<div class="card-body" >
 					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c">Publication</h5>
 					<p class="card-text" style="color:grey">Click the below link to get the reference</p>
-					<a href="#" class="btn btn-primary">Go to PubMed</a>
+					<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305386/" class="btn btn-primary" target="_blank">Go to PubMed</a>
 				</div>
 			</div>
 		</div>
