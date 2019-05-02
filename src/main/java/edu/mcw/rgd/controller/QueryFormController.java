@@ -3,12 +3,7 @@ package edu.mcw.rgd.controller;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -155,14 +150,14 @@ public class QueryFormController {
 		String sortString = "";
 		String messageLabel = ""; 
 		String tmpStr = "";
-		if (queryString.getqPMID().length() > 0) {
+		if (queryString.getqPMID()!=null && queryString.getqPMID().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("pmid",
 					FieldType.NUMERIC_FIELD, queryString.getqPMID());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqString().length() > 0){
+		if ( queryString.getqString()!=null && queryString.getqString().length() > 0){
 			tmpStr = SolrQueryStringService.getQueryString("*",
 					FieldType.TEXT_FIELD, queryString.getqString());
 			solrQString += tmpStr;
@@ -170,21 +165,21 @@ public class QueryFormController {
 		}
 			
 
-		if (queryString.getqAuthorStr().length() > 0) {
+		if (queryString.getqAuthorStr()!=null && queryString.getqAuthorStr().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("authors",
 					FieldType.TEXT_FIELD, queryString.getqAuthorStr());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqTitleStr().length() > 0){
+		if (queryString.getqTitleStr()!=null && queryString.getqTitleStr().length() > 0){
 			tmpStr = SolrQueryStringService.getQueryString("title",
 					FieldType.TEXT_FIELD, queryString.getqTitleStr());
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
 
-		if (queryString.getqAbstractStr().length() > 0) {
+		if (queryString.getqAbstractStr()!=null && queryString.getqAbstractStr().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("abstract",
 					FieldType.TEXT_FIELD, queryString.getqAbstractStr());
 			solrQString += tmpStr;
@@ -192,8 +187,8 @@ public class QueryFormController {
 
 		}
 
-		if (queryString.getqDateFrom().length() > 0
-				|| queryString.getqDateTo().length() > 0)
+		if (  queryString.getqDateFrom()!=null && queryString.getqDateFrom().length() > 0
+				||queryString.getqDateTo()!=null && queryString.getqDateTo().length() > 0)
 		{
 			tmpStr = SolrQueryStringService.getQueryString(
 					"p_date",
@@ -219,12 +214,24 @@ public class QueryFormController {
 					String termCat = null;
 					if (!fqc.getFieldName().equals("ontology")) {
 						termCat = SolrQueryStringService.getTermCat(fqc.getFieldName());
+						String fullTerm = guessConcept(fqc.getFieldValue(), termCat);
+						if (fullTerm != null) {
+							fqc.setFieldValue(fullTerm);
+							termStr = new OntoTermIdStr(fqc.getFieldValue());
+						}
+					}else{
+						Map<String, String> resultString=getSolrQueryString(fqc.getFieldValue());
+						for(Map.Entry e:resultString.entrySet() ){
+							if(e.getKey().equals("messageLabel")){
+								messageLabel+= (String) e.getValue();
+							}else{
+								solrQString += (String) e.getValue();
+							}
+						}
+
+						continue;
 					}
-					String fullTerm = guessConcept(fqc.getFieldValue(), termCat);
-					if (fullTerm != null) {
-						fqc.setFieldValue(fullTerm);
-						termStr = new OntoTermIdStr(fqc.getFieldValue());
-					}
+
 				}
 				
 				if (fqc.getFieldName().equals("ontology")) {
@@ -306,6 +313,7 @@ public class QueryFormController {
 			}
 //			solrQString = solrQString.trim() + "&sort=" + sortString;
 		}
+System.out.println(solrQString);
 
 		model.addAttribute("q", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
@@ -318,6 +326,69 @@ public class QueryFormController {
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
 
 		return "getResult";
+	}
+	public Map<String, String> getSolrQueryString(String fieldValue){
+		List<String> fullterms= guessConcept1(fieldValue, null);
+		String messageLabel = new String();
+		String solrQString= new String();
+		Map<String, String> resultString=new HashMap<>();
+		Map<String , OntoTermIdStr> catMap= new HashMap<>();
+		if (fullterms != null) {
+			for(String t: fullterms){
+              	OntoTermIdStr termStr = new OntoTermIdStr(t);
+				if(!t.equals(""))
+				catMap.putIfAbsent(termStr.getCat(), termStr);
+	        }
+
+			for(Map.Entry e: catMap.entrySet()){
+				FieldQueryCondition fqc= new FieldQueryCondition();
+				OntoTermIdStr termStr= (OntoTermIdStr) e.getValue();
+				String fieldName = SolrQueryStringService.getIndexTermField(termStr.getCat());
+				fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
+
+				if (fqc.getFieldName().equals("rgd_gene_term")) {
+					int iGeneRgdId =termStr.getId().intValue();
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
+					messageLabel +=	SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+				} else if (fqc.getFieldName().equals("mt_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				} else if (fqc.getFieldName().equals("organism_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"organism_term", fqc.getFieldValue().replaceAll("\\s",""));
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				}else {
+
+					messageLabel += SolrQueryStringService.getQueryString(
+							"OR", fqc.isNotCondition(),
+							SolrQueryStringService.getOntoCatLabelMap().get(termStr.getCat()), SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+
+					// Try search for ont_id directly
+					String idFieldName = SolrQueryStringService
+							.getOntIDField(fqc.getFieldName());
+					String qString = SolrQueryStringService.getQueryBooleans("OR",
+							fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR ");
+					solrQString += qString;
+				}
+
+			}
+
+			resultString.put("messageLabel", messageLabel);
+			resultString.put("solrQString", solrQString);
+		}
+		return resultString;
+
 	}
 
 	@RequestMapping(value = "/getResultForCuration", method = RequestMethod.GET)
@@ -624,7 +695,25 @@ public class QueryFormController {
 		}
 		return null;
 	}
-	
+	private List<String> guessConcept1(String termStr, String termCat) {
+
+		String termStrBoolean = termStr.replaceAll(" ", " AND ");
+		List<String> fullterms= new ArrayList<>();
+		try {
+			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
+					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
+					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
+			String ontoSolrQueryStr = uri.toASCIIString();
+
+			List<String> fullTerms = BasicUtils.restGet1(ontoSolrQueryStr, null);
+
+			return fullTerms;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@RequestMapping(value = "/defineTerm", method = RequestMethod.GET)
 	public String defineTerm(@ModelAttribute("solrQueryCondition") SolrQueryCondition qs, Model model) {
 		String termStr = qs.getQ().toLowerCase().replaceAll("(associated|association| with|/| and | or |,)", " ").trim();
@@ -1128,5 +1217,9 @@ public class QueryFormController {
 		model.addAttribute("message", curatable);
 		return "SimpleMessage";
 	}
-
+public static void main(String[] args){
+	QueryFormController ctrl= new QueryFormController();
+	ctrl.getSolrQueryString("hypertension");
+	System.out.println("DONE!!!!");
+}
 }
