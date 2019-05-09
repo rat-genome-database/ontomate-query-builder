@@ -141,7 +141,7 @@ function update_autocomplete(obj_name, ont_cat) {
 	$(obj_name).flushCache();
 	$(obj_name).unautocomplete();
 	 //  $(obj_name).autocomplete('/OntoSolr/select', {
-	$(obj_name).autocomplete('http://green.rgd.mcw.edu:8080/OntoSolr/select', {
+	$(obj_name).autocomplete('/OntoSolr/select', {
 		extraParams:{
           'qf': 'term_en^5 term_str^3 term^3 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
           'fq': 'cat:'+ (ont_cat=="ontology"?"(NOT CUSTOM NOT HP NOT MP)": ont_cat.substring(0,ont_cat.length-5).toUpperCase()),

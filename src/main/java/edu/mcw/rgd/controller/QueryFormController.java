@@ -681,7 +681,7 @@ System.out.println(solrQString);
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		
 		try {
-			URI uri = new URI("https",BasicUtils.hostname, "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("https","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -951,7 +951,7 @@ System.out.println(solrQString);
 					int iGeneRgdId =termStr.getId().intValue();
 					String mendelian_disease_ids = "*";
 					try {
-						URI uri = new URI("https",BasicUtils.hostname, "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+						URI uri = new URI("https","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 						String ontoSolrStr = uri.toASCIIString(); 
 						mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 					} catch (Exception e) {
@@ -1091,7 +1091,7 @@ System.out.println(solrQString);
 		String hlQString = "";
 		String mendelian_disease_ids = "*";
 		try {
-			URI uri = new URI("https",BasicUtils.hostname, "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+			URI uri = new URI("https","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 			String ontoSolrStr = uri.toASCIIString(); 
 			mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 		} catch (Exception e) {
