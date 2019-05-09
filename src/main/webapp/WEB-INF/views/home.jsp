@@ -5,8 +5,9 @@
 <%@ include file="/common/headerarea.jsp"%>
 <link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
-<script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript"  src="/OntoSolr/files/jquery-1.4.3.min.js"></script>
+<!--script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"  src="/OntoSolr/files/jquery-1.4.3.min.js"></script-->
+<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
 <script>
 	var jq14 = jQuery.noConflict(true);
 </script>
@@ -16,7 +17,7 @@
 <!--link rel="stylesheet" type="text/css" href="/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
 <link rel="stylesheet" href="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" /-->
 
-<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
+
 <!--script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script-->
 <!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script-->
 <style>
