@@ -7,13 +7,14 @@
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
-<script type="text/javascript"  src="/OntoSolr/files/jquery-1.4.3.min.js"></script>
+<!--script type="text/javascript"  src="/OntoSolr/files/jquery-1.4.3.min.js"></script-->
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
-<script type="text/javascript" src="/OntoSolr/files/jquery.autocomplete.js"></script>
-
 <script>
 	var jq14 = jQuery.noConflict(true);
 </script>
+<script type="text/javascript" src="/OntoSolr/files/jquery.autocomplete.js"></script>
+
+
 <style>
 	.jumbotron{
 	/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */
