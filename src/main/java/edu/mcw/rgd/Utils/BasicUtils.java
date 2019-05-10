@@ -174,13 +174,13 @@ public class BasicUtils {
         returnStr = returnStr.replaceAll("(?ms)^\\s*//.+?$", "");
         return returnStr;
     }
-    static String parseHostName() throws UnknownHostException {
+    static public String parseHostName()  {
         if( hostname!=null )
             return hostname;
         try {
 
             hostname = InetAddress.getLocalHost().getHostName().toLowerCase();
-           
+
 
           /*  isProduction = hostname.contains("hancock") || hostname.contains("owen");
             isPipelines = hostname.contains("reed");
