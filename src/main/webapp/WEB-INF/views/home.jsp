@@ -7,12 +7,13 @@
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
-<link rel="stylesheet" href="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/solr/files/main.css"/>
+<link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
-<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script-->
+<script type="text/javascript" src="/OntoSolr/files/jquery.autocomplete.js"></script>
+
+
 <style>
 	.jumbotron{
 	/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */
