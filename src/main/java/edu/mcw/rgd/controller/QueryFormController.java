@@ -681,7 +681,7 @@ System.out.println(solrQString);
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		
 		try {
-			URI uri = new URI("https",BasicUtils.parseHostName(), "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -696,11 +696,11 @@ System.out.println(solrQString);
 		return null;
 	}
 	private List<String> guessConcept1(String termStr, String termCat) {
-		System.out.println("**************HOST NAME: "+ BasicUtils.parseHostName());
+		System.out.println("**************HOST NAME: "+ "localhost:8080");
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {
-			URI uri = new URI("https",BasicUtils.parseHostName(), "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -725,7 +725,7 @@ System.out.println(solrQString);
 //		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 //					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ") ) AND def:(*)&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 //					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=csv&fl=def&csv.header=false&csv.separator=|", null);
-			URI uri = new URI("https",BasicUtils.parseHostName(), "/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ")  OR synonym_en:(" + termStr + ") ))&defType=edismax&rows=10&qf=term_en^30+term_str^50+term^30+synonym_en^4.5+synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&qf=&v.template=termdef&mm=75%", null);
@@ -951,7 +951,7 @@ System.out.println(solrQString);
 					int iGeneRgdId =termStr.getId().intValue();
 					String mendelian_disease_ids = "*";
 					try {
-						URI uri = new URI("https",BasicUtils.parseHostName(), "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+						URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 						String ontoSolrStr = uri.toASCIIString(); 
 						mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 					} catch (Exception e) {
@@ -1091,7 +1091,7 @@ System.out.println(solrQString);
 		String hlQString = "";
 		String mendelian_disease_ids = "*";
 		try {
-			URI uri = new URI("https",BasicUtils.parseHostName(), "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 			String ontoSolrStr = uri.toASCIIString(); 
 			mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 		} catch (Exception e) {
