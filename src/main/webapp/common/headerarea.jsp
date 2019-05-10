@@ -26,7 +26,7 @@
     <link href="/QueryBuilder/common/rgd_styles-3.css" rel="stylesheet" type="text/css" />
 
     <!-- adding link for OntoSolr (Pushkala) -->
-    <link rel="stylesheet" href="http://green.rgd.mcw.edu:8080/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
+    <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/common/modalDialog/common.js"></script>

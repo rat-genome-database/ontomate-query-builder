@@ -15,12 +15,6 @@ tr.alt td {
 	<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
   	<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
 
-	<!--link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
-	<link rel="stylesheet" type="text/css" href="http://ontomate.rgd.mcw.edu/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
-	<link rel="stylesheet" href="http://ontomate.rgd.mcw.edu/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
-	<script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
-	<script type="text/javascript" src="http://ontomate.rgd.mcw.edu/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script-->
 
 
 	<script type="text/javascript">
@@ -66,7 +60,7 @@ $(document).ready(function(){
 					$(col_name).flushCache();
 				
 				//	   $(col_name).autocomplete('/OntoSolr/select', {
-					$(col_name).autocomplete('http://green.rgd.mcw.edu:8080/OntoSolr/select', {
+					$(col_name).autocomplete('/OntoSolr/select', {
 						extraParams:{
 				             'qf': 'term_en^5 term_str^3 term^3 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
  				             'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -147,7 +141,7 @@ function update_autocomplete(obj_name, ont_cat) {
 	$(obj_name).flushCache();
 	$(obj_name).unautocomplete();
 	 //  $(obj_name).autocomplete('/OntoSolr/select', {
-	$(obj_name).autocomplete('http://green.rgd.mcw.edu:8080/OntoSolr/select', {
+	$(obj_name).autocomplete('/OntoSolr/select', {
 		extraParams:{
           'qf': 'term_en^5 term_str^3 term^3 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
           'fq': 'cat:'+ (ont_cat=="ontology"?"(NOT CUSTOM NOT HP NOT MP)": ont_cat.substring(0,ont_cat.length-5).toUpperCase()),
