@@ -8,11 +8,12 @@
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/solr/files/main.css"/>
+<link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/solr/files/main.css"/>
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
 <script type="text/javascript" src="/OntoSolr/files/jquery.autocomplete.js"></script>
+
 
 
 <style>
@@ -167,23 +168,42 @@
 	}
 
 	function update_autocomplete(obj_name, ont_cat) {
-	//	$(obj_name).flushCache();
-	//	$(obj_name).unautocomplete();
+			$(obj_name).flushCache();
+			$(obj_name).unautocomplete();
 		//  $(obj_name).autocomplete('/OntoSolr/select', {
-		console.log(obj_name + '\t'+ ont_cat);
-		$(obj_name).autocomplete('/OntoSolr/select', {
-					extraParams:{
-						'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
-						'fq': 'cat:'+ (ont_cat=="ontology"?"(NOT CUSTOM NOT HP)": ont_cat.substring(0,ont_cat.length-5).toUpperCase()),
-						'bf': 'term_len_l^.003',
-						'wt': 'velocity',
-						'v.template': 'termmatch1',
-						'cacheLength': 0
-					},
-					max: 20
-				}
+		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
+		if (ont_cat.trim() == "organism_term") {
+			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
+		/*	var url= '/QueryBuilder/getOrganisms/'+"Homo"
+		   $(obj_name).autocomplete(url, {
+						extraParams:{
+							term:"rat " 				}
+					}
+			);
+*/		$(obj_name).autocomplete('/solr/select', {
+						extraParams: {
+							'wt': 'velocity',
+							'v.template': 'termmatch1',
+							'cacheLength': 0
+						},
+						max: 20
+					}
+			);
 
-		);
+		} else {
+			$(obj_name).autocomplete('/OntoSolr/select', {
+						extraParams: {
+							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
+							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
+							'bf': 'term_len_l^.003',
+							'wt': 'velocity',
+							'v.template': 'termmatch1',
+							'cacheLength': 0
+						},
+						max: 20
+					}
+			);
+		}
 	}
 	function myToggleFunction() {
 		var x = document.getElementById("qb-options");
@@ -246,7 +266,7 @@
 			</div>
 			<div class="form-group col-md-8">
 				<div class="input-group" >
-					<form:input id="qb-ac-input" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>
+					<form:input id="qb-ac-input" name="qbInput" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>
 
 					<div class="input-group-append">
 
@@ -399,7 +419,7 @@
 	$(function () {
 		var qbinput=$('#qb-ac-input');
 		$(qbinput).autocomplete();
-		$(qbinput).autocomplete('/OntoSolr/select', {
+		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {
 			extraParams:{
 				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 				'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -409,7 +429,7 @@
 				'cacheLength': 0
 			},
 			max:20
-		});
+		});*/
 		$(qbinput).focus(function(){$(qbinput).attr("autocomplete","off");});
 		$(qbinput).focusout(function(){$(qbinput).attr("autocomplete","on");});
 	});

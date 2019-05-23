@@ -1,6 +1,7 @@
 package edu.mcw.rgd.controller;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -13,14 +14,14 @@ import org.apache.hadoop.hbase.util.Bytes;
 /*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;*/
 
+import org.eclipse.core.internal.jobs.ObjectMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.util.AutoPopulatingList;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
@@ -54,6 +55,8 @@ import edu.mcw.rgd.service.PubMedDbService;
 import edu.mcw.rgd.service.RgdTermSearchService;
 import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class QueryFormController {
@@ -141,7 +144,31 @@ public class QueryFormController {
 		model.addAttribute("queryString", queryString);
 		return "selects";
 	}
-
+/*	@RequestMapping(value = "/getOrganisms/{term}", method = RequestMethod.GET)
+//	public String getOrganisms(@RequestBody @RequestParam("term") String term, Model model, HttpServletRequest request) throws Exception {
+	public String getOrganisms(@RequestBody @PathVariable("term") String term, Model model) throws Exception {
+		System.out.println("HELLO:" +term);
+		String regex="[0-9]+";
+		URI uri = new URI("http://hansen.rgd.mcw.edu:8080/solr/select?q=rat&facet.field=organism_term_s&wt=json" );
+		String solrQueryStr = uri.toASCIIString();
+		String terms= BasicUtils.restGet(solrQueryStr);
+		JSONObject obj=new JSONObject(terms);
+		JSONObject facetObj=new JSONObject(obj.get("facet_counts").toString());
+		JSONObject orgObj= new JSONObject(facetObj.get("facet_fields").toString());
+		JSONArray array=(JSONArray) orgObj.get("organism_term_s");
+		Iterator i= array.iterator();
+		List<Object> orgObjects= new ArrayList<>();
+		List<String> organisms= new ArrayList<>();
+		while (i.hasNext()){
+			orgObjects.add(i.next());
+		}
+		for(Object org:orgObjects){
+			if(!org.toString().matches(regex))
+			organisms.add(org.toString());
+		}
+		model.addAttribute("organisms", organisms);
+	return "getOrganisms";
+	}*/
 	@RequestMapping(value = "/getResult", method = RequestMethod.GET)
 	public String getResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
@@ -239,8 +266,7 @@ public class QueryFormController {
 					fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
 				}
 
-				if (!fqc.getFieldValue().equals("*")) {
-					
+				if (!fqc.getFieldValue().equals("*")){
 				if (fqc.getFieldName().equals("rgd_gene_term")) {
 					int iGeneRgdId =termStr.getId().intValue();
 					solrQString += SolrQueryStringService.getQueryString(
@@ -259,10 +285,14 @@ public class QueryFormController {
 				} else if (fqc.getFieldName().equals("organism_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"organism_term", fqc.getFieldValue().replaceAll("\\s",""));
+							"organism_term", fqc.getFieldValue()+"*"
+									//.replaceAll("\\s","")
+							);
 					messageLabel += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue()
+								//	.replaceAll("\\s","")
+							));
 				} else if (true || fqc.isIncludeSynonyms()) {
 
 						/*
@@ -292,6 +322,7 @@ public class QueryFormController {
 										fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR "); 
 						solrQString += qString;
 					} } else {
+
 						messageLabel += SolrQueryStringService.getQueryString(
 								fqc.getBooleanOpt(), fqc.isNotCondition(),
 								SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
@@ -300,6 +331,7 @@ public class QueryFormController {
 								fqc.getBooleanOpt(), fqc.isNotCondition(),
 								fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
 					}
+
 
 				}
 			
