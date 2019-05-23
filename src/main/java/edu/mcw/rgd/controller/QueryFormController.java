@@ -1,22 +1,17 @@
 package edu.mcw.rgd.controller;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+import edu.mcw.rgd.service.PubMedReference;
 import org.apache.commons.text.StringEscapeUtils;
-
-import org.apache.hadoop.hbase.util.Bytes;
 
 /*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;*/
 
-import org.eclipse.core.internal.jobs.ObjectMap;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -29,17 +24,13 @@ import edu.mcw.rgd.dao.impl.AliasDAO;
 import edu.mcw.rgd.dao.impl.GeneDAO;
 import edu.mcw.rgd.dao.impl.OntologyXDAO;
 import edu.mcw.rgd.dao.impl.OrthologDAO;
-import edu.mcw.rgd.dao.impl.ReferenceDAO;
 import edu.mcw.rgd.dao.impl.XdbIdDAO;
-import edu.mcw.rgd.dao.spring.RgdIdQuery;
 import edu.mcw.rgd.datamodel.Alias;
 import edu.mcw.rgd.datamodel.Gene;
 import edu.mcw.rgd.datamodel.Ortholog;
-import edu.mcw.rgd.datamodel.Reference;
 import edu.mcw.rgd.datamodel.XdbId;
 import edu.mcw.rgd.datamodel.ontologyx.Term;
 import edu.mcw.rgd.datamodel.ontologyx.TermSynonym;
-import edu.mcw.rgd.datamodel.ontologyx.TermWithStats;
 import edu.mcw.rgd.model.BulkGeneString;
 import edu.mcw.rgd.model.CuratableCondition;
 import edu.mcw.rgd.model.CurationQueryString;
@@ -57,6 +48,7 @@ import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class QueryFormController {
@@ -422,7 +414,14 @@ System.out.println(solrQString);
 		return resultString;
 
 	}
-
+	@RequestMapping(value = "/getReferenceURL", method = RequestMethod.GET)
+	public String getReferenceURL(@RequestParam String pubmedId, HttpServletResponse response , HttpServletRequest request) throws Exception {
+		PubMedReference pubRef= new PubMedReference();
+		int refRgdId=pubRef.getReferenceRgdId(pubmedId);
+		System.out.print("REF RGD ID: "+refRgdId);
+		response.getWriter().print(refRgdId);
+		return null;
+}
 	@RequestMapping(value = "/getResultForCuration", method = RequestMethod.GET)
 	public String getResultForCuration(
 			@ModelAttribute("curationQueryString") CurationQueryString queryString, Model model) {
