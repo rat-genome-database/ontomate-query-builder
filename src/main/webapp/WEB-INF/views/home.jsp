@@ -12,9 +12,9 @@
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
-<script type="text/javascript" src="/OntoSolr/files/jquery.autocomplete.js"></script>
+<!--script type="text/javascript" src="http://hansen.rgd.mcw.edu:8080/OntoSolr/files/jquery.autocomplete.js"></script-->
 
-
+<script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
 
 <style>
 	.jumbotron{
@@ -71,7 +71,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/OntoSolr/select', {
+						$(col_name).autocomplete('http://hansen.rgd.mcw.edu:8080/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -183,7 +183,7 @@
 */		$(obj_name).autocomplete('/solr/select', {
 						extraParams: {
 							'wt': 'velocity',
-							'v.template': 'termmatch1',
+							'v.template': 'termmatch3',
 							'cacheLength': 0
 						},
 						max: 20
