@@ -384,7 +384,7 @@
 					<ul style="margin-left: 0">
 						<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>
 						<li style="color:grey">User-activated filters</li>
-						<li style="color:grey">Date and other filters relevant to the literature search</li>
+						<!--li style="color:grey">Date and other filters relevant to the literature search</li-->
 						<li style="color:grey">Information Annotated to Articles
 							<ul>
 
