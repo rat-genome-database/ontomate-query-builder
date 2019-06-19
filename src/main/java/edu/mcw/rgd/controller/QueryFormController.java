@@ -6,9 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+import edu.mcw.rgd.service.PubMedReference;
 import org.apache.commons.text.StringEscapeUtils;
-
-import org.apache.hadoop.hbase.util.Bytes;
 
 /*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;*/
@@ -17,10 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.util.AutoPopulatingList;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
@@ -28,17 +24,13 @@ import edu.mcw.rgd.dao.impl.AliasDAO;
 import edu.mcw.rgd.dao.impl.GeneDAO;
 import edu.mcw.rgd.dao.impl.OntologyXDAO;
 import edu.mcw.rgd.dao.impl.OrthologDAO;
-import edu.mcw.rgd.dao.impl.ReferenceDAO;
 import edu.mcw.rgd.dao.impl.XdbIdDAO;
-import edu.mcw.rgd.dao.spring.RgdIdQuery;
 import edu.mcw.rgd.datamodel.Alias;
 import edu.mcw.rgd.datamodel.Gene;
 import edu.mcw.rgd.datamodel.Ortholog;
-import edu.mcw.rgd.datamodel.Reference;
 import edu.mcw.rgd.datamodel.XdbId;
 import edu.mcw.rgd.datamodel.ontologyx.Term;
 import edu.mcw.rgd.datamodel.ontologyx.TermSynonym;
-import edu.mcw.rgd.datamodel.ontologyx.TermWithStats;
 import edu.mcw.rgd.model.BulkGeneString;
 import edu.mcw.rgd.model.CuratableCondition;
 import edu.mcw.rgd.model.CurationQueryString;
@@ -54,6 +46,9 @@ import edu.mcw.rgd.service.PubMedDbService;
 import edu.mcw.rgd.service.RgdTermSearchService;
 import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class QueryFormController {
@@ -141,7 +136,31 @@ public class QueryFormController {
 		model.addAttribute("queryString", queryString);
 		return "selects";
 	}
-
+/*	@RequestMapping(value = "/getOrganisms/{term}", method = RequestMethod.GET)
+//	public String getOrganisms(@RequestBody @RequestParam("term") String term, Model model, HttpServletRequest request) throws Exception {
+	public String getOrganisms(@RequestBody @PathVariable("term") String term, Model model) throws Exception {
+		System.out.println("HELLO:" +term);
+		String regex="[0-9]+";
+		URI uri = new URI("http://hansen.rgd.mcw.edu:8080/solr/select?q=rat&facet.field=organism_term_s&wt=json" );
+		String solrQueryStr = uri.toASCIIString();
+		String terms= BasicUtils.restGet(solrQueryStr);
+		JSONObject obj=new JSONObject(terms);
+		JSONObject facetObj=new JSONObject(obj.get("facet_counts").toString());
+		JSONObject orgObj= new JSONObject(facetObj.get("facet_fields").toString());
+		JSONArray array=(JSONArray) orgObj.get("organism_term_s");
+		Iterator i= array.iterator();
+		List<Object> orgObjects= new ArrayList<>();
+		List<String> organisms= new ArrayList<>();
+		while (i.hasNext()){
+			orgObjects.add(i.next());
+		}
+		for(Object org:orgObjects){
+			if(!org.toString().matches(regex))
+			organisms.add(org.toString());
+		}
+		model.addAttribute("organisms", organisms);
+	return "getOrganisms";
+	}*/
 	@RequestMapping(value = "/getResult", method = RequestMethod.GET)
 	public String getResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
@@ -239,8 +258,7 @@ public class QueryFormController {
 					fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
 				}
 
-				if (!fqc.getFieldValue().equals("*")) {
-					
+				if (!fqc.getFieldValue().equals("*")){
 				if (fqc.getFieldName().equals("rgd_gene_term")) {
 					int iGeneRgdId =termStr.getId().intValue();
 					solrQString += SolrQueryStringService.getQueryString(
@@ -259,10 +277,14 @@ public class QueryFormController {
 				} else if (fqc.getFieldName().equals("organism_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"organism_term", fqc.getFieldValue().replaceAll("\\s",""));
+							"organism_term", fqc.getFieldValue()+"*"
+									//.replaceAll("\\s","")
+							);
 					messageLabel += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue()
+								//	.replaceAll("\\s","")
+							));
 				} else if (true || fqc.isIncludeSynonyms()) {
 
 						/*
@@ -292,6 +314,7 @@ public class QueryFormController {
 										fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR "); 
 						solrQString += qString;
 					} } else {
+
 						messageLabel += SolrQueryStringService.getQueryString(
 								fqc.getBooleanOpt(), fqc.isNotCondition(),
 								SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
@@ -300,6 +323,7 @@ public class QueryFormController {
 								fqc.getBooleanOpt(), fqc.isNotCondition(),
 								fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
 					}
+
 
 				}
 			
@@ -390,7 +414,14 @@ System.out.println(solrQString);
 		return resultString;
 
 	}
-
+	@RequestMapping(value = "/getReferenceURL", method = RequestMethod.GET)
+	public String getReferenceURL(@RequestParam String pubmedId, HttpServletResponse response , HttpServletRequest request) throws Exception {
+		PubMedReference pubRef= new PubMedReference();
+		int refRgdId=pubRef.getReferenceRgdId(pubmedId);
+		System.out.print("REF RGD ID: "+refRgdId);
+		response.getWriter().print(refRgdId);
+		return null;
+}
 	@RequestMapping(value = "/getResultForCuration", method = RequestMethod.GET)
 	public String getResultForCuration(
 			@ModelAttribute("curationQueryString") CurationQueryString queryString, Model model) {
@@ -681,7 +712,7 @@ System.out.println(solrQString);
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		
 		try {
-			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -696,11 +727,11 @@ System.out.println(solrQString);
 		return null;
 	}
 	private List<String> guessConcept1(String termStr, String termCat) {
-
+		System.out.println("**************HOST NAME: "+ "localhost:8080");
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {
-			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -719,13 +750,13 @@ System.out.println(solrQString);
 		String termStr = qs.getQ().toLowerCase().replaceAll("(associated|association| with|/| and | or |,)", " ").trim();
 		String termStrBoolean = termStr.replaceAll(" +", " AND ");
 		String termCat = null;
-		
+
 		try {
 //			URI uri = new URI("http","fox.hmgc.mcw.edu", "/OntoSolr/select", "q=cat:(RDO^5 OR UMLS^4 OR HP^3 OR MP^2) AND (term_str:(\""
 //		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 //					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ") ) AND def:(*)&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 //					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=csv&fl=def&csv.header=false&csv.separator=|", null);
-			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ")  OR synonym_en:(" + termStr + ") ))&defType=edismax&rows=10&qf=term_en^30+term_str^50+term^30+synonym_en^4.5+synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&qf=&v.template=termdef&mm=75%", null);
@@ -951,7 +982,7 @@ System.out.println(solrQString);
 					int iGeneRgdId =termStr.getId().intValue();
 					String mendelian_disease_ids = "*";
 					try {
-						URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+						URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 						String ontoSolrStr = uri.toASCIIString(); 
 						mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 					} catch (Exception e) {
@@ -1091,7 +1122,7 @@ System.out.println(solrQString);
 		String hlQString = "";
 		String mendelian_disease_ids = "*";
 		try {
-			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 			String ontoSolrStr = uri.toASCIIString(); 
 			mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 		} catch (Exception e) {

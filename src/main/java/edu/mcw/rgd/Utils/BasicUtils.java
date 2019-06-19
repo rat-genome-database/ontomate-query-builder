@@ -10,6 +10,8 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +22,7 @@ import java.util.regex.Pattern;
  * Created by jthota on 1/24/2019.
  */
 public class BasicUtils {
+    public static String hostname;
     public static String strExceptionStackTrace(Exception e) {
         StringWriter writer = new StringWriter();
         e.printStackTrace(new PrintWriter(writer));
@@ -171,10 +174,31 @@ public class BasicUtils {
         returnStr = returnStr.replaceAll("(?ms)^\\s*//.+?$", "");
         return returnStr;
     }
+    static public String parseHostName()  {
+        if( hostname!=null )
+            return hostname;
+        try {
 
+            hostname = InetAddress.getLocalHost().getHostName().toLowerCase();
+
+
+          /*  isProduction = hostname.contains("hancock") || hostname.contains("owen");
+            isPipelines = hostname.contains("reed");
+            isDev = hostname.contains("hastings");
+            isCurator = isPipelines || isDev;
+            isTest = hostname.contains("rgd-27p8tr1") || hostname.contains("rgd-c6vhv52");
+*/
+            //System.out.println("RgdContext: HOSTNAME="+hostname);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hostname;
+    }
     public static String removeEmptyLines(String inputStr) {
         String returnStr = inputStr.replaceAll("(?ms)^\\s*", "");
         return returnStr;
     }
-
+public static void main(String[] args) throws UnknownHostException {
+    System.out.println(BasicUtils.parseHostName());
+}
 }
