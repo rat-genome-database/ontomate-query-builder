@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%  String pageTitle =  "OntoMate - Publications search engine";
+<%  String pageTitle =  "OntoMate - Literature search engine";
 	String pageDescription ="OntoMate";
 	String headContent = "";%>
 <%@ include file="/common/headerarea.jsp"%>
@@ -71,7 +71,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('http://hansen.rgd.mcw.edu:8080/OntoSolr/select', {
+						$(col_name).autocomplete('/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -370,7 +370,7 @@
 
 			<div class="card-body">
 				<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">About</h5>
-				<p class="card-text" style="color:grey">RGD has developed an ontology-driven, concept-based literature search engine, as a replacement for the PubMed (http://www.ncbi.nlm.nih.gov/pubmed) search engine in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism name and most of the 16 ontologies/vocabularies used at RGD.</p>
+				<p class="card-text" style="color:grey;text-align: justify">OntoMate is an ontology-driven, concept-based literature search engine that was originally developed by RGD as an alternative for the basic PubMed search engine (http://www.ncbi.nlm.nih.gov/pubmed) in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism names and terms from the ontologies/vocabularies used at RGD.</p>
 				<!--a href="#" class="btn btn-primary">Go somewhere</a-->
 			</div>
 		</div>
@@ -382,18 +382,21 @@
 					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">Features</h5>
 					<p class="card-text" style="color:grey"></p>
 					<ul style="margin-left: 0">
-						<li style="color:grey;margin-left: 0">Easy to build queries to search for concepts</li>
-						<li style="color:grey">OntoMate also provides user-activated filters for species.</li>
+						<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>
+						<li style="color:grey">User-activated filters</li>
 						<li style="color:grey">Date and other filters relevant to the literature search</li>
-						<li style="color:grey">Information Annotated to Articles:Disease terms (CTD terms)
-							Genes (using ABNER, A Biomedical Named Entity Recognizer)
-							Rat strains (rat strain ontology)
-							RGD genes
-							Organisms (OrganismTagger)
-							phenotype Ontology
-							trait ontology
-							Clinical terms
-							All of the other ontologies used at RGD
+						<li style="color:grey">Information Annotated to Articles
+							<ul>
+
+								<li style="color:grey">Genes</li>
+								<li style="color:grey">Rat strains </li>
+								<li style="color:grey">Organism</li>
+								<li style="color:grey">Disease</li>
+								<li style="color:grey">Phenotypes</li>
+								<li style="color:grey">Traits </li>
+								<li style="color:grey">Clinical Measurements</li>
+
+							</ul>
 						</li>
 					</ul>
 					<!--a href="#" class="btn btn-primary">Go somewhere</a-->
