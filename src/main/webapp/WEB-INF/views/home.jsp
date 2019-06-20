@@ -8,7 +8,7 @@
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/solr/files/main.css"/>
+<link rel="stylesheet" type="text/css" href="/solr/files/main.css"/>
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
@@ -182,6 +182,7 @@
 			);
 */		$(obj_name).autocomplete('/solr/select', {
 						extraParams: {
+							'qf': 'organism_term^5',
 							'wt': 'velocity',
 							'v.template': 'termmatch3',
 							'cacheLength': 0
