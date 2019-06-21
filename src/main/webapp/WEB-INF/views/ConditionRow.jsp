@@ -38,7 +38,7 @@
   <option value="ma_term">Mouse Anatomy</option>
   <option value="mt_term">Mutation</option>
   <option value="nbo_term">Neuro Behavioral</option>
-  <option value="organism_term">Organism Ontology</option>
+  <option value="organism_term">Organism Scientific Name</option>
   <option value="pw_term">Pathway Ontology</option>
   <option value="rs_term">Rat Strain Ontology</option>
     <option value="zfa_term">Zebrafish Anatomy</option>
