@@ -27,15 +27,15 @@ public class HBaseService {
 			.getLogger(QueryFormController.class);*/
 
 
-	private static String HBASE_REST_SERVICE_HOST= "gray04.rgd.mcw.edu:8080";
-	private static String HBASE_TABLE="articles";
 
+	private static String HBASE_REST_SERVICE_HOST= getHbaseServiceProperties().getProperty("HBASE_REST_SERVICE_HOST");
+	private static String HBASE_TABLE=getHbaseServiceProperties().getProperty("HBASE_TABLE");
 
 	public static Properties getHbaseServiceProperties(){
 		Properties props= new Properties();
 		FileInputStream fis=null;
 		try{
-			fis=new FileInputStream("~/properties/hbaseService.properties");
+			fis=new FileInputStream("/data/properties/hbaseService.properties");
 			props.load(fis);
 		}catch (Exception e){
 			e.printStackTrace();
