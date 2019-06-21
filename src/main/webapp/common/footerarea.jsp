@@ -6,10 +6,10 @@
 <br>
 <div class="bottom-bar" >
     <table align=center class="headerTable"> <tr><td align="left" style="color:white;">
-        <a href="https://dev.rgd.mcw.edu/contact/index.shtml">Contact Us</a>&nbsp;|&nbsp;
-        <a href="https://dev.rgd.mcw.edu/wg/about-us">About Us</a>&nbsp;|&nbsp;
+        <a href="https://rgd.mcw.edu/contact/index.shtml">Contact Us</a>&nbsp;|&nbsp;
+        <a href="https://rgd.mcw.edu/wg/about-us">About Us</a>&nbsp;|&nbsp;
         <a href="https://creativecommons.org/licenses/by/4.0/">License CC BY 4.0</a>&nbsp;|&nbsp;
-        <a href="https://dev.rgd.mcw.edu/wg/home/disclaimer">Legal Disclaimer</a>&nbsp;|&nbsp;
+        <a href="https://rgd.mcw.edu/wg/home/disclaimer">Legal Disclaimer</a>&nbsp;|&nbsp;
         <a href="http://www.mcw.edu/">&copy; Medical College of Wisconsin</a>
     </td></tr></table>
 </div>
@@ -18,10 +18,10 @@
 
 <table align="center">
     <tr>
-        <td><a href="https://dev.rgd.mcw.edu/wg/wp-admin/post.php?post=15&action=edit"><img src="https://dev.rgd.mcw.edu/rgdweb/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute logo"></a><br><br></td>
-        <td width=100 align="center"><a href="http://alliancegenome.org"><img src="https://dev.rgd.mcw.edu/rgdweb/common/images/alliance_logo.png" height="80" width="133" border=0/></a></td>
-        <td width=100 align="right"><a href="https://dev.rgd.mcw.edu/wg/gerrc"><img src="https://dev.rgd.mcw.edu/rgdweb/common/images/GERRC-35.png" border=0/></a></td>
-        <td width=100 align="right"><a href="https://dev.rgd.mcw.edu/wg/physgenknockouts"><img src="https://dev.rgd.mcw.edu/rgdweb/common/images/knockOuts.jpg" border=0/></a></td>
+        <td><a href="https://rgd.mcw.edu/wg/wp-admin/post.php?post=15&action=edit"><img src="https://rgd.mcw.edu/rgdweb/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute logo"></a><br><br></td>
+        <td width=100 align="center"><a href="http://alliancegenome.org"><img src="https://rgd.mcw.edu/rgdweb/common/images/alliance_logo.png" height="80" width="133" border=0/></a></td>
+        <td width=100 align="right"><a href="https://rgd.mcw.edu/wg/gerrc"><img src="https://rgd.mcw.edu/rgdweb/common/images/GERRC-35.png" border=0/></a></td>
+        <td width=100 align="right"><a href="https://rgd.mcw.edu/wg/physgenknockouts"><img src="https://rgd.mcw.edu/rgdweb/common/images/knockOuts.jpg" border=0/></a></td>
     </tr>
 </table>
 
@@ -32,7 +32,7 @@
 
 </div>
 
-<script language="javascript" src="https://dev.rgd.mcw.edu/common/js/killerZebraStripes.js" type="text/javascript"></script>
+<script language="javascript" src="https://rgd.mcw.edu/common/js/killerZebraStripes.js" type="text/javascript"></script>
 <script>
     var arr = document.getElementsByTagName("table");
     for (i=0; i< arr.length; i++) {
