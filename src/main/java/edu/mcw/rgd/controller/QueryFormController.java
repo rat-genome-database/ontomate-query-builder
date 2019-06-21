@@ -277,7 +277,7 @@ public class QueryFormController {
 				} else if (fqc.getFieldName().equals("organism_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"organism_term", fqc.getFieldValue()+"*"
+							"organism_term", fqc.getFieldValue()
 									//.replaceAll("\\s","")
 							);
 					messageLabel += SolrQueryStringService.getQueryString(
