@@ -581,9 +581,11 @@ System.out.println(solrQString);
 				+ SolrQueryStringService.getValueQueryString(
 				FieldType.ONT_ID, termStr.getFullId());
 		    StringBuilder textQueryStr = new StringBuilder();
+		if(termStr.getFullId()!=null)
 		    textQueryStr.append(getTermTextQueryStr(termStr.getFullId(), defaultBoolConn));
 			OntologyXDAO xdao = new OntologyXDAO();
 			try {
+				if(termStr.getFullId()!=null )
 				termStr.setTerm(xdao.getTermByAccId(termStr.getFullId()).getTerm());
 				termMessageLabel.append((termMessageLabel.length()>0 ? defaultBoolConn : "") +
 						termStr.getTerm());
