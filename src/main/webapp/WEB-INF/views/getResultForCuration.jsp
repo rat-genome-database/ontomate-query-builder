@@ -10,7 +10,8 @@
 Searching... Condition: <span style="color:brown;">${message_label}</span> 
 <form action="/solr/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>
- <input type="hidden" name="sort" value = "${sort}"/>
+ <!--input type="hidden" name="sort" value = "$-{sort}"/-->
+ <input type="hidden" name="sort" value = "p_date desc"/>
  <input type="hidden" name="qf" value="title^2 mesh_terms^1.4 abstract^0.8 mt_term^1"/>
  <input type="hidden" name="v.template" value="browseCuration"/>
  <input type="hidden" name="curHost" value="${curHost}"/>
