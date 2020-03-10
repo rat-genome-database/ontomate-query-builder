@@ -244,7 +244,7 @@
 						<option value="bp_term">Biological Process</option>
 						<option value="cl_term">Cell Ontology</option>
 						<option value="cc_term">Cellular Component</option>
-						<option value="chebi_term">CheBi Ontology</option>
+						<option value="chebi_term">ChEBI Ontology</option>
 						<option value="cmo_term">Clinical Measurement</option>
 						<option value="rdo_term">Disease Ontology (RDO)</option>
 						<option value="chebi_term">Drug and Chemical</option>
