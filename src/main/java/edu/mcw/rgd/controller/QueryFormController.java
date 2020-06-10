@@ -141,7 +141,7 @@ public class QueryFormController {
 	public String getOrganisms(@RequestBody @PathVariable("term") String term, Model model) throws Exception {
 		System.out.println("HELLO:" +term);
 		String regex="[0-9]+";
-		URI uri = new URI("http://hansen.rgd.mcw.edu:8080/solr/select?q=rat&facet.field=organism_term_s&wt=json" );
+		URI uri = new URI("http://hansen.rgd.mcw.edu:8080preprintSolr/select?q=rat&facet.field=organism_term_s&wt=json" );
 		String solrQueryStr = uri.toASCIIString();
 		String terms= BasicUtils.restGet(solrQueryStr);
 		JSONObject obj=new JSONObject(terms);
@@ -164,7 +164,6 @@ public class QueryFormController {
 	@RequestMapping(value = "/getResult", method = RequestMethod.GET)
 	public String getResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
-
 		String solrQString = "";
 		String sortString = "";
 		String messageLabel = ""; 
@@ -337,7 +336,7 @@ public class QueryFormController {
 			}
 //			solrQString = solrQString.trim() + "&sort=" + sortString;
 		}
-System.out.println(solrQString);
+
 
 		model.addAttribute("q", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
@@ -348,7 +347,13 @@ System.out.println(solrQString);
 		model.addAttribute("message_label", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
-
+		if(queryString.getqSource().equalsIgnoreCase("pubmed")){
+			model.addAttribute("source", "solr");
+		}
+		if(queryString.getqSource().equalsIgnoreCase("preprint"))
+		{
+			model.addAttribute("source", "preprintSolr");
+		}
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -729,7 +734,6 @@ System.out.println(solrQString);
 		return null;
 	}
 	private List<String> guessConcept1(String termStr, String termCat) {
-		System.out.println("**************HOST NAME: "+ "localhost:8080");
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {

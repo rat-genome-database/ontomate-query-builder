@@ -6,6 +6,7 @@ import org.springframework.util.AutoPopulatingList;
 public class QueryString {
 	private String qString;
 	private String qAuthorStr;
+	private String qSource = "pubmed";
 	private AutoPopulatingList<FieldQueryCondition> qFieldConditions;
 	/**
 	 * @return the qSortConditions
@@ -156,5 +157,13 @@ public class QueryString {
 		if (in == null)
 			return null;
 		return StringEscapeUtils.escapeHtml4("\"" + in + "\"");
+	}
+
+	public String getqSource() {
+		return qSource;
+	}
+
+	public void setqSource(String qSource) {
+		this.qSource = qSource;
 	}
 }
