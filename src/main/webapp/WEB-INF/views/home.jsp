@@ -236,14 +236,14 @@
 	<div class="jumbotron">
 		<div class="container"  >
 			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
+				<!--div class="form-check form-check-inline"-->
+					<!--form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
 					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
+				</div-->
+				<!--div class="form-check form-check-inline"-->
+					<!--form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
 					<label class="form-check-label" for="preprint" style="font-size: medium">Preprint</label>
-				</div>
+				</div-->
 			</div>
 		<div class="form-row row">
 			<div class="form-group col-md-4" id="selOnt0">
