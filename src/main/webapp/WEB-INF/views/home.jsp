@@ -8,7 +8,7 @@
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/solr/files/main.css"/>
+<link rel="stylesheet" type="text/css" href="solr/files/main.css"/>
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
@@ -234,8 +234,17 @@
 	<hr>
 <form:form id="qForm" action="/QueryBuilder/getResult/" method="get"  commandName="queryString" target="_blank">
 	<div class="jumbotron">
-		<div class="container">
-
+		<div class="container"  >
+			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
+				<div class="form-check form-check-inline">
+					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
+					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
+					<label class="form-check-label" for="preprint" style="font-size: medium">Preprint</label>
+				</div>
+			</div>
 		<div class="form-row row">
 			<div class="form-group col-md-4" id="selOnt0">
 
@@ -244,7 +253,7 @@
 						<option value="bp_term">Biological Process</option>
 						<option value="cl_term">Cell Ontology</option>
 						<option value="cc_term">Cellular Component</option>
-						<option value="chebi_term">CheBi Ontology</option>
+						<option value="chebi_term">ChEBI Ontology</option>
 						<option value="cmo_term">Clinical Measurement</option>
 						<option value="rdo_term">Disease Ontology (RDO)</option>
 						<option value="chebi_term">Drug and Chemical</option>
