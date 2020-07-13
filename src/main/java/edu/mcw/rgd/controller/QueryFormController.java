@@ -12,6 +12,7 @@ import org.apache.commons.text.StringEscapeUtils;
 /*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;*/
 
+import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -59,13 +60,17 @@ public class QueryFormController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, @ModelAttribute("queryString") QueryString queryString) {
 	/*	logger.info("Welcome home! the client locale is " + locale.toString());*/
 
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 		String formattedDate = dateFormat.format(date);
+		if(queryString.getqSource()==null || queryString.getqSource().equals(""))
+		queryString.setqSource("pubmed");
+		else
+			queryString.setqSource(queryString.getqSource());
 
 		model.addAttribute("serverTime", formattedDate);
 

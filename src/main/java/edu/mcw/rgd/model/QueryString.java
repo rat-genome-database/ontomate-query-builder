@@ -6,7 +6,7 @@ import org.springframework.util.AutoPopulatingList;
 public class QueryString {
 	private String qString;
 	private String qAuthorStr;
-	private String qSource = "pubmed";
+	public String qSource;
 	private AutoPopulatingList<FieldQueryCondition> qFieldConditions;
 	/**
 	 * @return the qSortConditions

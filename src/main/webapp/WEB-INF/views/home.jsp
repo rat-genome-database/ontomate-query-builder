@@ -240,9 +240,10 @@
 					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
 					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
 				</div>
+				<div  class="form-check form-check-inline">&nbsp;</div>
 				<div class="form-check form-check-inline">
 					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
-					<label class="form-check-label" for="preprint" style="font-size: medium">Preprint</label>
+					<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
 				</div>
 			</div>
 		<div class="form-row row">
