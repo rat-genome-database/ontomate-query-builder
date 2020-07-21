@@ -7,6 +7,7 @@ import java.util.*;
 
 
 import edu.mcw.rgd.service.PubMedReference;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
 /*import org.slf4j.Logger;
@@ -67,11 +68,16 @@ public class QueryFormController {
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 		String formattedDate = dateFormat.format(date);
-		if(queryString.getqSource()==null || queryString.getqSource().equals(""))
-		queryString.setqSource("pubmed");
-		else
-			queryString.setqSource(queryString.getqSource());
-
+		if(queryString!= null) {
+			if ((queryString.getqSource() == null)
+					|| ( queryString.getqSource().equals("")))
+				queryString.setqSource("pubmed");
+			else
+				queryString.setqSource(queryString.getqSource());
+		}else{
+			queryString=new QueryString();
+			queryString.setqSource("pubmed");
+		}
 		model.addAttribute("serverTime", formattedDate);
 
 		return "home";
@@ -352,12 +358,16 @@ public class QueryFormController {
 		model.addAttribute("message_label", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
-		if(queryString.getqSource().equalsIgnoreCase("pubmed")){
-			model.addAttribute("source", "solr");
-		}
-		if(queryString.getqSource().equalsIgnoreCase("preprint"))
-		{
-			model.addAttribute("source", "preprintSolr");
+		if(queryString.getqSource()!=null) {
+			if (queryString.getqSource().equalsIgnoreCase("pubmed")) {
+				model.addAttribute("source", "solr");
+			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
+				model.addAttribute("source", "preprintSolr");
+			}
+		}else{
+
+				model.addAttribute("source", "solr");
+
 		}
 		return "getResult";
 	}
