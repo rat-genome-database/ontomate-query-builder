@@ -19,7 +19,7 @@
     <%=headContent%>
     <title><%=pageTitle%></title>
 
-    <link rel="stylesheet" href="https://rgd.mcw.edu/rgdweb/css/jquery/jquery-ui-1.8.18.custom.css">
+    <!--link rel="stylesheet" href="https://rgd.mcw.edu/rgdweb/css/jquery/jquery-ui-1.8.18.custom.css"-->
     <link rel="SHORTCUT ICON" href="https://rgd.mcw.edu/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/subModal.css" />
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/style.css" />
@@ -31,8 +31,11 @@
 
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/common/modalDialog/common.js"></script>
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/common/modalDialog/subModal.js"></script>
-    <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery-1.7.1.min.js"></script>
-    <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery-ui-1.8.18.custom.min.js"></script>
+    <!--script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script-->
+    <script src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
+    <!--script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery-ui-1.8.18.custom.min.js"></script-->
+    <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1.min.js"></script>
+
     <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
 
     <script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
