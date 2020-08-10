@@ -746,7 +746,7 @@
                     });
 
                     //if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
-                /*    if($.browser.msie) {
+                   if($.browser.msie) {
                         var listHeight = 0;
                         listItems.each(function() {
                             listHeight += this.offsetHeight;
@@ -757,7 +757,7 @@
                             // IE doesn't recalculate width when scrollbar disappears
                             listItems.width( list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")) );
                         }
-                    }*/
+                    }
 
                 }
             },
