@@ -4,14 +4,15 @@
 	String headContent = "";%>
 <%@ include file="/common/headerarea.jsp"%>
 
-<link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="solr/files/main.css"/>
-<link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/solr/files/main.css"/>
+<link rel="stylesheet" href="https://rgd.mcw.edu/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 
-<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script>
+<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+
 <!--script type="text/javascript" src="http://hansen.rgd.mcw.edu:8080/OntoSolr/files/jquery.autocomplete.js"></script-->
 
 <script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
@@ -180,7 +181,7 @@
 							term:"rat " 				}
 					}
 			);
-*/		$(obj_name).autocomplete('https://dev.rgd.mcw.edu/solr/select', {
+*/		$(obj_name).autocomplete('/solr/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
