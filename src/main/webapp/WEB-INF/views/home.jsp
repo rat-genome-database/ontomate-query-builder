@@ -7,8 +7,8 @@
 <!--link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" /-->
 <!--script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script-->
 <script src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://ontomate.rgd.mcw.edu/solr/files/main.css"/>
-<link rel="stylesheet" href="https://ontomate.rgd.mcw.edu/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href=/solr/files/main.css"/>
+<link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
 <!--script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.8.18.js"></script-->
 <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1.min.js"></script>
 <script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
@@ -68,7 +68,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('https://ontomate.rgd.mcw.edu/OntoSolr/select', {
+						$(col_name).autocomplete('/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -177,7 +177,7 @@
 							term:"rat " 				}
 					}
 			);
-*/		$(obj_name).autocomplete('https://ontomate.rgd.mcw.edu/solr/select', {
+*/		$(obj_name).autocomplete('/solr/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
@@ -189,7 +189,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('https://ontomate.rgd.mcw.edu/OntoSolr/select', {
+			$(obj_name).autocomplete('/OntoSolr/select', {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
