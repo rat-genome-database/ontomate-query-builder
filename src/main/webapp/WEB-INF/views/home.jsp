@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
 
-<script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="solr/files/main.css"/>
 <link rel="stylesheet" href="/OntoSolr/files/jquery.autocomplete.css" type="text/css" />

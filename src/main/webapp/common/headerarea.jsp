@@ -31,7 +31,7 @@
 
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/common/modalDialog/common.js"></script>
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/common/modalDialog/subModal.js"></script>
-    <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
     <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
 
