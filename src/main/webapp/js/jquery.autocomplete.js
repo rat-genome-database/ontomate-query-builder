@@ -359,7 +359,9 @@
                     dataType: options.dataType,
                     url: options.url,
                     data: $.extend({
-                      q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+") OR organism_term:(" + qStr + ")"+(options.strict?'"':''),
+                    //  q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+") OR organism_term:(" + qStr + ")"+(options.strict?'"':''),
+                        q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+")"+(options.strict?'"':''),
+
                         //q: (options.strict?'"':'')+ qStr+(options.strict?'"':''),
                     //   q: 'organism_term:("' + qStr + '")^5 OR term:("' + qStr + '")^5 OR (' + (options.strict?'"':'') + qStr+(options.strict?'"':'')+')',
                         defType: "edismax",
