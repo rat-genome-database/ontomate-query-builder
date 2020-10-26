@@ -8,13 +8,12 @@ tr.alt td {
  }
 </style>
 <head>
-	<link rel="stylesheet" href="/QueryBuilder/css/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
 	<link rel="stylesheet" href="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
-	<!--script type="text/javascript" src="/QueryBuilder/js/jquery-1.7.1.min.js"></script-->
-	<script src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1.min.js"></script>
-	<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
+	<script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+  	<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
 
 
 

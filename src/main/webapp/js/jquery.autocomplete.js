@@ -81,7 +81,8 @@
         var blockSubmit;
 
         // prevent form submit in opera when selecting with return key
-         $(input.form).bind("submit.autocomplete", function() {
+     //   $.browser.opera && $(input.form).bind("submit.autocomplete", function() {
+            $(input.form).bind("submit.autocomplete", function() {
             if (blockSubmit) {
                 blockSubmit = false;
                 return false;
@@ -89,7 +90,8 @@
         });
 
         // only opera doesn't trigger keydown multiple times while pressed, others don't work with keypress at all
-        $input.bind(( "keydown") + ".autocomplete", function(event) {
+   //     $input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function(event) {
+            $input.bind(("keydown") + ".autocomplete", function(event) {
             // track last key pressed
             lastKeyPressCode = event.keyCode;
             switch(event.keyCode) {
@@ -357,7 +359,9 @@
                     dataType: options.dataType,
                     url: options.url,
                     data: $.extend({
-                      q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+") OR organism_term:(" + qStr + ")"+(options.strict?'"':''),
+                    //  q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+") OR organism_term:(" + qStr + ")"+(options.strict?'"':''),
+                        q: (options.strict?'"':'')+ "synonym:("+qStr+") OR text:("+qStr+") OR term:("+qStr+")"+(options.strict?'"':''),
+
                         //q: (options.strict?'"':'')+ qStr+(options.strict?'"':''),
                     //   q: 'organism_term:("' + qStr + '")^5 OR term:("' + qStr + '")^5 OR (' + (options.strict?'"':'') + qStr+(options.strict?'"':'')+')',
                         defType: "edismax",
@@ -744,7 +748,7 @@
                     });
 
                     //if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
-                    if($.browser.msie) {
+                   if($.browser.msie) {
                         var listHeight = 0;
                         listItems.each(function() {
                             listHeight += this.offsetHeight;
