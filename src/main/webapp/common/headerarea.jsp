@@ -192,7 +192,9 @@
                                         </button>
 
                                         <div class="rgd-dropdown-content">
+                                            <a href="https://rgd.mcw.edu/rgdweb/models/findModels.html">Find Models&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;color:red">new</span></a>
                                             <a href="https://rgd.mcw.edu/rgdweb/models/allModels.html">Genetic Models</a>
+                                            <a href="https://rgd.mcw.edu/wg/autism-rat-model-resource/">Autism Models</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quantitative Phenotypes)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/phenominerExpectedRanges/views/home.html">Expected Ranges (Quantitative Phenotype)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/pa/termCompare.html?term1=RS%3A0000457&term2=CMO%3A0000000&countType=rec&species=3">Phenominer Term Comparison</a>
