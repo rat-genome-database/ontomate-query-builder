@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/subModal.css" />
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/style.css" />
     <link href="/QueryBuilder/common/rgd_styles-3.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://rgd.mcw.edu/rgdweb/css/webFeedback.css" type="text/css"/>
 
     <!-- adding link for OntoSolr (Pushkala) -->
     <link rel="stylesheet" href="https://rgd.mcw.edu/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
@@ -34,6 +35,12 @@
     <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://rgd.mcw.edu/rgdweb/js/webFeedback.js"></script>
 
     <script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -74,6 +81,40 @@
 
 <body  ng-cloak ng-app="rgdPage">
 <%--@ include file="/common/angularTopBodyInclude.jsp" --%>
+<html>
+
+<body>
+<div id="divButtons" class="btnDiv">
+    <button type="button" class="hideMe" id="hideDiv" onclick="hideButtons()">x</button>
+    <button class="thumbsDown" v-on:click="dislikedPage"></button>
+    <button class="open-button" onclick="openForm()">Send Message</button>
+    <button class="thumbsUp" v-on:click="likedPage"></button>
+</div>
+<div id="hiddenBtns" class="hiddenBtns" style="display: none">
+    <button type="button" class="openLikeBtn" onclick="hideButtons()"></button>
+</div>
+
+<div class="chat-popup" id="messageVue">
+    <form class="form-container">
+        <button type="button" id="close" onclick="closeForm()" class="closeForm">x</button>
+        <h2 id="headMsg">Send us a Message</h2>
+        <input type="hidden" name="subject" value="Help and Feedback Form">
+        <input type="hidden" name="found" value="0">
+
+        <label><b>Your email</b></label>
+        <br><input type="email" name="email" v-model="email">
+        <br><label><b>Message</b></label>
+        <textarea placeholder="Type message.." name="comment" v-model="message"></textarea>
+
+        <button type="button" class="btn" v-on:click="sendMail">Send</button>
+
+    </form>
+</div>
+</body>
+</html>
+<script>
+    checkCookie();
+</script>
 
 
 
@@ -99,10 +140,10 @@
                                 <a href="https://rgd.mcw.edu//wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
 
-                                <a href="ftp://ftp.rgd.mcw.edu/pub">FTP Download</a>&nbsp;|&nbsp;
+                                <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
                                 <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui.html">REST API</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/citing-rgd">Citing RGD</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu/wg/contact/">Contact</a>&nbsp;&nbsp;&nbsp;
+                                <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact</a>&nbsp;&nbsp;&nbsp;
 
                                 <input type="button" class="btn btn-info btn-sm"  value="{{username}}" ng-click="rgd.loadMyRgd($event)" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px"/>
                             </td>
@@ -125,7 +166,7 @@
                                             <a href="https://rgd.mcw.edu/wg/grants/">Grant Resources</a>
                                             <a href="https://rgd.mcw.edu/wg/citing-rgd/">Citing RGD</a>
                                             <a href="https://rgd.mcw.edu/wg/about-us/">About Us</a>
-                                            <a href="https://rgd.mcw.edu/wg/contact/">Contact Us</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact Us</a>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
@@ -142,7 +183,7 @@
                                             <a href="https://rgd.mcw.edu/rgdweb/ontology/search.html">Ontologies</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/search/cellLines.html">Cell Lines</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/search/references.html?100">References</a>
-                                            <a href="ftp://ftp.rgd.mcw.edu/pub/">FTP Download</a>
+                                            <a href="https://download.rgd.mcw.edu">Download</a>
                                             <a href="https://rgd.mcw.edu/registration-entry.shtml">Submit Data</a>
                                         </div>
                                     </div>
@@ -205,7 +246,7 @@
                                             <a href="https://rgd.mcw.edu/wg/physiology/strain-medical-records/">Strain Medical Records</a>
                                             <a href="https://rgd.mcw.edu/wg/phylogenetics/">Phylogenetics</a>
                                             <a href="https://rgd.mcw.edu/wg/strain-availability/">Strain Availability</a>
-                                            <a href="ftp://ftp.rgd.mcw.edu/pub/data_release/Hi-res_Rat_Calendars/">Calendar</a>
+                                            <a href="https://download.rgd.mcw.edu/pub/data_release/Hi-res_Rat_Calendars/">Calendar</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/rats101/">Rats 101</a>
                                             <a href="https://rgd.mcw.edu/wg/photos-and-images/community-submissions/">Community</a>
                                             <a href="https://rgd.mcw.edu/wg/photos-and-images/physgen-photo-archive2/">Photo Archive</a>

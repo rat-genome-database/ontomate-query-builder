@@ -6,7 +6,7 @@
 <br>
 <div class="bottom-bar" >
     <table align=center class="headerTable"> <tr><td align="left" style="color:white;">
-        <a href="https://rgd.mcw.edu/wg/contact/">Contact Us</a>&nbsp;|&nbsp;
+        <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact Us</a>&nbsp;|&nbsp;
         <a href="https://rgd.mcw.edu/wg/about-us">About Us</a>&nbsp;|&nbsp;
         <a href="https://creativecommons.org/licenses/by/4.0/">License CC BY 4.0</a>&nbsp;|&nbsp;
         <a href="https://rgd.mcw.edu/wg/home/disclaimer">Legal Disclaimer</a>&nbsp;|&nbsp;
