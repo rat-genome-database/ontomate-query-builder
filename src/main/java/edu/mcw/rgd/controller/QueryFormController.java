@@ -538,7 +538,7 @@ public class QueryFormController {
 		
 //		solrQString += " OR (title:\"not\")^-50";
 //		solrQString += " OR (title:\"not\") OR -(title:\"not\")";
-		System.out.println("Curation query String:" + solrQString);
+	//	System.out.println("Curation query String:" + solrQString);
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("curHost", queryString.getCurHost().trim());
 		model.addAttribute("message_label", messageLabel.toString());
