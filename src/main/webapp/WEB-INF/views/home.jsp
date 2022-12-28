@@ -140,6 +140,8 @@
 			$("#queryForm").show();
 
 		})
+		update_autocomplete("#qb-ac-input", "ontology")
+
 	});
 
 	function addAnotherRow() {
