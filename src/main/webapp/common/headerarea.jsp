@@ -134,11 +134,11 @@
                             </td>
 
                             <td align="right" style="color:white;" valign="center" colspan="3">
-
-                                <a href="https://rgd.mcw.edu//tu">Help</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/home/rgd_rat_community_videos/">Video Tutorials</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/registration-entry/">Submit Data</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/help3">Help</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/home/rgd_rat_community_videos/">Video Tutorials</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
 
                                 <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
                                 <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui.html">REST API</a>&nbsp;|&nbsp;
@@ -195,16 +195,17 @@
                                         <div class="rgd-dropdown-content">
                                             <a href="/QueryBuilder" >OntoMate (Literature Search) </a>
                                             <a href="https://rgd.mcw.edu/jbrowse/">JBrowse (Genome Browser)</a>
+                                            <a href="https://rgd.mcw.edu/vcmap">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
                                             <a href="https://rgd.mcw.edu/rgdweb/front/config.html">Variant Visualizer</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/enrichment/start.html">Multi-Ontology Enrichment (MOET)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/ortholog/start.html">Gene-Ortholog Location Finder (GOLF)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/cytoscape/query.html">InterViewer (Protein-Protein Interactions)</a>
-                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quatitative Phenotypes)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/ontChoices.html">PhenoMiner (Quatitative Phenotypes)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/ga/start.jsp">Gene Annotator</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/generator/list.html">OLGA (Gene List Generator)</a>
-                                            <a href="http://ratmine.mcw.edu/ratmine/begin.do">RatMine</a>
+                                            <a href="https://www.alliancegenome.org/bluegenes/alliancemine">AllianceMine</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/gTool/Gviewer.jsp">GViewer (Genome Viewer)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/overgo/find.html">Overgo Probe Designer</a>
-                                            <a href="https://rgd.mcw.edu/ACPHAPLOTYPER/">ACP Haplotyper</a>
-                                            <a href="https://rgd.mcw.edu/GENOMESCANNER/">Genome Scanner</a>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
@@ -214,7 +215,7 @@
 
                                         <div class="rgd-dropdown-content">
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=aging">Aging & Age-Related Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cancer">Cancer</a>
+                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cancer">Cancer & Neoplastic Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cardio">Cardiovascular Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=develop">Developmental Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=diabetes">Diabetes</a>
