@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/subModal.css" />
     <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/rgdweb/common/modalDialog/style.css" />
     <link href="/QueryBuilder/common/rgd_styles-3.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://rgd.mcw.edu/rgdweb/css/webFeedback.css" type="text/css"/>
+    <link rel="stylesheet" href="https://dev.rgd.mcw.edu/rgdweb/css/webFeedback.css" type="text/css"/>
 
     <!-- adding link for OntoSolr (Pushkala) -->
     <link rel="stylesheet" href="https://rgd.mcw.edu/OntoSolr/files/jquery.autocomplete.css" type="text/css" />
@@ -134,11 +134,11 @@
                             </td>
 
                             <td align="right" style="color:white;" valign="center" colspan="3">
-
-                                <a href="https://rgd.mcw.edu//tu">Help</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/home/rgd_rat_community_videos/">Video Tutorials</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu//wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/registration-entry/">Submit Data</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/help3">Help</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/home/rgd_rat_community_videos/">Video Tutorials</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
 
                                 <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
                                 <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui.html">REST API</a>&nbsp;|&nbsp;
@@ -195,16 +195,17 @@
                                         <div class="rgd-dropdown-content">
                                             <a href="/QueryBuilder" >OntoMate (Literature Search) </a>
                                             <a href="https://rgd.mcw.edu/jbrowse/">JBrowse (Genome Browser)</a>
+                                            <a href="https://rgd.mcw.edu/vcmap">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
                                             <a href="https://rgd.mcw.edu/rgdweb/front/config.html">Variant Visualizer</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/enrichment/start.html">Multi-Ontology Enrichment (MOET)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/ortholog/start.html">Gene-Ortholog Location Finder (GOLF)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/cytoscape/query.html">InterViewer (Protein-Protein Interactions)</a>
-                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quatitative Phenotypes)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/ontChoices.html">PhenoMiner (Quatitative Phenotypes)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/ga/start.jsp">Gene Annotator</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/generator/list.html">OLGA (Gene List Generator)</a>
-                                            <a href="http://ratmine.mcw.edu/ratmine/begin.do">RatMine</a>
+                                            <a href="https://www.alliancegenome.org/bluegenes/alliancemine">AllianceMine</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/gTool/Gviewer.jsp">GViewer (Genome Viewer)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/overgo/find.html">Overgo Probe Designer</a>
-                                            <a href="https://rgd.mcw.edu/ACPHAPLOTYPER/">ACP Haplotyper</a>
-                                            <a href="https://rgd.mcw.edu/GENOMESCANNER/">Genome Scanner</a>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
@@ -213,18 +214,21 @@
                                         </button>
 
                                         <div class="rgd-dropdown-content">
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=aging">Aging & Age-Related Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cancer">Cancer</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cardio">Cardiovascular Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=develop">Developmental Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=diabetes">Diabetes</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=blood">Hematologic Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=immune">Immune & Inflammatory Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=nuro">Neurological Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=obesity">Obesity & Metabolic Syndrome</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=renal">Renal Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=respir">Respiratory Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=sensory">Sensory Organ Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=1">Aging & Age-Related Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=2">Cancer & Neoplastic Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=3">Cardiovascular Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=14">COVID-19</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=12">Developmental Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=4">Diabetes</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=5">Hematologic Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=6">Immune & Inflammatory Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=15">Infectious Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=13">Liver Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=7">Neurological Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=8">Obesity & Metabolic Syndrome</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=9">Renal Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=10">Respiratory Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=11">Sensory Organ Disease</a>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
