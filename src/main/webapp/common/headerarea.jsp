@@ -47,7 +47,15 @@
         _uacct = "UA-2739107-2";
         urchinTracker();
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTF869XJFG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'G-BTF869XJFG');
+    </script>
     <script type="text/javascript" src="/QueryBuilder/js/rgdHomeFunctions-3.js"></script>
 
 
@@ -134,8 +142,9 @@
                             </td>
 
                             <td align="right" style="color:white;" valign="center" colspan="3">
+                                <a href="https://rgd.mcw.edu/wg/registration-entry/">Submit Data</a>&nbsp;|&nbsp;
 
-                                <a href="https://rgd.mcw.edu//tu">Help</a>&nbsp;|&nbsp;
+                                <a href="https://rgd.mcw.edu/wg/help3/">Help</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/home/rgd_rat_community_videos/">Video Tutorials</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/com-menu/poster_archive/">News</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
@@ -195,6 +204,8 @@
                                         <div class="rgd-dropdown-content">
                                             <a href="/QueryBuilder" >OntoMate (Literature Search) </a>
                                             <a href="https://rgd.mcw.edu/jbrowse/">JBrowse (Genome Browser)</a>
+                                            <a href="https://rgd.mcw.edu/vcmap/">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
+
                                             <a href="https://rgd.mcw.edu/rgdweb/front/config.html">Variant Visualizer</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/cytoscape/query.html">InterViewer (Protein-Protein Interactions)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quatitative Phenotypes)</a>
@@ -216,10 +227,15 @@
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=aging">Aging & Age-Related Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cancer">Cancer</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cardio">Cardiovascular Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=14">COVID-19</a>
+
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=develop">Developmental Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=diabetes">Diabetes</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=blood">Hematologic Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=immune">Immune & Inflammatory Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=15">Infectious Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=13">Liver Disease</a>
+
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=nuro">Neurological Disease</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=obesity">Obesity & Metabolic Syndrome</a>
                                             <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=renal">Renal Disease</a>
@@ -239,6 +255,8 @@
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quantitative Phenotypes)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/phenominerExpectedRanges/views/home.html">Expected Ranges (Quantitative Phenotype)</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/pa/termCompare.html?term1=RS%3A0000457&term2=CMO%3A0000000&countType=rec&species=3">Phenominer Term Comparison</a>
+                                            <a href="https://rgd.mcw.edu/wg/hrdp_panel/">Hybrid Rat Diversity Panel</a>
+
                                             <a href="https://rgd.mcw.edu/wg/phenotype-data13/">Phenotypes</a>
                                             <a href="https://rgd.mcw.edu/wg/gerrc/">GERRC (Gene Editing Rat Resource Center)</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/additionalmodels/">Phenotypes in Other Animal Models</a>
@@ -248,7 +266,7 @@
                                             <a href="https://rgd.mcw.edu/wg/strain-availability/">Strain Availability</a>
                                             <a href="https://download.rgd.mcw.edu/pub/data_release/Hi-res_Rat_Calendars/">Calendar</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/rats101/">Rats 101</a>
-                                            <a href="https://rgd.mcw.edu/wg/photos-and-images/community-submissions/">Community</a>
+                                            <a href="https://rgd.mcw.edu/wg/photos-and-images/community-submissions/">Submissions</a>
                                             <a href="https://rgd.mcw.edu/wg/photos-and-images/physgen-photo-archive2/">Photo Archive</a>
                                         </div>
                                     </div>
@@ -277,32 +295,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="center" id="search-td">
-
-
-                                <form  name="elasticSearchForm" class="form-inline" action="https://rgd.mcw.edu/rgdweb/elasticResults.html" id="elasticSearchForm" role="search" method="post">
-                                    <input type="hidden" name="log" value="true" />
-                                    <table border="0">
-                                        <tr>
-
-                                            <td>
-                                                <input type="hidden" name="category" id="category" value="General"/>
-                                                <input  type=text class="form-control searchgroup" id="term" name=term size="50" placeholder="Enter Search Term..." value="" style="border:1px solid #2865A3">
-                                            </td>
-                                            <td>
-                                                <!--<input type="image" src="/rgdweb/common/images/searchGlass.gif" class="searchButtonSmall"/>-->
-                                                <input class="btn btn-info btn-sm form-control" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px" type="submit" value="Search RGD"/>
-
-                                            </td>
-                                            <td colspan="2"  align="center"><br><a href="https://rgd.mcw.edu/rgdweb/generator/list.html" >Advanced Search (OLGA)</a></td>
-                                        </tr>
-                                    </table>
-
-                                </form>
-
-
-
-
+                            <td>
+                                <%@include file="../WEB-INF/jsp/search/elasticsearch/searchBox.jsp"%>
                             </td>
                             <td>
                                 <a href="https://www.facebook.com/pg/RatGenomeDatabase/posts/"><img src="https://rgd.mcw.edu/rgdweb/common/images/social/facebook-20.png"/></a>
