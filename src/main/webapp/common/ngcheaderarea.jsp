@@ -20,7 +20,6 @@
     <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
 
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/js/elasticsearch/elasticsearchcommon.js"></script>
-<!--script src="/rgdweb/js/jquery/jquery-1.7.1.min.js"></script-->
     <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
 <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
 <script type="text/javascript" src="https://rgd.mcw.edu/common/js/ddtabmenu.js">
