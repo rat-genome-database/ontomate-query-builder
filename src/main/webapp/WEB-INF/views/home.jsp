@@ -175,7 +175,7 @@
 							term:"rat " 				}
 					}
 			);
-*/		$(obj_name).autocomplete('/solr/select', {
+*/		$(obj_name).autocomplete('/solr/OntoMate/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
