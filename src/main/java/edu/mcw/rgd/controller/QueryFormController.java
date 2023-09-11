@@ -360,13 +360,13 @@ public class QueryFormController {
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
 		if(queryString.getqSource()!=null) {
 			if (queryString.getqSource().equalsIgnoreCase("pubmed")) {
-				model.addAttribute("source", "solr");
+				model.addAttribute("source", "solr/OntoMate");
 			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
 				model.addAttribute("source", "preprintSolr");
 			}
 		}else{
 
-				model.addAttribute("source", "solr");
+				model.addAttribute("source", "solr/OntoMate");
 
 		}
 		return "getResult";
