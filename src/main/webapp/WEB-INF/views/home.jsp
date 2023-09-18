@@ -140,6 +140,8 @@
 			$("#queryForm").show();
 
 		})
+		update_autocomplete("#qb-ac-input", "ontology")
+
 	});
 
 	function addAnotherRow() {
@@ -227,7 +229,7 @@
 	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 		</div>
 	<hr>
-<form:form id="qForm" action="/QueryBuilder/getResult/" method="get"  commandName="queryString" target="_blank">
+<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">
 	<div class="jumbotron">
 		<div class="container"  >
 			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
