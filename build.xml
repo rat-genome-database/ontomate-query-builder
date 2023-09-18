@@ -20,7 +20,8 @@
         <mkdir dir="target/test-classes"/>
         <mkdir dir="${web.lib.dir}"/>
         <copy todir="${web.lib.dir}" description="">
-          
+            <fileset dir="${lib.dir}">
+            </fileset>
         </copy>
         <copy includeemptydirs="false" todir="target/classes">
             <fileset dir="src/main/java">
