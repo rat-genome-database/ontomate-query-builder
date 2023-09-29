@@ -361,7 +361,7 @@ public class QueryFormController {
 			}
 		}else{
 
-				model.addAttribute("source", "solr/OntoMate");
+				model.addAttribute("source", "https://dev.rgd.mcw.edu/solr/OntoMate");
 
 		}
 		return "getResult";
