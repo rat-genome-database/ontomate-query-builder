@@ -35,7 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/rgdweb/js/webFeedback.js" defer></script>
+    <script src="https://rgd.mcw.edu/rgdweb/js/webFeedback.js" defer></script>
 
     <!--script src="/rgdweb/js/jquery/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="/rgdweb/js/jquery/jquery_combo_box.js"></script-->
@@ -567,7 +567,7 @@
                                                 </button>
 
                                                 <div class="rgd-dropdown-content">
-                                                    <a href="https://rgd.mcw.edu/QueryBuilder" >OntoMate (Literature Search)</a>
+                                                    <a href="/QueryBuilder" >OntoMate (Literature Search)</a>
                                                     <a href="https://rgd.mcw.edu/jbrowse/">JBrowse (Genome Browser)</a>
                                                     <a href="https://rgd.mcw.edu/vcmap">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
                                                     <a href="https://rgd.mcw.edu/rgdweb/front/config.html">Variant Visualizer</a>
@@ -758,12 +758,12 @@
 
 
 
-                    <link rel="stylesheet" href="https://rgd.mcw.edu/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
-                    <script type="text/javascript" src="https://rgd.mcw.edu/QueryBuilder/js/jquery-1.12.4.min.js"></script>
-                    <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/QueryBuilder/js/main.css"/>
-                    <link rel="stylesheet" href="https://rgd.mcw.edu/QueryBuilder/css/jquery.autocomplete.css" type="text/css" />
-                    <script type="text/javascript" src="https://rgd.mcw.edu/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
-                    <script type="text/javascript" src="https://rgd.mcw.edu/QueryBuilder/js/jquery.autocomplete.js"></script>
+                    <link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
+                    <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/QueryBuilder/js/main.css"/>
+                    <link rel="stylesheet" href="/QueryBuilder/css/jquery.autocomplete.css" type="text/css" />
+                    <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+                    <script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
 
                     <style>
                         .jumbotron{
