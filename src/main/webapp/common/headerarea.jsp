@@ -141,7 +141,7 @@
                                 <a href="https://rgd.mcw.edu/wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
 
                                 <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
-                                <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui.html">REST API</a>&nbsp;|&nbsp;
+                                <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui/index.html">REST API</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu//wg/citing-rgd">Citing RGD</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact</a>&nbsp;&nbsp;&nbsp;
 
@@ -205,7 +205,7 @@
                                             <a href="https://rgd.mcw.edu/rgdweb/generator/list.html">OLGA (Gene List Generator)</a>
                                             <a href="https://www.alliancegenome.org/bluegenes/alliancemine">AllianceMine</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/gTool/Gviewer.jsp">GViewer (Genome Viewer)</a>
-                                            <a href="https://rgd.mcw.edu/rgdweb/overgo/find.html">Overgo Probe Designer</a>
+<%--                                            <a href="https://rgd.mcw.edu/rgdweb/overgo/find.html">Overgo Probe Designer</a>--%>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
