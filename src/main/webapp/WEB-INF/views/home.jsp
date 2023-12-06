@@ -229,8 +229,10 @@
 	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 		</div>
 	<hr>
-	The OntoMate QueryBuilder is moved to new URL https://ontomate.rgd.mcw.edu/QueryBuilder
+	<div style="text-align: center">
+		<strong style="color:red">The OntoMate QueryBuilder is moved to new URL</strong> https://ontomate.rgd.mcw.edu/QueryBuilder<br>
 	<button class="btn btn-success">Click Redirect to OntoMate</button>
+	</div>
 <%--<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">--%>
 <%--	<div class="jumbotron">--%>
 <%--		<div class="container"  >--%>
