@@ -229,147 +229,149 @@
 	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 		</div>
 	<hr>
-<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">
-	<div class="jumbotron">
-		<div class="container"  >
-			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
-					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
-				</div>
-				<div  class="form-check form-check-inline">&nbsp;</div>
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
-					<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
-				</div>
-			</div>
-		<div class="form-row row">
-			<div class="form-group col-md-4" id="selOnt0">
+	The OntoMate QueryBuilder is moved to new URL https://ontomate.rgd.mcw.edu/QueryBuilder
+	<button class="btn btn-success">Click Redirect to OntoMate</button>
+<%--<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">--%>
+<%--	<div class="jumbotron">--%>
+<%--		<div class="container"  >--%>
+<%--			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >--%>
+<%--				<div class="form-check form-check-inline">--%>
+<%--					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>--%>
+<%--					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>--%>
+<%--				</div>--%>
+<%--				<div  class="form-check form-check-inline">&nbsp;</div>--%>
+<%--				<div class="form-check form-check-inline">--%>
+<%--					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>--%>
+<%--					<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		<div class="form-row row">--%>
+<%--			<div class="form-group col-md-4" id="selOnt0">--%>
 
-					<form:select class="form-control form-control-lg" id="qb-ontology-select" path="qFieldConditions[0].fieldName" onchange='update_autocomplete("#qb-ac-input", $(this).val());'>
-						<option value="ontology">Any ontology/Gene</option>
-						<option value="bp_term">Biological Process</option>
-						<option value="cl_term">Cell Ontology</option>
-						<option value="cc_term">Cellular Component</option>
-						<option value="chebi_term">ChEBI Ontology</option>
-						<option value="cmo_term">Clinical Measurement</option>
-						<option value="rdo_term">Disease Ontology (RDO)</option>
-						<option value="chebi_term">Drug and Chemical</option>
-						<option value="xco_term">Experimental Condition</option>
-						<option value="rgd_gene_term">Gene</option>
-						<option value="mp_term">Mammalian Phenotype</option>
-						<option value="mmo_term">Measurement Methods</option>
-						<option value="mf_term">Molecular Function</option>
-						<option value="ma_term">Mouse Anatomy</option>
-						<option value="mt_term">Mutation</option>
-						<option value="nbo_term">Neuro Behavioral</option>
-						<option value="organism_term">Organism Scientific Name</option>
-						<option value="pw_term">Pathway Ontology</option>
-						<option value="rs_term">Rat Strain Ontology</option>
-						<option value="zfa_term">Zebrafish Anatomy</option>
-						<option value="so_term">Sequence Ontology</option>
+<%--					<form:select class="form-control form-control-lg" id="qb-ontology-select" path="qFieldConditions[0].fieldName" onchange='update_autocomplete("#qb-ac-input", $(this).val());'>--%>
+<%--						<option value="ontology">Any ontology/Gene</option>--%>
+<%--						<option value="bp_term">Biological Process</option>--%>
+<%--						<option value="cl_term">Cell Ontology</option>--%>
+<%--						<option value="cc_term">Cellular Component</option>--%>
+<%--						<option value="chebi_term">ChEBI Ontology</option>--%>
+<%--						<option value="cmo_term">Clinical Measurement</option>--%>
+<%--						<option value="rdo_term">Disease Ontology (RDO)</option>--%>
+<%--						<option value="chebi_term">Drug and Chemical</option>--%>
+<%--						<option value="xco_term">Experimental Condition</option>--%>
+<%--						<option value="rgd_gene_term">Gene</option>--%>
+<%--						<option value="mp_term">Mammalian Phenotype</option>--%>
+<%--						<option value="mmo_term">Measurement Methods</option>--%>
+<%--						<option value="mf_term">Molecular Function</option>--%>
+<%--						<option value="ma_term">Mouse Anatomy</option>--%>
+<%--						<option value="mt_term">Mutation</option>--%>
+<%--						<option value="nbo_term">Neuro Behavioral</option>--%>
+<%--						<option value="organism_term">Organism Scientific Name</option>--%>
+<%--						<option value="pw_term">Pathway Ontology</option>--%>
+<%--						<option value="rs_term">Rat Strain Ontology</option>--%>
+<%--						<option value="zfa_term">Zebrafish Anatomy</option>--%>
+<%--						<option value="so_term">Sequence Ontology</option>--%>
 
-					</form:select>
+<%--					</form:select>--%>
 
-			</div>
-			<div class="form-group col-md-8">
-				<div class="input-group" >
-					<form:input id="qb-ac-input" name="qbInput" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>
+<%--			</div>--%>
+<%--			<div class="form-group col-md-8">--%>
+<%--				<div class="input-group" >--%>
+<%--					<form:input id="qb-ac-input" name="qbInput" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>--%>
 
-					<div class="input-group-append">
+<%--					<div class="input-group-append">--%>
 
-						<button class="btn btn-outline-secondary" type="submit">
-							<i class="fa fa-search"></i>
-						</button>
-					</div>
-				</div>
-				<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
-			</div>
-		</div>
-		</div>
-		<div class="form-group col-md-12">
-			<table class="table" >
-				<tr id="lastRow">
+<%--						<button class="btn btn-outline-secondary" type="submit">--%>
+<%--							<i class="fa fa-search"></i>--%>
+<%--						</button>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--				<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		</div>--%>
+<%--		<div class="form-group col-md-12">--%>
+<%--			<table class="table" >--%>
+<%--				<tr id="lastRow">--%>
 
-				</tr>
-			</table>
-		</div>
+<%--				</tr>--%>
+<%--			</table>--%>
+<%--		</div>--%>
 
-		<div class="container" id="qb-options" style="width:70%; align:center">
-			<table class="table" id="fieldTable">
-				<tbody>
-				<tr>
-					<td style="vertical-align:bottom">Date(yyyy-mm-dd):</td>
-					<td>
-						<div class="form-row">
-							<div class="col-auto">
-								From
-								<form:input class="form-control" id="dateFrom" path="qDateFrom"  />
-							</div>
-							<div class="col-auto">
-								To <form:input class="form-control" id="dateTo" path="qDateTo" />
-							</div>
-						</div>
-					</td>
+<%--		<div class="container" id="qb-options" style="width:70%; align:center">--%>
+<%--			<table class="table" id="fieldTable">--%>
+<%--				<tbody>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align:bottom">Date(yyyy-mm-dd):</td>--%>
+<%--					<td>--%>
+<%--						<div class="form-row">--%>
+<%--							<div class="col-auto">--%>
+<%--								From--%>
+<%--								<form:input class="form-control" id="dateFrom" path="qDateFrom"  />--%>
+<%--							</div>--%>
+<%--							<div class="col-auto">--%>
+<%--								To <form:input class="form-control" id="dateTo" path="qDateTo" />--%>
+<%--							</div>--%>
+<%--						</div>--%>
+<%--					</td>--%>
 
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">PMIDs:</td>
-					<td>
-						<div class="row">
-							<div class="col">
-								<form:input class="form-control" id="pmid" path="qPMID"  /></div>
-							<div class="col">
-								<span class="badge badge-secondary butHelp" id="helpPMID" style="cursor:hand">?</span>
-							</div>
-						</div>
-					</td>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align: bottom">PMIDs:</td>--%>
+<%--					<td>--%>
+<%--						<div class="row">--%>
+<%--							<div class="col">--%>
+<%--								<form:input class="form-control" id="pmid" path="qPMID"  /></div>--%>
+<%--							<div class="col">--%>
+<%--								<span class="badge badge-secondary butHelp" id="helpPMID" style="cursor:hand">?</span>--%>
+<%--							</div>--%>
+<%--						</div>--%>
+<%--					</td>--%>
 
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">All fields:</td>
-					<td><form:input class="form-control" path="qString"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Title:</td>
-					<td><form:input class="form-control" path="qTitleStr"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Author:</td>
-					<td><form:input class="form-control" path="qAuthorStr"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Keyword:</td>
-					<td><form:input  path="qAbstractStr" class="form-control"
-					/></td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align: bottom">All fields:</td>--%>
+<%--					<td><form:input class="form-control" path="qString"  /></td>--%>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align: bottom">Title:</td>--%>
+<%--					<td><form:input class="form-control" path="qTitleStr"  /></td>--%>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align: bottom">Author:</td>--%>
+<%--					<td><form:input class="form-control" path="qAuthorStr"  /></td>--%>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td style="vertical-align: bottom">Keyword:</td>--%>
+<%--					<td><form:input  path="qAbstractStr" class="form-control"--%>
+<%--					/></td>--%>
+<%--				</tr>--%>
+<%--				</tbody>--%>
+<%--			</table>--%>
+<%--		</div>--%>
 
-		<div class="form-group col-md-12" style="text-align: center" >
-			<div class="form-group" style="display: inline-block">
-			<table style="alignment: center">
-				<tr>
-					<td><button type="button" id="addCond" class="btn btn-outline-secondary" style="">Add term
-						condition</button></td>
+<%--		<div class="form-group col-md-12" style="text-align: center" >--%>
+<%--			<div class="form-group" style="display: inline-block">--%>
+<%--			<table style="alignment: center">--%>
+<%--				<tr>--%>
+<%--					<td><button type="button" id="addCond" class="btn btn-outline-secondary" style="">Add term--%>
+<%--						condition</button></td>--%>
 
-					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">More Search Options</button>
+<%--					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->--%>
+<%--						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">More Search Options</button>--%>
 
-					</td>
-					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<a href="<%=request.getContextPath()%>"  class="btn btn-outline-secondary" id="aClear" style="padding:6px" >Clear Form</a>
-					</td>
-					<td><button class="btn btn-primary" type="submit">
-						Search OntoMate
-					</button></td>
-				</tr>
-			</table>
-			</div>
-		</div>
-	</div>
-	</form:form>
+<%--					</td>--%>
+<%--					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->--%>
+<%--						<a href="<%=request.getContextPath()%>"  class="btn btn-outline-secondary" id="aClear" style="padding:6px" >Clear Form</a>--%>
+<%--					</td>--%>
+<%--					<td><button class="btn btn-primary" type="submit">--%>
+<%--						Search OntoMate--%>
+<%--					</button></td>--%>
+<%--				</tr>--%>
+<%--			</table>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--	</div>--%>
+<%--	</form:form>--%>
 
 	<div class="container">
 	<div class="row">
