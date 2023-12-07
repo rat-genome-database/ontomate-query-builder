@@ -4,235 +4,231 @@
 	String headContent = "";%>
 <%@ include file="/common/headerarea.jsp"%>
 
-<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
-<script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/QueryBuilder/js/main.css"/>
-<link rel="stylesheet" href="/QueryBuilder/css/jquery.autocomplete.css" type="text/css" />
-<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
+<%--<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />--%>
+<%--<script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>--%>
+<%--<link rel="stylesheet" type="text/css" href="/QueryBuilder/js/main.css"/>--%>
+<%--<link rel="stylesheet" href="/QueryBuilder/css/jquery.autocomplete.css" type="text/css" />--%>
+<%--<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>--%>
+<%--<script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>--%>
 
-<style>
-	.jumbotron{
-	/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */
-		background:linear-gradient(to bottom, white 0%, #D6EAF8 100%);
-		background-color: #D1F2EB;
-	}
-</style>
+<%--<style>--%>
+<%--	.jumbotron{--%>
+<%--	/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */--%>
+<%--		background:linear-gradient(to bottom, white 0%, #D6EAF8 100%);--%>
+<%--		background-color: #D1F2EB;--%>
+<%--	}--%>
+<%--</style>--%>
 
-<script type="text/javascript">
+<%--<script type="text/javascript">--%>
 
-	var row_count=0;
-	var sort_row_count = 0;
+<%--	var row_count=0;--%>
+<%--	var sort_row_count = 0;--%>
 
-	$(document).ready(function(){
-		$('#qb-options').hide();
-		$('#qb-advancedSearchForm').hide();
-		$("#dateFrom").datepicker({dateFormat: "yy-mm-dd"});
-		$("#dateTo").datepicker({dateFormat: "yy-mm-dd"});
-		$(".button").button();
+<%--	$(document).ready(function(){--%>
+<%--		$('#qb-options').hide();--%>
+<%--		$('#qb-advancedSearchForm').hide();--%>
+<%--		$("#dateFrom").datepicker({dateFormat: "yy-mm-dd"});--%>
+<%--		$("#dateTo").datepicker({dateFormat: "yy-mm-dd"});--%>
+<%--		$(".button").button();--%>
 
-		$("input").addClass("ui-widget-content ui-state-default ui-corner-all");
-		$("form").addClass("ui-widget");
-		$("#queryConditions").addClass("ui-corner-all");
-		$("#queryConditions").hide();
-		$("#sortConditions").addClass("ui-corner-all");
-		$("#sortConditions").hide();
-		$(".butHelp").button({icons: {primary: "ui-icon-help"}, text:false});
+<%--		$("input").addClass("ui-widget-content ui-state-default ui-corner-all");--%>
+<%--		$("form").addClass("ui-widget");--%>
+<%--		$("#queryConditions").addClass("ui-corner-all");--%>
+<%--		$("#queryConditions").hide();--%>
+<%--		$("#sortConditions").addClass("ui-corner-all");--%>
+<%--		$("#sortConditions").hide();--%>
+<%--		$(".butHelp").button({icons: {primary: "ui-icon-help"}, text:false});--%>
 
-		$.ajaxSetup ({
-			cache: false
-		});
+<%--		$.ajaxSetup ({--%>
+<%--			cache: false--%>
+<%--		});--%>
 
-		var ajax_load = "<img src='img/load.gif' alt='loading...' />";
+<%--		var ajax_load = "<img src='img/load.gif' alt='loading...' />";--%>
 
-		//  load() functions
-		$("#getOntNmae").click(function(){
-			var loadUrl = "<%=request.getContextPath()%>/get_ontology/"+ontId.value;
-			$("#result").html(ajax_load).load(loadUrl);
-		});
+<%--		//  load() functions--%>
+<%--		$("#getOntNmae").click(function(){--%>
+<%--			var loadUrl = "<%=request.getContextPath()%>/get_ontology/"+ontId.value;--%>
+<%--			$("#result").html(ajax_load).load(loadUrl);--%>
+<%--		});--%>
 
-		var row_id=1;
+<%--		var row_id=1;--%>
 
-		$("#addCond").click(function() {
-		//	$("#queryConditions").show();
-			var loadUrl = "/getConditionRow/"+row_id;
-			console.log("<%=request.getContextPath()%>"+loadUrl);
-			$.get("<%=request.getContextPath()%>"+loadUrl,{},
-					function(data){
-						$("#lastRow").before(data);
-						$(".stripeTable tr:odd").addClass("ui-widget-content");
-						$(".butRemove").button({icons: {primary: "ui-icon-close"}, text:false});
-						var col_name="#inTerm"+(row_id-1)+" input";
-						$(col_name).flushCache();
+<%--		$("#addCond").click(function() {--%>
+<%--		//	$("#queryConditions").show();--%>
+<%--			var loadUrl = "/getConditionRow/"+row_id;--%>
+<%--			console.log("<%=request.getContextPath()%>"+loadUrl);--%>
+<%--			$.get("<%=request.getContextPath()%>"+loadUrl,{},--%>
+<%--					function(data){--%>
+<%--						$("#lastRow").before(data);--%>
+<%--						$(".stripeTable tr:odd").addClass("ui-widget-content");--%>
+<%--						$(".butRemove").button({icons: {primary: "ui-icon-close"}, text:false});--%>
+<%--						var col_name="#inTerm"+(row_id-1)+" input";--%>
+<%--						$(col_name).flushCache();--%>
 
-						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/solr/OntoSolr/select', {
-									extraParams:{
-										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
-										'fq': 'NOT cat:(CUSTOM HP MP)',
-										'wt': 'velocity',
-										'bf': 'term_len_l^.01',
-										'v.template': 'termmatch1',
-										'cacheLength': 0
-									},
-									max:20
-								}
-						);
-						$(col_name).focus(function(){$(col_name).attr("autocomplete","off");});
-						$(col_name).focusout(function(){$(col_name).attr("autocomplete","on");});
-					});
+<%--						//	   $(col_name).autocomplete('/OntoSolr/select', {--%>
+<%--						$(col_name).autocomplete('/solr/OntoSolr/select', {--%>
+<%--									extraParams:{--%>
+<%--										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',--%>
+<%--										'fq': 'NOT cat:(CUSTOM HP MP)',--%>
+<%--										'wt': 'velocity',--%>
+<%--										'bf': 'term_len_l^.01',--%>
+<%--										'v.template': 'termmatch1',--%>
+<%--										'cacheLength': 0--%>
+<%--									},--%>
+<%--									max:20--%>
+<%--								}--%>
+<%--						);--%>
+<%--						$(col_name).focus(function(){$(col_name).attr("autocomplete","off");});--%>
+<%--						$(col_name).focusout(function(){$(col_name).attr("autocomplete","on");});--%>
+<%--					});--%>
 
-			row_id=row_id +1;
-			row_count = row_count +1;
-		});
-
-
-		var sort_row_id=0;
-
-		$("#addSort").click(function() {
-			$("#sortConditions").show();
-			var loadUrl = "/getSortCondRow/"+sort_row_id;
-			$.get("<%=request.getContextPath()%>"+loadUrl, {},
-					function(data){
-						$("#lastSortRow").before(data);
-						$(".stripeTable1 tr:odd").addClass("ui-widget-content");
-						$(".butRemove").button({icons: {primary: "ui-icon-close"}, text:false});
-					});
-
-			sort_row_id=sort_row_id +1;
-			sort_row_count = sort_row_count +1;
-		});
-
-		$("#helpPMID").click(function() {
-			var dialog = $("<div></div>")
-					.html("Three options: <br>1. One PMID. <br> 2. Multiple comma or space separated PMIDs. <br> 3. Start_PMID to End_PMID.")
-					.dialog({title: 'Enter PMID', modal:'true', width:400, resizable:false});
-		});
-
-		$("#helpOntoID").click(function() {
-			var dialog = $("<div></div>")
-					.html('Two options:<br>1. Enter an ontology term.<br>2. Enter a RGD gene')
-					.dialog({title: 'Term or ID', modal:'true', width:400, resizable:false});
-		});
-		$('.nav-item').click(function () {
-
-		});
-		$("#butShowFields").click(function() {
-			$('#fieldTable').toggle();
-		});
-//	$('#fieldTable').hide();
-//	$("#addSort").click();
-	//	$("#addCond").click();
-	//	window.setTimeout(addAnotherRow,500);
-		$("#aboutLink").click(function () {
-			$("#queryForm").hide();
-			$("#features").hide();
-			$("#about").show();
-		})
-		$("#featuresLink").click(function () {
-			$("#queryForm").hide();
-			$("#about").hide();
-			$("#features").show();
-		})
-		$("#formLink").click(function () {
-			$("#about").hide();
-			$("#features").hide();
-			$("#queryForm").show();
-
-		})
-		update_autocomplete("#qb-ac-input", "ontology")
-
-	});
-
-	function addAnotherRow() {
-		$("#addCond").click();
-	}
-
-	function removeRow(rowId) {
-		row_count = row_count -1;
-		$('#condRow'+rowId).remove();
-		$(".stripeTable tr").removeClass("ui-widget-content");
-		$(".stripeTable tr:odd").addClass("ui-widget-content");
-		if (row_count ==0) $("#queryConditions").hide();
-	}
-
-	function removeSortRow(rowId) {
-		sort_row_count = sort_row_count -1;
-		$('#sortRow'+rowId).remove();
-		$(".stripeTable1 tr").removeClass("ui-widget-content");
-		$(".stripeTable1 tr:odd").addClass("ui-widget-content");
-		if (sort_row_count ==0) $("#sortConditions").hide();
-	}
-
-	function update_autocomplete(obj_name, ont_cat) {
-			$(obj_name).flushCache();
-			$(obj_name).unautocomplete();
-		//  $(obj_name).autocomplete('/OntoSolr/select', {
-		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
-		if (ont_cat.trim() == "organism_term") {
-			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
-		/*	var url= '/QueryBuilder/getOrganisms/'+"Homo"
-		   $(obj_name).autocomplete(url, {
-						extraParams:{
-							term:"rat " 				}
-					}
-			);
-*/		$(obj_name).autocomplete('/solr/OntoSolr/select', {
-						extraParams: {
-							'qf': 'organism_term^5',
-							'wt': 'velocity',
-							'v.template': 'termmatch3',
-							'cacheLength': 0
-						},
-						max: 20
-					}
-			);
-
-		} else {
-			$(obj_name).autocomplete('/solr/OntoSolr/select', {
-						extraParams: {
-							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
-							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
-							'bf': 'term_len_l^.003',
-							'wt': 'velocity',
-							'v.template': 'termmatch1',
-							'cacheLength': 0
-						},
-						max: 20
-					}
-			);
-		}
-	}
-	function myToggleFunction() {
-		var x = document.getElementById("qb-options");
-		if (x.style.display === "none") {
-			x.style.display = "block";
-		} else {
-			x.style.display = "none";
-		}
-	}
-	function toggleQBAdvancedSearchForm() {
-		var x = document.getElementById("qb-advancedSearchForm");
-		if (x.style.display === "none") {
-			x.style.display = "block";
-		} else {
-			x.style.display = "none";
-		}
-	}
+<%--			row_id=row_id +1;--%>
+<%--			row_count = row_count +1;--%>
+<%--		});--%>
 
 
+<%--		var sort_row_id=0;--%>
 
-</script>
-<div class="container-fluid">
-	<div style="text-align: center">
-	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
-	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
-		</div>
-	<hr>
-	<div style="text-align: center">
-		<strong style="color:red">The OntoMate QueryBuilder is moved to new URL</strong> https://ontomate.rgd.mcw.edu/QueryBuilder<br>
-	<a href="https://ontomate.rgd.mcw.edu/QueryBuilder"><button class="btn btn-success">Click Redirect to OntoMate Query Form</button></a>
-	</div>
+<%--		$("#addSort").click(function() {--%>
+<%--			$("#sortConditions").show();--%>
+<%--			var loadUrl = "/getSortCondRow/"+sort_row_id;--%>
+<%--			$.get("<%=request.getContextPath()%>"+loadUrl, {},--%>
+<%--					function(data){--%>
+<%--						$("#lastSortRow").before(data);--%>
+<%--						$(".stripeTable1 tr:odd").addClass("ui-widget-content");--%>
+<%--						$(".butRemove").button({icons: {primary: "ui-icon-close"}, text:false});--%>
+<%--					});--%>
+
+<%--			sort_row_id=sort_row_id +1;--%>
+<%--			sort_row_count = sort_row_count +1;--%>
+<%--		});--%>
+
+<%--		$("#helpPMID").click(function() {--%>
+<%--			var dialog = $("<div></div>")--%>
+<%--					.html("Three options: <br>1. One PMID. <br> 2. Multiple comma or space separated PMIDs. <br> 3. Start_PMID to End_PMID.")--%>
+<%--					.dialog({title: 'Enter PMID', modal:'true', width:400, resizable:false});--%>
+<%--		});--%>
+
+<%--		$("#helpOntoID").click(function() {--%>
+<%--			var dialog = $("<div></div>")--%>
+<%--					.html('Two options:<br>1. Enter an ontology term.<br>2. Enter a RGD gene')--%>
+<%--					.dialog({title: 'Term or ID', modal:'true', width:400, resizable:false});--%>
+<%--		});--%>
+<%--		$('.nav-item').click(function () {--%>
+
+<%--		});--%>
+<%--		$("#butShowFields").click(function() {--%>
+<%--			$('#fieldTable').toggle();--%>
+<%--		});--%>
+<%--//	$('#fieldTable').hide();--%>
+<%--//	$("#addSort").click();--%>
+<%--	//	$("#addCond").click();--%>
+<%--	//	window.setTimeout(addAnotherRow,500);--%>
+<%--		$("#aboutLink").click(function () {--%>
+<%--			$("#queryForm").hide();--%>
+<%--			$("#features").hide();--%>
+<%--			$("#about").show();--%>
+<%--		})--%>
+<%--		$("#featuresLink").click(function () {--%>
+<%--			$("#queryForm").hide();--%>
+<%--			$("#about").hide();--%>
+<%--			$("#features").show();--%>
+<%--		})--%>
+<%--		$("#formLink").click(function () {--%>
+<%--			$("#about").hide();--%>
+<%--			$("#features").hide();--%>
+<%--			$("#queryForm").show();--%>
+
+<%--		})--%>
+<%--		update_autocomplete("#qb-ac-input", "ontology")--%>
+
+<%--	});--%>
+
+<%--	function addAnotherRow() {--%>
+<%--		$("#addCond").click();--%>
+<%--	}--%>
+
+<%--	function removeRow(rowId) {--%>
+<%--		row_count = row_count -1;--%>
+<%--		$('#condRow'+rowId).remove();--%>
+<%--		$(".stripeTable tr").removeClass("ui-widget-content");--%>
+<%--		$(".stripeTable tr:odd").addClass("ui-widget-content");--%>
+<%--		if (row_count ==0) $("#queryConditions").hide();--%>
+<%--	}--%>
+
+<%--	function removeSortRow(rowId) {--%>
+<%--		sort_row_count = sort_row_count -1;--%>
+<%--		$('#sortRow'+rowId).remove();--%>
+<%--		$(".stripeTable1 tr").removeClass("ui-widget-content");--%>
+<%--		$(".stripeTable1 tr:odd").addClass("ui-widget-content");--%>
+<%--		if (sort_row_count ==0) $("#sortConditions").hide();--%>
+<%--	}--%>
+
+<%--	function update_autocomplete(obj_name, ont_cat) {--%>
+<%--			$(obj_name).flushCache();--%>
+<%--			$(obj_name).unautocomplete();--%>
+<%--		//  $(obj_name).autocomplete('/OntoSolr/select', {--%>
+<%--		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);--%>
+<%--		if (ont_cat.trim() == "organism_term") {--%>
+<%--			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");--%>
+<%--		/*	var url= '/QueryBuilder/getOrganisms/'+"Homo"--%>
+<%--		   $(obj_name).autocomplete(url, {--%>
+<%--						extraParams:{--%>
+<%--							term:"rat " 				}--%>
+<%--					}--%>
+<%--			);--%>
+<%--*/		$(obj_name).autocomplete('/solr/OntoSolr/select', {--%>
+<%--						extraParams: {--%>
+<%--							'qf': 'organism_term^5',--%>
+<%--							'wt': 'velocity',--%>
+<%--							'v.template': 'termmatch3',--%>
+<%--							'cacheLength': 0--%>
+<%--						},--%>
+<%--						max: 20--%>
+<%--					}--%>
+<%--			);--%>
+
+<%--		} else {--%>
+<%--			$(obj_name).autocomplete('/solr/OntoSolr/select', {--%>
+<%--						extraParams: {--%>
+<%--							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',--%>
+<%--							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),--%>
+<%--							'bf': 'term_len_l^.003',--%>
+<%--							'wt': 'velocity',--%>
+<%--							'v.template': 'termmatch1',--%>
+<%--							'cacheLength': 0--%>
+<%--						},--%>
+<%--						max: 20--%>
+<%--					}--%>
+<%--			);--%>
+<%--		}--%>
+<%--	}--%>
+<%--	function myToggleFunction() {--%>
+<%--		var x = document.getElementById("qb-options");--%>
+<%--		if (x.style.display === "none") {--%>
+<%--			x.style.display = "block";--%>
+<%--		} else {--%>
+<%--			x.style.display = "none";--%>
+<%--		}--%>
+<%--	}--%>
+<%--	function toggleQBAdvancedSearchForm() {--%>
+<%--		var x = document.getElementById("qb-advancedSearchForm");--%>
+<%--		if (x.style.display === "none") {--%>
+<%--			x.style.display = "block";--%>
+<%--		} else {--%>
+<%--			x.style.display = "none";--%>
+<%--		}--%>
+<%--	}--%>
+
+
+
+<%--</script>--%>
+<%--<div class="container-fluid">--%>
+<%--	<div style="text-align: center">--%>
+<%--	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>--%>
+<%--	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>--%>
+<%--		</div>--%>
+<%--	<hr>--%>
 <%--<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">--%>
 <%--	<div class="jumbotron">--%>
 <%--		<div class="container"  >--%>
@@ -375,81 +371,81 @@
 <%--	</div>--%>
 <%--	</form:form>--%>
 
-	<div class="container">
-	<div class="row">
-		<div class="col-md-4">
-		<div class="card" style="width: 25rem;border:0">
+<%--	<div class="container">--%>
+<%--	<div class="row">--%>
+<%--		<div class="col-md-4">--%>
+<%--		<div class="card" style="width: 25rem;border:0">--%>
 
-			<div class="card-body">
-				<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">About</h5>
-				<p class="card-text" style="color:grey;text-align: justify">OntoMate is an ontology-driven, concept-based literature search engine that was originally developed by RGD as an alternative for the basic PubMed search engine (http://www.ncbi.nlm.nih.gov/pubmed) in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism names and terms from the ontologies/vocabularies used at RGD.</p>
-				<!--a href="#" class="btn btn-primary">Go somewhere</a-->
-			</div>
-		</div>
-		</div>
-		<div class="col-md-4">
-				<div class="card" style="width: 25rem;border:0">
+<%--			<div class="card-body">--%>
+<%--				<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">About</h5>--%>
+<%--				<p class="card-text" style="color:grey;text-align: justify">OntoMate is an ontology-driven, concept-based literature search engine that was originally developed by RGD as an alternative for the basic PubMed search engine (http://www.ncbi.nlm.nih.gov/pubmed) in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism names and terms from the ontologies/vocabularies used at RGD.</p>--%>
+<%--				<!--a href="#" class="btn btn-primary">Go somewhere</a-->--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		</div>--%>
+<%--		<div class="col-md-4">--%>
+<%--				<div class="card" style="width: 25rem;border:0">--%>
 
-				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">Features</h5>
-					<p class="card-text" style="color:grey"></p>
-					<ul style="margin-left: 0">
-						<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>
-						<li style="color:grey">User-activated filters</li>
-						<!--li style="color:grey">Date and other filters relevant to the literature search</li-->
-						<li style="color:grey">Information Annotated to Articles
-							<ul>
+<%--				<div class="card-body">--%>
+<%--					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">Features</h5>--%>
+<%--					<p class="card-text" style="color:grey"></p>--%>
+<%--					<ul style="margin-left: 0">--%>
+<%--						<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>--%>
+<%--						<li style="color:grey">User-activated filters</li>--%>
+<%--						<!--li style="color:grey">Date and other filters relevant to the literature search</li-->--%>
+<%--						<li style="color:grey">Information Annotated to Articles--%>
+<%--							<ul>--%>
 
-								<li style="color:grey">Genes</li>
-								<li style="color:grey">Rat strains </li>
-								<li style="color:grey">Organism</li>
-								<li style="color:grey">Disease</li>
-								<li style="color:grey">Phenotypes</li>
-								<li style="color:grey">Traits </li>
-								<li style="color:grey">Clinical Measurements</li>
+<%--								<li style="color:grey">Genes</li>--%>
+<%--								<li style="color:grey">Rat strains </li>--%>
+<%--								<li style="color:grey">Organism</li>--%>
+<%--								<li style="color:grey">Disease</li>--%>
+<%--								<li style="color:grey">Phenotypes</li>--%>
+<%--								<li style="color:grey">Traits </li>--%>
+<%--								<li style="color:grey">Clinical Measurements</li>--%>
 
-							</ul>
-						</li>
-					</ul>
-					<!--a href="#" class="btn btn-primary">Go somewhere</a-->
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card" style="width: 25rem;border:0">
+<%--							</ul>--%>
+<%--						</li>--%>
+<%--					</ul>--%>
+<%--					<!--a href="#" class="btn btn-primary">Go somewhere</a-->--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		<div class="col-md-4">--%>
+<%--			<div class="card" style="width: 25rem;border:0">--%>
 
-				<div class="card-body" >
-					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c">Publication</h5>
-					<p class="card-text" style="color:grey">Click the below link to get the reference</p>
-					<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305386/" class="btn btn-primary" target="_blank">Go to PubMed</a>
-				</div>
-			</div>
-		</div>
+<%--				<div class="card-body" >--%>
+<%--					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c">Publication</h5>--%>
+<%--					<p class="card-text" style="color:grey">Click the below link to get the reference</p>--%>
+<%--					<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305386/" class="btn btn-primary" target="_blank">Go to PubMed</a>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		</div>--%>
 
-	</div>
-	</div>
-	</div>
+<%--	</div>--%>
+<%--	</div>--%>
+<%--	</div>--%>
 
-<script>
-	$(function () {
-		var qbinput=$('#qb-ac-input');
-		$(qbinput).autocomplete();
-		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {
-			extraParams:{
-				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
-				'fq': 'NOT cat:(CUSTOM HP MP)',
-				'wt': 'velocity',
-				'bf': 'term_len_l^.01',
-				'v.template': 'termmatch1',
-				'cacheLength': 0
-			},
-			max:20
-		});*/
-		$(qbinput).focus(function(){$(qbinput).attr("autocomplete","off");});
-		$(qbinput).focusout(function(){$(qbinput).attr("autocomplete","on");});
-	});
+<%--<script>--%>
+<%--	$(function () {--%>
+<%--		var qbinput=$('#qb-ac-input');--%>
+<%--		$(qbinput).autocomplete();--%>
+<%--		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {--%>
+<%--			extraParams:{--%>
+<%--				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',--%>
+<%--				'fq': 'NOT cat:(CUSTOM HP MP)',--%>
+<%--				'wt': 'velocity',--%>
+<%--				'bf': 'term_len_l^.01',--%>
+<%--				'v.template': 'termmatch1',--%>
+<%--				'cacheLength': 0--%>
+<%--			},--%>
+<%--			max:20--%>
+<%--		});*/--%>
+<%--		$(qbinput).focus(function(){$(qbinput).attr("autocomplete","off");});--%>
+<%--		$(qbinput).focusout(function(){$(qbinput).attr("autocomplete","on");});--%>
+<%--	});--%>
 
 
-</script>
+<%--</script>--%>
 
 <%@ include file="/common/footerarea.jsp"%>
