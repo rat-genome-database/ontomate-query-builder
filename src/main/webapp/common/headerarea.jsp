@@ -85,6 +85,7 @@
     <script src="/rgdweb/common/jquery-ui/jquery-ui.js"></script>
 
     <script type="text/javascript" src="/rgdweb/js/elasticsearch/elasticsearchcommon.js"></script>
+    <meta http-equiv="refresh" content="0; url=https://ontomate.rgd.mcw.edu/QueryBuilder">
 </head>
 
 <style>
