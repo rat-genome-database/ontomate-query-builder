@@ -80,13 +80,13 @@ public class OntoTermIdStr {
 			 setTerm(m.group(1));
             if(m.group(2).toUpperCase().equals("DOID")){
                 setCat("RDO");
-                setId(new Long(m.group(3)));
+                setId(Long.valueOf((m.group(3))));
 
                 setFullId("DOID:"+ m.group(3));
             }
             else {
 			 setCat(m.group(2).toUpperCase());
-			 setId(new Long(m.group(3)));
+			 setId(Long.valueOf((m.group(3))));
 			 setFullId(padId(getCat(), getId()));
             }
 		 } else { // Match for CAT:ID
@@ -96,13 +96,13 @@ public class OntoTermIdStr {
                 if(m.group(1).equals("DOID")){
 
                     setCat("RDO");
-                    setId(new Long(m.group(2)));
+                    setId(Long.valueOf((m.group(2))));
                     setFullId("DOID:"+ m.group(2));
                 }
                 else {
 
 				 setCat(m.group(1));
-				 setId(new Long(m.group(2)));
+				 setId(Long.valueOf((m.group(2))));
 				 setFullId(padId(getCat(), getId()));
                 }
 			 } else // Just the term

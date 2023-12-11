@@ -1,0 +1,26 @@
+group 'rgd.mcw.edu'
+version ''
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+
+sourceCompatibility = 17
+project.archivesBaseName = "QueryBuilder"
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    implementation fileTree(dir: 'lib', include: '*.jar')
+
+}
+
+
+task update_rgdcore(type:Copy){
+    from file("../../rgd-core-library/dist/rgdcore_1.1.3.jar")
+    into file("lib/")
+
+}
+
