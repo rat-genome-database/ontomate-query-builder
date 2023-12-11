@@ -6,7 +6,7 @@ function getOntTerms(IdStr, termField) {
                     result[i] = '"' + value + '"^'+(Ids.length-i);
     });
     var qValue = result.join(' ');
-    var qURL = "https://dev.rgd.mcw.edu/solr/OntoSolr/select?q=id:("+qValue+")&wt=velocity&v.template=termsstring&v.contentType=text/html;charset=UTF-8";
+    var qURL = "/solr/OntoSolr/select?q=id:("+qValue+")&wt=velocity&v.template=termsstring&v.contentType=text/html;charset=UTF-8";
     $.ajaxSetup ({
          cache: false
      });
