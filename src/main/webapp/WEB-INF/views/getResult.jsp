@@ -17,6 +17,8 @@
  <input type="hidden" name="facet.field" value="gene_s"/>
  <input type="hidden" name="facet.field" value="mt_term_s"/>
  <input type="hidden" name="facet.field" value="rdo_id"/>
+ <input type="hidden" name="facet.field" value="p_source"/>
+
  <input type="hidden" name="facet.limit" value="200"/>
  <input type="hidden" name="mm" value="1"/>
  <input type="hidden" name="message_label" value='${message_label}'/>
