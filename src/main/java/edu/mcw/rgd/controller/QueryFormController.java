@@ -355,13 +355,17 @@ public class QueryFormController {
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
 		if(queryString.getqSource()!=null) {
 			if (queryString.getqSource().equalsIgnoreCase("pubmed")) {
-				model.addAttribute("source", "/solr/OntoMate");
+//				model.addAttribute("source", "/solr/OntoMate");
+				model.addAttribute("source", "https://ontomate.rgd.mcw.edu/solr");
+
 			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
-				model.addAttribute("source", "/solr/preprintSolr");
+//				model.addAttribute("source", "/solr/preprintSolr");
+				model.addAttribute("source", "https://ontomate.rgd.mcw.edu/preprintSolr");
+
 			}
 		}else{
 
-				model.addAttribute("source", "/solr/OntoMate");
+				model.addAttribute("source", "https://ontomate.rgd.mcw.edu/solr");
 
 		}
 		return "getResult";
