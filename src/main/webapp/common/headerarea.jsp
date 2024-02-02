@@ -153,7 +153,7 @@
                                 <a href="https://rgd.mcw.edu//wg/citing-rgd">Citing RGD</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact</a>&nbsp;&nbsp;&nbsp;
 
-                                <input type="button" class="btn btn-info btn-sm"  value="{{username}}" ng-click="rgd.loadMyRgd($event)" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px"/>
+                                <%-- <input type="button" class="btn btn-info btn-sm"  value="{{username}}" ng-click="rgd.loadMyRgd($event)" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px"/> --%>
                             </td>
 
                         </tr>
@@ -170,7 +170,7 @@
                                         </button>
 
                                         <div class="rgd-dropdown-content">
-                                            <a href="https://rgd.mcw.edu/wg/general-search/">Search RGD</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/search/searchByPosition.html">Search RGD</a>
                                             <a href="https://rgd.mcw.edu/wg/grants/">Grant Resources</a>
                                             <a href="https://rgd.mcw.edu/wg/citing-rgd/">Citing RGD</a>
                                             <a href="https://rgd.mcw.edu/wg/about-us/">About Us</a>
@@ -184,6 +184,7 @@
 
                                         <div class="rgd-dropdown-content">
                                             <a href="https://rgd.mcw.edu/rgdweb/search/genes.html?100">Genes</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/projects/project.html">Community Projects</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/search/qtls.html?100">QTLs</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/search/strains.html?100">Strains</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/search/markers.html?100">Markers</a>
@@ -202,7 +203,7 @@
 
                                         <div class="rgd-dropdown-content">
                                             <a href="/QueryBuilder" >OntoMate (Literature Search) </a>
-                                            <a href="https://rgd.mcw.edu/jbrowse/">JBrowse (Genome Browser)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/jbrowse2/listing.jsp">JBrowse (Genome Browser)</a>
                                             <a href="https://rgd.mcw.edu/vcmap">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
                                             <a href="https://rgd.mcw.edu/rgdweb/front/config.html">Variant Visualizer</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/enrichment/start.html">Multi-Ontology Enrichment (MOET)</a>
@@ -222,18 +223,21 @@
                                         </button>
 
                                         <div class="rgd-dropdown-content">
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=aging">Aging & Age-Related Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cancer">Cancer & Neoplastic Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=cardio">Cardiovascular Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=develop">Developmental Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=diabetes">Diabetes</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=blood">Hematologic Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=immune">Immune & Inflammatory Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=nuro">Neurological Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=obesity">Obesity & Metabolic Syndrome</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=renal">Renal Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=respir">Respiratory Disease</a>
-                                            <a href="https://rgd.mcw.edu/rgdCuration/?module=portal&func=show&name=sensory">Sensory Organ Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=1">Aging & Age-Related Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=2">Cancer & Neoplastic Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=3">Cardiovascular Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=14">Coronavirus Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=12">Developmental Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=4">Diabetes</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=5">Hematologic Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=6">Immune & Inflammatory Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=15">Infectious Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=13">Liver Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=7">Neurological Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=8">Obesity & Metabolic Syndrome</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=9">Renal Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=10">Respiratory Disease</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/portal/home.jsp?p=11">Sensory Organ Disease</a>
                                         </div>
                                     </div>
                                     <div class="rgd-dropdown">
@@ -245,11 +249,12 @@
                                             <a href="https://rgd.mcw.edu/rgdweb/models/findModels.html">Find Models&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;color:red">new</span></a>
                                             <a href="https://rgd.mcw.edu/rgdweb/models/allModels.html">Genetic Models</a>
                                             <a href="https://rgd.mcw.edu/wg/autism-rat-model-resource/">Autism Models</a>
-                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/home.jsp">PhenoMiner (Quantitative Phenotypes)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/ontChoices.html?species=3">Rat PhenoMiner (Quantitative Phenotypes)</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/phenominer/ontChoices.html?species=4">Chinchilla PhenoMiner</a>
                                             <a href="https://rgd.mcw.edu/rgdweb/phenominer/phenominerExpectedRanges/views/home.html">Expected Ranges (Quantitative Phenotype)</a>
-                                            <a href="https://rgd.mcw.edu/rgdweb/pa/termCompare.html?term1=RS%3A0000457&term2=CMO%3A0000000&countType=rec&species=3">Phenominer Term Comparison</a>
+                                            <a href="https://rgd.mcw.edu/rgdweb/pa/termCompare.html?term1=RS%3A0000457&term2=CMO%3A0000000&countType=rec&species=3">PhenoMiner Term Comparison</a>
+                                            <a href="https://rgd.mcw.edu/wg/hrdp_panel/">Hybrid Rat Diversity Panel</a>
                                             <a href="https://rgd.mcw.edu/wg/phenotype-data13/">Phenotypes</a>
-                                            <a href="https://rgd.mcw.edu/wg/gerrc/">GERRC (Gene Editing Rat Resource Center)</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/additionalmodels/">Phenotypes in Other Animal Models</a>
                                             <a href="https://rgd.mcw.edu/wg/strain-maintenance/">Animal Husbandry</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/strain-medical-records/">Strain Medical Records</a>
@@ -257,7 +262,7 @@
                                             <a href="https://rgd.mcw.edu/wg/strain-availability/">Strain Availability</a>
                                             <a href="https://download.rgd.mcw.edu/pub/data_release/Hi-res_Rat_Calendars/">Calendar</a>
                                             <a href="https://rgd.mcw.edu/wg/physiology/rats101/">Rats 101</a>
-                                            <a href="https://rgd.mcw.edu/wg/photos-and-images/community-submissions/">Community</a>
+                                            <a href="https://rgd.mcw.edu/wg/photos-and-images/community-submissions/">Submissions</a>
                                             <a href="https://rgd.mcw.edu/wg/photos-and-images/physgen-photo-archive2/">Photo Archive</a>
                                         </div>
                                     </div>
@@ -318,6 +323,7 @@
                                 <a href="https://twitter.com/ratgenome"><img src="https://rgd.mcw.edu/rgdweb/common/images/social/twitter-20.png"/></a>
                                 <a href="https://www.linkedin.com/company/ratgenome/about/"><img src="https://rgd.mcw.edu/rgdweb/common/images/social/linkedin-20.png"/></a>
                                 <a href="https://www.youtube.com/channel/UCMpex8AfXd_JSTH3DIxMGFw?view_as=subscriber"><img src="https://rgd.mcw.edu/rgdweb/common/images/social/youtube-20.png"/></a>
+                                <a href="https://github.com/rat-genome-database"><img src="https://rgd.mcw.edu/rgdweb/common/images/GitHub_Logo_White-20.png"/></a>
 
                             </td>
                         </tr>
