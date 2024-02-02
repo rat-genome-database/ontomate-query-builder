@@ -513,11 +513,11 @@
                                         <a href="/wg/home/rat-genome-database-publications">Publications</a>&nbsp;|&nbsp;
 
                                         <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
-                                        <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui.html">REST API</a>&nbsp;|&nbsp;
+                                        <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui/index.html">REST API</a>&nbsp;|&nbsp;
                                         <a href="/wg/citing-rgd">Citing RGD</a>&nbsp;|&nbsp;
                                         <a href="/rgdweb/contact/contactus.html">Contact</a>&nbsp;&nbsp;&nbsp;
 
-                                        <input type="button" class="btn btn-info btn-sm"  value="{{username}}" ng-click="rgd.loadMyRgd($event)" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px"/>
+                                        <%-- <input type="button" class="btn btn-info btn-sm"  value="{{username}}" ng-click="rgd.loadMyRgd($event)" style="background-color:#2B84C8;padding:1px 10px;font-size:12px;line-height:1.5;border-radius:3px"/> --%>
                                     </td>
 
                                 </tr>
@@ -548,6 +548,8 @@
 
                                                 <div class="rgd-dropdown-content">
                                                     <a href="/rgdweb/search/genes.html?100">Genes</a>
+                                                    <a href="/rgdweb/search/variants.html">Variants <span style="color:red;">(beta)</span></a>
+                                                    <a href="/rgdweb/projects/project.html">Community Projects</a>
                                                     <a href="/rgdweb/search/qtls.html?100">QTLs</a>
                                                     <a href="/rgdweb/search/strains.html?100">Strains</a>
                                                     <a href="/rgdweb/search/markers.html?100">Markers</a>
@@ -566,19 +568,18 @@
 
                                                 <div class="rgd-dropdown-content">
                                                     <a href="/QueryBuilder" >OntoMate (Literature Search)</a>
-                                                    <a href="/jbrowse/">JBrowse (Genome Browser)</a>
-                                                    <a href="/vcmap">Synteny Browser (VCMap)&nbsp;&nbsp;<span style="color:red;">(beta)</span></a>
+                                                    <a href="/rgdweb/jbrowse2/listing.jsp">JBrowse (Genome Browser)</a>
+                                                    <a href="/vcmap">Synteny Browser (VCMap)</a>
                                                     <a href="/rgdweb/front/config.html">Variant Visualizer</a>
 
                                                     <a href="/rgdweb/enrichment/start.html">Multi-Ontology Enrichment (MOET)</a>
                                                     <a href="/rgdweb/ortholog/start.html">Gene-Ortholog Location Finder (GOLF)</a>
                                                     <a href="/rgdweb/cytoscape/query.html">InterViewer (Protein-Protein Interactions)</a>
-                                                    <a href="/rgdweb/phenominer/ontChoices.html">PhenoMiner (Quatitative Phenotypes)</a>
+                                                    <a href="/rgdweb/phenominer/ontChoices.html?species=3">PhenoMiner (Quatitative Phenotypes)</a>
                                                     <a href="/rgdweb/ga/start.jsp">Gene Annotator</a>
                                                     <a href="/rgdweb/generator/list.html">OLGA (Gene List Generator)</a>
                                                     <a href="https://www.alliancegenome.org/bluegenes/alliancemine">AllianceMine</a>
                                                     <a href="/rgdweb/gTool/Gviewer.jsp">GViewer (Genome Viewer)</a>
-                                                    <a href="/rgdweb/overgo/find.html">Overgo Probe Designer</a>
                                                 </div>
                                             </div>
                                             <div class="rgd-dropdown">
@@ -589,7 +590,7 @@
                                                     <a href="/rgdweb/portal/home.jsp?p=1">Aging & Age-Related Disease</a>
                                                     <a href="/rgdweb/portal/home.jsp?p=2">Cancer & Neoplastic Disease</a>
                                                     <a href="/rgdweb/portal/home.jsp?p=3">Cardiovascular Disease</a>
-                                                    <a href="/rgdweb/portal/home.jsp?p=14">COVID-19</a>
+                                                    <a href="/rgdweb/portal/home.jsp?p=14">Coronavirus Disease</a>
                                                     <a href="/rgdweb/portal/home.jsp?p=12">Developmental Disease</a>
                                                     <a href="/rgdweb/portal/home.jsp?p=4">Diabetes</a>
                                                     <a href="/rgdweb/portal/home.jsp?p=5">Hematologic Disease</a>
@@ -613,12 +614,12 @@
                                                     <a href="/rgdweb/models/findModels.html">Find Models&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;color:red">new</span></a>
                                                     <a href="/rgdweb/models/allModels.html">Genetic Models</a>
                                                     <a href="/wg/autism-rat-model-resource/">Autism Models</a>
-                                                    <a href="/rgdweb/phenominer/ontChoices.html">PhenoMiner (Quantitative Phenotypes)</a>
+                                                    <a href="/rgdweb/phenominer/ontChoices.html?species=3">Rat PhenoMiner (Quantitative Phenotypes)</a>
+                                                    <a href="/rgdweb/phenominer/ontChoices.html?species=4">Chinchilla PhenoMiner</a>
                                                     <a href="/rgdweb/phenominer/phenominerExpectedRanges/views/home.html">Expected Ranges (Quantitative Phenotype)</a>
-                                                    <a href="/rgdweb/phenominer/ontChoices.html">PhenoMiner Term Comparison</a>
+                                                    <a href="/rgdweb/pa/termCompare.html?term1=RS%3A0000457&term2=CMO%3A0000000&countType=rec&species=3">PhenoMiner Term Comparison</a>
                                                     <a href="/wg/hrdp_panel/">Hybrid Rat Diversity Panel</a>
                                                     <a href="/wg/phenotype-data13/">Phenotypes</a>
-                                                    <a href="/wg/gerrc/">GERRC (Gene Editing Rat Resource Center)</a>
                                                     <a href="/wg/physiology/additionalmodels/">Phenotypes in Other Animal Models</a>
                                                     <a href="/wg/strain-maintenance/">Animal Husbandry</a>
                                                     <a href="/wg/physiology/strain-medical-records/">Strain Medical Records</a>
@@ -644,8 +645,8 @@
                                                     <a href="/wg/home/rgd_rat_community_videos/">Video Tutorials</a>
                                                     <a href="/wg/news2/">News</a>
                                                     <a href="/wg/home/rat-genome-database-publications/">RGD Publications</a>
-                                                    <a href="/wg/com-menu/poster_archive/">RGD Poster Archive</a>
-                                                    <a href="/nomen/nomen.shtml">Nomenclature Guidelines</a>
+                                                    <a href="/wg/com-menu/poster_archive/">RGD Presentations Archive</a>
+                                                    <a href="/wg/nomenclature-guidelines/">Nomenclature Guidelines</a>
                                                     <a href="/wg/resource-links/">Resource Links</a>
                                                     <a href="/wg/resource-links/laboratory-resources/">Laboratory Resources</a>
                                                     <a href="/wg/resource-links/employment-resources/">Employment Resources</a>
@@ -751,6 +752,5 @@
 <div id="mainBody">
     <div id="contentArea" class="content-area">
         <table cellpadding="5" border=0 align="center" width="100%">
-            <tr>
+            <tr>                
                 <td colspan="3" align="left" valign="top">
-
