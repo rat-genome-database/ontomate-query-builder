@@ -167,7 +167,7 @@ public class QueryFormController {
 		model.addAttribute("organisms", organisms);
 	return "getOrganisms";
 	}*/
-	@RequestMapping(value = "/getResult", method = RequestMethod.GET)
+	@RequestMapping(value = "/getResult/", method = RequestMethod.GET)
 	public String getResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
 		String solrQString = "";
