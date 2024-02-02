@@ -67,8 +67,10 @@ public class QueryFormController {
 			if ((queryString.getqSource() == null)
 					|| ( queryString.getqSource().equals("")))
 				queryString.setqSource("pubmed");
-			else
+			else {
 				queryString.setqSource(queryString.getqSource());
+				return "redirect:https://ontomate.rgd.mcw.edu/QueryBuilder/?qSource=preprint";
+			}
 		}else{
 			queryString=new QueryString();
 			queryString.setqSource("pubmed");
