@@ -358,6 +358,10 @@ public class QueryFormController {
 				model.addAttribute("source", "/solr/OntoMate");
 			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
 				model.addAttribute("source", "/solr/preprintSolr");
+			} else if (queryString.getqSource().equalsIgnoreCase("ai1")) {
+				model.addAttribute("source", "/solr/ai1");
+			} else if (queryString.getqSource().equalsIgnoreCase("ai2")) {
+				model.addAttribute("source", "/solr/ai2");
 			}
 		}else{
 
