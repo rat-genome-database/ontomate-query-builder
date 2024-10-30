@@ -362,6 +362,12 @@ public class QueryFormController {
 				model.addAttribute("source", "/solr/ai1");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai2")) {
 				model.addAttribute("source", "/solr/ai2");
+			} else if (queryString.getqSource().equalsIgnoreCase("ai3")) {
+				model.addAttribute("source", "/solr/ai3");
+			} else if (queryString.getqSource().equalsIgnoreCase("ai4")) {
+				model.addAttribute("source", "/solr/ai4");
+			} else if (queryString.getqSource().equalsIgnoreCase("ai5")) {
+				model.addAttribute("source", "/solr/ai5");
 			}
 		}else{
 
