@@ -233,11 +233,11 @@ public class SolrQueryStringService {
 		if (toDate == null)
 			toDate = "";
 		if (fromDate.length() > 0 && toDate.length() == 0)
-			return fromDate + "T00:00:00:000Z TO *";
+			return fromDate + "T00:00:00Z TO *";
 		if (fromDate.length() > 0 && toDate.length() > 0)
-			return fromDate + "T00:00:00:000Z TO " + toDate + "T23:59:59:999Z";
+			return fromDate + "T00:00:00Z TO " + toDate + "T23:59:59Z";
 		if (fromDate.length() == 0 && toDate.length() > 0)
-			return "* TO " + toDate + "T23:59:59:999Z";
+			return "* TO " + toDate + "T23:59:59Z";
 
 		return "*";
 	}
