@@ -9,7 +9,7 @@
 <meta name="author" content="NGC">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="generator" content="WebGUI 7.9.16" /><meta http-equiv="Content-Script-Type" content="text/javascript" /><meta http-equiv="Content-Style-Type" content="text/css" /><script type="text/javascript">function getWebguiProperty (propName) {var props = new Array();props["extrasURL"] = "/extras/";props["pageURL"] = "/wg/ngc/template";props["firstDayOfWeek"] = "0";return props[propName];}</script><link href="/wg/layout.css" rel="stylesheet" type="text/css" /><!--page layout--><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0, private" /><meta http-equiv="Expires" content="0" />
 
-    <link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.css" type="text/css" media="all" />
 <link rel="SHORTCUT ICON" href="https://rgd.mcw.edu/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="/https://rgd.mcw.educommon/modalDialog/subModal.css" />
 <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/common/modalDialog/style.css" />
@@ -17,10 +17,10 @@
 <!-- CSS for Tab Menu #4 -->
 <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/common/style/ddcolortabsNGC.css" />
 
-    <script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/QueryBuilder/js/jquery-3.7.1.min.js"></script>
 
     <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/js/elasticsearch/elasticsearchcommon.js"></script>
-    <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.js"></script>
 <script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
 <script type="text/javascript" src="https://rgd.mcw.edu/common/js/ddtabmenu.js">
 
