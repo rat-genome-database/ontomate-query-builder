@@ -4,16 +4,16 @@
 	String headContent = "";%>
 <%@ include file="/common/headerarea.jsp"%>
 
-<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" />
-<script type="text/javascript" src="/QueryBuilder/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.css" type="text/css" media="all" />
+<script type="text/javascript" src="/QueryBuilder/js/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/QueryBuilder/js/main.css"/>
 <link rel="stylesheet" href="/QueryBuilder/css/jquery.autocomplete.css" type="text/css" />
-<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.js"></script>
 <script type="text/javascript" src="/QueryBuilder/js/jquery.autocomplete.js"></script>
 
 <style>
 	.jumbotron{
-	/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */
+		/*	background:linear-gradient(to bottom, white 0%, #D6EAF8 100%); */
 		background:linear-gradient(to bottom, white 0%, #D6EAF8 100%);
 		background-color: #D1F2EB;
 	}
@@ -54,7 +54,7 @@
 		var row_id=1;
 
 		$("#addCond").click(function() {
-		//	$("#queryConditions").show();
+			//	$("#queryConditions").show();
 			var loadUrl = "/getConditionRow/"+row_id;
 			console.log("<%=request.getContextPath()%>"+loadUrl);
 			$.get("<%=request.getContextPath()%>"+loadUrl,{},
@@ -66,7 +66,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/solr/OntoSolr/select', {
+						$(col_name).autocomplete('/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -122,8 +122,8 @@
 		});
 //	$('#fieldTable').hide();
 //	$("#addSort").click();
-	//	$("#addCond").click();
-	//	window.setTimeout(addAnotherRow,500);
+		//	$("#addCond").click();
+		//	window.setTimeout(addAnotherRow,500);
 		$("#aboutLink").click(function () {
 			$("#queryForm").hide();
 			$("#features").hide();
@@ -165,19 +165,19 @@
 	}
 
 	function update_autocomplete(obj_name, ont_cat) {
-			$(obj_name).flushCache();
-			$(obj_name).unautocomplete();
+		$(obj_name).flushCache();
+		$(obj_name).unautocomplete();
 		//  $(obj_name).autocomplete('/OntoSolr/select', {
 		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
 		if (ont_cat.trim() == "organism_term") {
 			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
-		/*	var url= '/QueryBuilder/getOrganisms/'+"Homo"
-		   $(obj_name).autocomplete(url, {
-						extraParams:{
-							term:"rat " 				}
-					}
-			);
-*/		$(obj_name).autocomplete('/solr/OntoMate/select', {
+			/*	var url= '/QueryBuilder/getOrganisms/'+"Homo"
+               $(obj_name).autocomplete(url, {
+                            extraParams:{
+                                term:"rat " 				}
+                        }
+                );
+    */		$(obj_name).autocomplete('/solr/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
@@ -189,7 +189,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('/solr/OntoSolr/select', {
+			$(obj_name).autocomplete('/OntoSolr/select', {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
@@ -225,206 +225,206 @@
 </script>
 <div class="container-fluid">
 	<div style="text-align: center">
-	<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
-	<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
-		</div>
+		<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
+		<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
+	</div>
 	<hr>
-<form:form id="qForm" action="getResult" method="get"  modelAttribute="queryString" target="_blank">
-	<div class="jumbotron">
-		<div class="container"  >
-			<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
-					<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
-				</div>
-				<div  class="form-check form-check-inline">&nbsp;</div>
-				<div class="form-check form-check-inline">
-					<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
-					<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
-				</div>
-			</div>
-		<div class="form-row row">
-			<div class="form-group col-md-4" id="selOnt0">
-
-					<form:select class="form-control form-control-lg" id="qb-ontology-select" path="qFieldConditions[0].fieldName" onchange='update_autocomplete("#qb-ac-input", $(this).val());'>
-						<option value="ontology">Any ontology/Gene</option>
-						<option value="bp_term">Biological Process</option>
-						<option value="cl_term">Cell Ontology</option>
-						<option value="cc_term">Cellular Component</option>
-						<option value="chebi_term">ChEBI Ontology</option>
-						<option value="cmo_term">Clinical Measurement</option>
-						<option value="rdo_term">Disease Ontology (RDO)</option>
-						<option value="chebi_term">Drug and Chemical</option>
-						<option value="xco_term">Experimental Condition</option>
-						<option value="rgd_gene_term">Gene</option>
-						<option value="mp_term">Mammalian Phenotype</option>
-						<option value="mmo_term">Measurement Methods</option>
-						<option value="mf_term">Molecular Function</option>
-						<option value="ma_term">Mouse Anatomy</option>
-						<option value="mt_term">Mutation</option>
-						<option value="nbo_term">Neuro Behavioral</option>
-						<option value="organism_term">Organism Scientific Name</option>
-						<option value="pw_term">Pathway Ontology</option>
-						<option value="rs_term">Rat Strain Ontology</option>
-						<option value="zfa_term">Zebrafish Anatomy</option>
-						<option value="so_term">Sequence Ontology</option>
-
-					</form:select>
-
-			</div>
-			<div class="form-group col-md-8">
-				<div class="input-group" >
-					<form:input id="qb-ac-input" name="qbInput" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>
-
-					<div class="input-group-append">
-
-						<button class="btn btn-outline-secondary" type="submit">
-							<i class="fa fa-search"></i>
-						</button>
+	<form:form id="qForm" action="/QueryBuilder/getResult/" method="get"  commandName="queryString" target="_blank">
+		<div class="jumbotron">
+			<div class="container"  >
+				<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="pubmed" path="qSource" value="pubmed"/>
+						<label class="form-check-label" for="pubmed" style="font-size: medium">Pubmed</label>
+					</div>
+					<div  class="form-check form-check-inline">&nbsp;</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
+						<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
 					</div>
 				</div>
-				<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
-			</div>
-		</div>
-		</div>
-		<div class="form-group col-md-12">
-			<table class="table" >
-				<tr id="lastRow">
+				<div class="form-row row">
+					<div class="form-group col-md-4" id="selOnt0">
 
-				</tr>
-			</table>
-		</div>
+						<form:select class="form-control form-control-lg" id="qb-ontology-select" path="qFieldConditions[0].fieldName" onchange='update_autocomplete("#qb-ac-input", $(this).val());'>
+							<option value="ontology">Any ontology/Gene</option>
+							<option value="bp_term">Biological Process</option>
+							<option value="cl_term">Cell Ontology</option>
+							<option value="cc_term">Cellular Component</option>
+							<option value="chebi_term">ChEBI Ontology</option>
+							<option value="cmo_term">Clinical Measurement</option>
+							<option value="rdo_term">Disease Ontology (RDO)</option>
+							<option value="chebi_term">Drug and Chemical</option>
+							<option value="xco_term">Experimental Condition</option>
+							<option value="rgd_gene_term">Gene</option>
+							<option value="mp_term">Mammalian Phenotype</option>
+							<option value="mmo_term">Measurement Methods</option>
+							<option value="mf_term">Molecular Function</option>
+							<option value="ma_term">Mouse Anatomy</option>
+							<option value="mt_term">Mutation</option>
+							<option value="nbo_term">Neuro Behavioral</option>
+							<option value="organism_term">Organism Scientific Name</option>
+							<option value="pw_term">Pathway Ontology</option>
+							<option value="rs_term">Rat Strain Ontology</option>
+							<option value="zfa_term">Zebrafish Anatomy</option>
+							<option value="so_term">Sequence Ontology</option>
 
-		<div class="container" id="qb-options" style="width:70%; align:center">
-			<table class="table" id="fieldTable">
-				<tbody>
-				<tr>
-					<td style="vertical-align:bottom">Date(yyyy-mm-dd):</td>
-					<td>
-						<div class="form-row">
-							<div class="col-auto">
-								From
-								<form:input class="form-control" id="dateFrom" path="qDateFrom"  />
-							</div>
-							<div class="col-auto">
-								To <form:input class="form-control" id="dateTo" path="qDateTo" />
+						</form:select>
+
+					</div>
+					<div class="form-group col-md-8">
+						<div class="input-group" >
+							<form:input id="qb-ac-input" name="qbInput" class="ont-auto-complete form-control form-control-lg border-secondary" type="search"  placeholder="Enter Search Term ...." path="qFieldConditions[0].fieldValue"/>
+
+							<div class="input-group-append">
+
+								<button class="btn btn-outline-secondary" type="submit">
+									<i class="fa fa-search"></i>
+								</button>
 							</div>
 						</div>
-					</td>
+						<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-md-12">
+				<table class="table" >
+					<tr id="lastRow">
 
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">PMIDs:</td>
-					<td>
-						<div class="row">
-							<div class="col">
-								<form:input class="form-control" id="pmid" path="qPMID"  /></div>
-							<div class="col">
-								<span class="badge badge-secondary butHelp" id="helpPMID" style="cursor:hand">?</span>
+					</tr>
+				</table>
+			</div>
+
+			<div class="container" id="qb-options" style="width:70%; align:center">
+				<table class="table" id="fieldTable">
+					<tbody>
+					<tr>
+						<td style="vertical-align:bottom">Date(yyyy-mm-dd):</td>
+						<td>
+							<div class="form-row">
+								<div class="col-auto">
+									From
+									<form:input class="form-control" id="dateFrom" path="qDateFrom"  />
+								</div>
+								<div class="col-auto">
+									To <form:input class="form-control" id="dateTo" path="qDateTo" />
+								</div>
 							</div>
-						</div>
-					</td>
+						</td>
 
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">All fields:</td>
-					<td><form:input class="form-control" path="qString"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Title:</td>
-					<td><form:input class="form-control" path="qTitleStr"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Author:</td>
-					<td><form:input class="form-control" path="qAuthorStr"  /></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: bottom">Keyword:</td>
-					<td><form:input  path="qAbstractStr" class="form-control"
-					/></td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+					</tr>
+					<tr>
+						<td style="vertical-align: bottom">PMIDs:</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									<form:input class="form-control" id="pmid" path="qPMID"  /></div>
+								<div class="col">
+									<span class="badge badge-secondary butHelp" id="helpPMID" style="cursor:hand">?</span>
+								</div>
+							</div>
+						</td>
 
-		<div class="form-group col-md-12" style="text-align: center" >
-			<div class="form-group" style="display: inline-block">
-			<table style="alignment: center">
-				<tr>
-					<td><button type="button" id="addCond" class="btn btn-outline-secondary" style="">Add term
-						condition</button></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: bottom">All fields:</td>
+						<td><form:input class="form-control" path="qString"  /></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: bottom">Title:</td>
+						<td><form:input class="form-control" path="qTitleStr"  /></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: bottom">Author:</td>
+						<td><form:input class="form-control" path="qAuthorStr"  /></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: bottom">Keyword:</td>
+						<td><form:input  path="qAbstractStr" class="form-control"
+						/></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
 
-					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">More Search Options</button>
+			<div class="form-group col-md-12" style="text-align: center" >
+				<div class="form-group" style="display: inline-block">
+					<table style="alignment: center">
+						<tr>
+							<td><button type="button" id="addCond" class="btn btn-outline-secondary" style="">Add term
+								condition</button></td>
 
-					</td>
-					<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
-						<a href="<%=request.getContextPath()%>"  class="btn btn-outline-secondary" id="aClear" style="padding:6px" >Clear Form</a>
-					</td>
-					<td><button class="btn btn-primary" type="submit">
-						Search OntoMate
-					</button></td>
-				</tr>
-			</table>
+							<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
+								<button class="btn btn-outline-secondary" type="button" onclick="myToggleFunction()">More Search Options</button>
+
+							</td>
+							<td><!--button class="btn btn-outline-secondary" type="button" onclick="toggleQBAdvancedSearchForm()">Advanced Search</button-->
+								<a href="<%=request.getContextPath()%>"  class="btn btn-outline-secondary" id="aClear" style="padding:6px" >Clear Form</a>
+							</td>
+							<td><button class="btn btn-primary" type="submit">
+								Search OntoMate
+							</button></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
 	</form:form>
 
 	<div class="container">
-	<div class="row">
-		<div class="col-md-4">
-		<div class="card" style="width: 25rem;border:0">
-
-			<div class="card-body">
-				<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">About</h5>
-				<p class="card-text" style="color:grey;text-align: justify">OntoMate is an ontology-driven, concept-based literature search engine that was originally developed by RGD as an alternative for the basic PubMed search engine (http://www.ncbi.nlm.nih.gov/pubmed) in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism names and terms from the ontologies/vocabularies used at RGD.</p>
-				<!--a href="#" class="btn btn-primary">Go somewhere</a-->
-			</div>
-		</div>
-		</div>
-		<div class="col-md-4">
+		<div class="row">
+			<div class="col-md-4">
 				<div class="card" style="width: 25rem;border:0">
 
-				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">Features</h5>
-					<p class="card-text" style="color:grey"></p>
-					<ul style="margin-left: 0">
-						<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>
-						<li style="color:grey">User-activated filters</li>
-						<!--li style="color:grey">Date and other filters relevant to the literature search</li-->
-						<li style="color:grey">Information Annotated to Articles
-							<ul>
-
-								<li style="color:grey">Genes</li>
-								<li style="color:grey">Rat strains </li>
-								<li style="color:grey">Organism</li>
-								<li style="color:grey">Disease</li>
-								<li style="color:grey">Phenotypes</li>
-								<li style="color:grey">Traits </li>
-								<li style="color:grey">Clinical Measurements</li>
-
-							</ul>
-						</li>
-					</ul>
-					<!--a href="#" class="btn btn-primary">Go somewhere</a-->
+					<div class="card-body">
+						<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">About</h5>
+						<p class="card-text" style="color:grey;text-align: justify">OntoMate is an ontology-driven, concept-based literature search engine that was originally developed by RGD as an alternative for the basic PubMed search engine (http://www.ncbi.nlm.nih.gov/pubmed) in the gene curation workflow. OntoMate tags abstracts with gene names, gene mutations, organism names and terms from the ontologies/vocabularies used at RGD.</p>
+						<!--a href="#" class="btn btn-primary">Go somewhere</a-->
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card" style="width: 25rem;border:0">
+			<div class="col-md-4">
+				<div class="card" style="width: 25rem;border:0">
 
-				<div class="card-body" >
-					<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c">Publication</h5>
-					<p class="card-text" style="color:grey">Click the below link to get the reference</p>
-					<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305386/" class="btn btn-primary" target="_blank">Go to PubMed</a>
+					<div class="card-body">
+						<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c;">Features</h5>
+						<p class="card-text" style="color:grey"></p>
+						<ul style="margin-left: 0">
+							<li style="color:grey;margin-left: 0">Easy to build concept-based queries</li>
+							<li style="color:grey">User-activated filters</li>
+							<!--li style="color:grey">Date and other filters relevant to the literature search</li-->
+							<li style="color:grey">Information Annotated to Articles
+								<ul>
+
+									<li style="color:grey">Genes</li>
+									<li style="color:grey">Rat strains </li>
+									<li style="color:grey">Organism</li>
+									<li style="color:grey">Disease</li>
+									<li style="color:grey">Phenotypes</li>
+									<li style="color:grey">Traits </li>
+									<li style="color:grey">Clinical Measurements</li>
+
+								</ul>
+							</li>
+						</ul>
+						<!--a href="#" class="btn btn-primary">Go somewhere</a-->
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="col-md-4">
+				<div class="card" style="width: 25rem;border:0">
 
+					<div class="card-body" >
+						<h5 class="card-title" style="font-weight: bold;font-size: 20px;color:#24619c">Publication</h5>
+						<p class="card-text" style="color:grey">Click the below link to get the reference</p>
+						<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305386/" class="btn btn-primary" target="_blank">Go to PubMed</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
-	</div>
-	</div>
+</div>
 
 <script>
 	$(function () {
