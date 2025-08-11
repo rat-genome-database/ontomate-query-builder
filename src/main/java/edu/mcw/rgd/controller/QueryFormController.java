@@ -369,9 +369,7 @@ public class QueryFormController {
 				model.addAttribute("source", "solr");
 
 		}
-		System.out.println("STANDALONE QUERY:"+ StringEscapeUtils
-				.escapeHtml4(SolrQueryStringService
-						.finalQueryString(solrQString.trim())))
+		System.out.println("STANDALONE QUERY:"+ StringEscapeUtils.escapeHtml4(SolrQueryStringService.finalQueryString(solrQString.trim())));
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -553,9 +551,7 @@ public class QueryFormController {
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
-		System.out.println("CURATION QUERY:"+ StringEscapeUtils
-				.escapeHtml4(SolrQueryStringService
-						.finalQueryString(solrQString.trim())))
+		System.out.println("CURATION QUERY:"+ StringEscapeUtils.escapeHtml4(SolrQueryStringService.finalQueryString(solrQString.trim())));
 		return "getResultForCuration";
 	}
 
