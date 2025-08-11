@@ -543,7 +543,7 @@ public class QueryFormController {
 		
 //		solrQString += " OR (title:\"not\")^-50";
 //		solrQString += " OR (title:\"not\") OR -(title:\"not\")";
-//		System.out.println("Curation query String:" + solrQString);
+		System.out.println("Curation query String:" + solrQString);
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("curHost", queryString.getCurHost().trim());
 		model.addAttribute("message_label", messageLabel.toString());
@@ -551,7 +551,7 @@ public class QueryFormController {
 		model.addAttribute("userId", queryString.getUserId().trim());
 		model.addAttribute("userFullName", queryString.getUserFullName().trim());
 		
-		
+
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
