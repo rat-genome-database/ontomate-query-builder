@@ -7,13 +7,10 @@ import java.util.*;
 
 
 import edu.mcw.rgd.service.PubMedReference;
-import org.apache.commons.lang.ObjectUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.text.StringEscapeUtils;
-
-/*import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;*/
-
-import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -49,8 +46,6 @@ import edu.mcw.rgd.service.RgdTermSearchService;
 import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class QueryFormController {
