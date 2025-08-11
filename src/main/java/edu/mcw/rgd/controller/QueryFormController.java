@@ -374,6 +374,7 @@ public class QueryFormController {
 				model.addAttribute("source", "/solr/OntoMate");
 
 		}
+		System.out.println("Standalone query String:" + solrQString);
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
