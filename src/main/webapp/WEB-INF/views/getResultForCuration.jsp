@@ -8,7 +8,7 @@
 </head>
 <body onload='document.forms[0].submit()'>
 Searching... Condition: <span style="color:brown;">${message_label}</span> 
-<form action="/solr/OntoMate/browse" method="post">
+<form action="https://dev.rgd.mcw.edu/solr/OntoMate/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>
  <input type="hidden" name="sort" value = "${sort}"/>
  <!--input type="hidden" name="sort" value = "p_date desc"/-->
@@ -25,7 +25,7 @@ Searching... Condition: <span style="color:brown;">${message_label}</span>
  <input type="hidden" name="facet.field" value="mt_term_s"/>
  <input type="hidden" name="facet.field" value="rdo_id"/>
  <input type="hidden" name="facet.limit" value="100"/>
-  <input type="hidden" name="mm" value="1"/>
+<%--  <input type="hidden" name="mm" value="1"/>--%>
  <input type="hidden" name="message_label" value='${message_label}'/>
 </form>
 </body>
