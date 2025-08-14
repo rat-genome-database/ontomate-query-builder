@@ -25,7 +25,7 @@ Searching... Condition: <span style="color:brown;">${message_label}</span>
  <input type="hidden" name="facet.field" value="mt_term_s"/>
  <input type="hidden" name="facet.field" value="rdo_id"/>
  <input type="hidden" name="facet.limit" value="100"/>
-<%--  <input type="hidden" name="mm" value="1"/>--%>
+  <input type="hidden" name="mm" value="1"/>
  <input type="hidden" name="message_label" value='${message_label}'/>
 </form>
 </body>
