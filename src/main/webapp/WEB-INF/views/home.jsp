@@ -65,8 +65,8 @@
 						var col_name="#inTerm"+(row_id-1)+" input";
 						$(col_name).flushCache();
 
-						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/OntoSolr/select', {
+						//	   $(col_name).autocomplete('/solr/OntoSolr/select', {
+						$(col_name).autocomplete('/solr/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -167,7 +167,7 @@
 	function update_autocomplete(obj_name, ont_cat) {
 		$(obj_name).flushCache();
 		$(obj_name).unautocomplete();
-		//  $(obj_name).autocomplete('/OntoSolr/select', {
+		//  $(obj_name).autocomplete('/solr/OntoSolr/select', {
 		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
 		if (ont_cat.trim() == "organism_term") {
 			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
@@ -189,7 +189,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('/OntoSolr/select', {
+			$(obj_name).autocomplete('/solr/OntoSolr/select', {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
@@ -430,7 +430,7 @@
 	$(function () {
 		var qbinput=$('#qb-ac-input');
 		$(qbinput).autocomplete();
-		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {
+		/*$(qbinput).autocomplete('https://rgd.mcw.edu/solr/OntoSolr/select', {
 			extraParams:{
 				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 				'fq': 'NOT cat:(CUSTOM HP MP)',
