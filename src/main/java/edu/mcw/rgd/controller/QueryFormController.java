@@ -6,14 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+import edu.mcw.rgd.dao.OrthologDAO;
+import edu.mcw.rgd.dao.impl.*;
 import edu.mcw.rgd.service.PubMedReference;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
 /*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;*/
 
-import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -22,11 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
-import edu.mcw.rgd.dao.impl.AliasDAO;
-import edu.mcw.rgd.dao.impl.GeneDAO;
-import edu.mcw.rgd.dao.impl.OntologyXDAO;
-import edu.mcw.rgd.dao.impl.OrthologDAO;
-import edu.mcw.rgd.dao.impl.XdbIdDAO;
+
 import edu.mcw.rgd.datamodel.Alias;
 import edu.mcw.rgd.datamodel.Gene;
 import edu.mcw.rgd.datamodel.Ortholog;
@@ -687,7 +683,7 @@ public class QueryFormController {
 		
 		return geneQString.toString();
 	}
-	
+
 	private String getGeneQueryString(Gene gene, String defaultBoolean, boolean looseMatch) {
 		try {
 			int iRgdId = gene.getRgdId();
