@@ -369,7 +369,7 @@ public class QueryFormController {
 				model.addAttribute("source", "solr");
 
 		}
-		System.out.println("STANDALONE QUERY:"+ solrQString)
+		System.out.println("STANDALONE QUERY:"+ solrQString);
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -583,7 +583,7 @@ public class QueryFormController {
 //		model.addAttribute("curHost", queryString.getCurHost().trim());
 //		model.addAttribute("message_label", messageLabel);
 
-		System.out.println("CURATION QUERY:"+ solrQString)
+		System.out.println("CURATION QUERY:"+ solrQString);
 		return "getResultForCuration";
 	}
 
