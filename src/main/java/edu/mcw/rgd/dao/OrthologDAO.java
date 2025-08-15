@@ -1,6 +1,6 @@
 package edu.mcw.rgd.dao;
 
-import edu.mcw.rgd.dao.spring.OrthologQuery;
+
 import edu.mcw.rgd.datamodel.Ortholog;
 
 import java.util.List;
