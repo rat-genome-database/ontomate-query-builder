@@ -551,7 +551,7 @@ public class QueryFormController {
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
-
+		System.out.println("CURATION QUERY:"+ solrQString);
 		return "getResultForCuration";
 	}
 
@@ -583,7 +583,7 @@ public class QueryFormController {
 //		model.addAttribute("curHost", queryString.getCurHost().trim());
 //		model.addAttribute("message_label", messageLabel);
 
-		System.out.println("CURATION QUERY:"+ solrQString);
+
 		return "getResultForCuration";
 	}
 
