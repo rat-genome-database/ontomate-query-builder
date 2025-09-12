@@ -368,7 +368,6 @@ public class QueryFormController {
 				model.addAttribute("source", "solr/OntoMate");
 
 		}
-		System.out.println("STANDALONE QUERY:"+ solrQString);
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -438,7 +437,6 @@ public class QueryFormController {
 	public String getReferenceURL(@RequestParam String pubmedId, HttpServletResponse response , HttpServletRequest request) throws Exception {
 		PubMedReference pubRef= new PubMedReference();
 		int refRgdId=pubRef.getReferenceRgdId(pubmedId);
-		System.out.print("REF RGD ID: "+refRgdId);
 		response.getWriter().print(refRgdId);
 		return null;
 }
@@ -535,10 +533,6 @@ public class QueryFormController {
 
 		if (termMessageLabel.length() > 0) messageLabel += topLevelBooleanConnect(messageLabel, "(" + termMessageLabel.toString() + ")");
 
-		
-//		solrQString += " OR (title:\"not\")^-50";
-//		solrQString += " OR (title:\"not\") OR -(title:\"not\")";
-//		System.out.println("Curation query String:" + solrQString);
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("curHost", queryString.getCurHost().trim());
 		model.addAttribute("message_label", messageLabel.toString());
@@ -550,7 +544,6 @@ public class QueryFormController {
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
-		System.out.println("CURATION QUERY:"+ solrQString);
 		return "getResultForCuration";
 	}
 
@@ -741,9 +734,8 @@ public class QueryFormController {
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
 			String ontoSolrQueryStr = uri.toASCIIString(); 
 
-//			System.out.println("ONTOSOLR QUERY:"+ontoSolrQueryStr);
 			String fullTerm = BasicUtils.restGet(ontoSolrQueryStr);
-			System.out.println("FULL TERM:"+ fullTerm);
+
 			return fullTerm;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1271,9 +1263,5 @@ public class QueryFormController {
 		model.addAttribute("message", curatable);
 		return "SimpleMessage";
 	}
-public static void main(String[] args){
-	QueryFormController ctrl= new QueryFormController();
-	ctrl.getSolrQueryString("hypertension");
-	System.out.println("DONE!!!!");
-}
+
 }
