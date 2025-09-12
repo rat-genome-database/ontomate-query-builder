@@ -104,3 +104,6 @@ group 'rgd.mcw.edu'
         into file("lib/")
 
         }
+tasks.withType(JavaCompile) {
+        options.compilerArgs << "-parameters"
+}
