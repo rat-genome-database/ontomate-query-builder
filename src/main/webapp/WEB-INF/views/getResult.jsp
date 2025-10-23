@@ -8,7 +8,7 @@
 </head>
 <body onload='document.forms[0].submit()'>
 
-<form action="https://dev.rgd.mcw.edu/solr/OntoMate/browse" method="post">
+<form action="${source}/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>
  <input type="hidden" name="q.op" value="AND"/>
  <input type="hidden" name="sort" value = "${sort}"/>
