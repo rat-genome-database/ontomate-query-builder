@@ -451,6 +451,8 @@ public class QueryFormController {
 	@RequestMapping(value = "/getResultForCuration", method = RequestMethod.GET)
 	public String getResultForCuration(
 			@ModelAttribute("curationQueryString") CurationQueryString queryString, Model model) {
+		String source= queryString.getqSource();
+		System.out.println("CORE:"+source);
 		String defaultBoolConn = " OR ";
 //		String solrQString = "((-organism_term_s:(*)) OR (organism_term_s:(\"Rattus sp.\"^3 OR \"Rattus norvegicus\"^3 OR \"Homo sapiens\"^2 OR \"Mus musculus\"^1))) AND ((-mt_term:(*)) OR (mt_term:(*))^200)";
 		String solrQString = "((-organism_term_s:(*)) OR (organism_term_s:(\"Rattus sp.\"^3 OR \"Rattus norvegicus\"^3 OR \"Homo sapiens\"^2 OR \"Mus musculus\"^1)))";
@@ -551,7 +553,11 @@ public class QueryFormController {
 		model.addAttribute("userKey", queryString.getUserKey().trim());
 		model.addAttribute("userId", queryString.getUserId().trim());
 		model.addAttribute("userFullName", queryString.getUserFullName().trim());
-
+		if(source!=null && source.equalsIgnoreCase("old")) {
+			model.addAttribute("source", "/solr/ai1");
+		}else{
+			model.addAttribute("source", "/solr/OntoMate");
+		}
 
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
