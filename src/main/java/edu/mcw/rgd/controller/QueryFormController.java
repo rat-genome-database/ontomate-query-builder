@@ -6,13 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-import edu.mcw.rgd.dao.OrthologDAO;
-import edu.mcw.rgd.dao.impl.*;
 import edu.mcw.rgd.service.PubMedReference;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.apache.commons.text.StringEscapeUtils;
 
-/*import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;*/
 
 import org.springframework.stereotype.Controller;
 
@@ -22,7 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
-
+import edu.mcw.rgd.dao.impl.AliasDAO;
+import edu.mcw.rgd.dao.impl.GeneDAO;
+import edu.mcw.rgd.dao.impl.OntologyXDAO;
+import edu.mcw.rgd.dao.impl.OrthologDAO;
+import edu.mcw.rgd.dao.impl.XdbIdDAO;
 import edu.mcw.rgd.datamodel.Alias;
 import edu.mcw.rgd.datamodel.Gene;
 import edu.mcw.rgd.datamodel.Ortholog;
@@ -45,8 +48,7 @@ import edu.mcw.rgd.service.RgdTermSearchService;
 import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 public class QueryFormController {
@@ -74,6 +76,7 @@ public class QueryFormController {
 			queryString=new QueryString();
 			queryString.setqSource("pubmed");
 		}
+		model.addAttribute("queryString", queryString);
 		model.addAttribute("serverTime", formattedDate);
 
 		return "home";
@@ -356,16 +359,15 @@ public class QueryFormController {
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
 		if(queryString.getqSource()!=null) {
 			if (queryString.getqSource().equalsIgnoreCase("pubmed")) {
-				model.addAttribute("source", "solr");
+				model.addAttribute("source", "solr/OntoMate");
 			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
-				model.addAttribute("source", "preprintSolr");
+				model.addAttribute("source", "solr/preprintSolr");
 			}
 		}else{
 
-				model.addAttribute("source", "solr");
+				model.addAttribute("source", "solr/OntoMate");
 
 		}
-		System.out.println("STANDALONE QUERY:"+ solrQString);
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -435,7 +437,6 @@ public class QueryFormController {
 	public String getReferenceURL(@RequestParam String pubmedId, HttpServletResponse response , HttpServletRequest request) throws Exception {
 		PubMedReference pubRef= new PubMedReference();
 		int refRgdId=pubRef.getReferenceRgdId(pubmedId);
-		System.out.print("REF RGD ID: "+refRgdId);
 		response.getWriter().print(refRgdId);
 		return null;
 }
@@ -532,10 +533,6 @@ public class QueryFormController {
 
 		if (termMessageLabel.length() > 0) messageLabel += topLevelBooleanConnect(messageLabel, "(" + termMessageLabel.toString() + ")");
 
-		
-//		solrQString += " OR (title:\"not\")^-50";
-//		solrQString += " OR (title:\"not\") OR -(title:\"not\")";
-//		System.out.println("Curation query String:" + solrQString);
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("curHost", queryString.getCurHost().trim());
 		model.addAttribute("message_label", messageLabel.toString());
@@ -547,7 +544,6 @@ public class QueryFormController {
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
-		System.out.println("CURATION QUERY:"+ solrQString);
 		return "getResultForCuration";
 	}
 
@@ -683,7 +679,7 @@ public class QueryFormController {
 		
 		return geneQString.toString();
 	}
-
+	
 	private String getGeneQueryString(Gene gene, String defaultBoolean, boolean looseMatch) {
 		try {
 			int iRgdId = gene.getRgdId();
@@ -732,7 +728,7 @@ public class QueryFormController {
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		
 		try {
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("https","ontomate.rgd.mcw.edu", "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -750,7 +746,7 @@ public class QueryFormController {
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","ontomate.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -771,11 +767,11 @@ public class QueryFormController {
 		String termCat = null;
 
 		try {
-//			URI uri = new URI("http","fox.hmgc.mcw.edu", "/OntoSolr/select", "q=cat:(RDO^5 OR UMLS^4 OR HP^3 OR MP^2) AND (term_str:(\""
+//			URI uri = new URI("http","fox.hmgc.mcw.edu", "/solr/OntoSolr/select", "q=cat:(RDO^5 OR UMLS^4 OR HP^3 OR MP^2) AND (term_str:(\""
 //		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 //					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ") ) AND def:(*)&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 //					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=csv&fl=def&csv.header=false&csv.separator=|", null);
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
+			URI uri = new URI("http","ontomate.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ")  OR synonym_en:(" + termStr + ") ))&defType=edismax&rows=10&qf=term_en^30+term_str^50+term^30+synonym_en^4.5+synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&qf=&v.template=termdef&mm=75%", null);
@@ -1001,7 +997,7 @@ public class QueryFormController {
 					int iGeneRgdId =termStr.getId().intValue();
 					String mendelian_disease_ids = "*";
 					try {
-						URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+						URI uri = new URI("http","ontomate.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 						String ontoSolrStr = uri.toASCIIString(); 
 						mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 					} catch (Exception e) {
@@ -1141,7 +1137,7 @@ public class QueryFormController {
 		String hlQString = "";
 		String mendelian_disease_ids = "*";
 		try {
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+			URI uri = new URI("http","ontomate.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
 			String ontoSolrStr = uri.toASCIIString(); 
 			mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 		} catch (Exception e) {
@@ -1267,9 +1263,5 @@ public class QueryFormController {
 		model.addAttribute("message", curatable);
 		return "SimpleMessage";
 	}
-public static void main(String[] args){
-	QueryFormController ctrl= new QueryFormController();
-	ctrl.getSolrQueryString("hypertension");
-	System.out.println("DONE!!!!");
-}
+
 }

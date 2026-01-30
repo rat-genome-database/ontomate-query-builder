@@ -7,7 +7,7 @@
 <title>Getting Result</title>
 </head>
 <body onload='document.forms[0].submit()'>
-<form action="/solr/browse" method="post">
+<form action="https://ontomate.rgd.mcw.edu/solr/OntoMate/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/> 
 <input type="hidden" name="hl.q" value = '${hlq}'/> 
  <input type="hidden" name="sort" value = "${sort}"/>

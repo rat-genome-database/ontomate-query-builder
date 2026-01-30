@@ -65,8 +65,8 @@
 						var col_name="#inTerm"+(row_id-1)+" input";
 						$(col_name).flushCache();
 
-						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/OntoSolr/select', {
+						//	   $(col_name).autocomplete('/solr/OntoSolr/select', {
+						$(col_name).autocomplete('https://ontomate.rgd.mcw.edu/solr/OntoSolr/select', {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -167,7 +167,7 @@
 	function update_autocomplete(obj_name, ont_cat) {
 		$(obj_name).flushCache();
 		$(obj_name).unautocomplete();
-		//  $(obj_name).autocomplete('/OntoSolr/select', {
+		//  $(obj_name).autocomplete('/solr/OntoSolr/select', {
 		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
 		if (ont_cat.trim() == "organism_term") {
 			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
@@ -177,7 +177,7 @@
                                 term:"rat " 				}
                         }
                 );
-    */		$(obj_name).autocomplete('/solr/select', {
+    */		$(obj_name).autocomplete('/solr/OntoMate/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
@@ -189,7 +189,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('/OntoSolr/select', {
+			$(obj_name).autocomplete('https://ontomate.rgd.mcw.edu/solr/OntoSolr/select', {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
@@ -225,11 +225,11 @@
 </script>
 <div class="container-fluid">
 	<div style="text-align: center">
-		<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
+		<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>OntoMate </span> </p>
 		<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 	</div>
 	<hr>
-	<form:form id="qForm" action="/QueryBuilder/getResult/" method="get"  commandName="queryString" target="_blank">
+	<form:form id="qForm" action="/QueryBuilder/getResult" method="get"   modelAttribute="queryString" target="_blank">
 		<div class="jumbotron">
 			<div class="container"  >
 				<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
@@ -283,7 +283,7 @@
 								</button>
 							</div>
 						</div>
-						<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
+						<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
 					</div>
 				</div>
 			</div>
@@ -430,7 +430,7 @@
 	$(function () {
 		var qbinput=$('#qb-ac-input');
 		$(qbinput).autocomplete();
-		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {
+		/*$(qbinput).autocomplete('https://rgd.mcw.edu/solr/OntoSolr/select', {
 			extraParams:{
 				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 				'fq': 'NOT cat:(CUSTOM HP MP)',

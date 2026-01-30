@@ -18,8 +18,8 @@ public class RgdTermSearchService {
 		String solrQueryString = "q=" + (isForHuman ? "species_s:(human) AND " : "") + "(term_str:("+
 	geneQueryString +") OR id_s:(" + geneQueryString + ")) AND cat:(RGD_GENE)&fl=id_s&wt=csv&csv.header=false&rows=1000000&csv.newline= ";
 		try {
-		//	URI uri = new URI("http","localhost:8080", "/OntoSolr/collection1/select", solrQueryString, null);
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/collection1/select", solrQueryString, null);
+		//	URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/OntoSolr/collection1/select", solrQueryString, null);
+			URI uri = new URI("http","ontomate.rgd.mcw.edu", "/OntoSolr/collection1/select", solrQueryString, null);
 			String value = BasicUtils.restGet(uri.toString(), null);
 			return value.split(" ");
 		} catch (Exception e) {
