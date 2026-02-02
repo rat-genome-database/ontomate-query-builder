@@ -17,7 +17,7 @@
  }
 %>
 Searching... Condition: <span style="color:brown;">${message_label}</span> 
-<form action=<%=hostURL%>/${source}/browse" method="post">
+<form action="<%=hostURL%>/${source}/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>
  <input type="hidden" name="sort" value = "${sort}"/>
  <!--input type="hidden" name="sort" value = "p_date desc"/-->
