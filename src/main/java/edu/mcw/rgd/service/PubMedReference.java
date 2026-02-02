@@ -18,7 +18,6 @@ public class PubMedReference {
 
             int annotcount = annDao.getCountOfAnnotationsByReference(refRgdId);
             if(annotcount>0){
-                System.out.println("ANNOT COUNT: "+ annotcount);
                 url=Link.ref(refRgdId)+"&abstract=0";
 
             }

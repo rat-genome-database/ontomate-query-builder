@@ -9,7 +9,7 @@ public class CurationQueryString {
 	private String qCond;
 	private String qGeneCond;
 	private Boolean qLooseMatch = false;
-	public String qSource;
+	private String qSource;
 	/**
 	 * @return the qLooseMatch
 	 */

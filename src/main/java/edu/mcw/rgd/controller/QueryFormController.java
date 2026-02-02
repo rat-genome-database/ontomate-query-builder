@@ -7,10 +7,13 @@ import java.util.*;
 
 
 import edu.mcw.rgd.service.PubMedReference;
-
+import edu.mcw.rgd.services.RgdContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.apache.commons.text.StringEscapeUtils;
+
+
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -47,6 +50,7 @@ import edu.mcw.rgd.service.SolrQueryStringService;
 import edu.mcw.rgd.service.SolrQueryStringService.FieldType;
 
 
+
 @Controller
 public class QueryFormController {
 /*	private static final Logger logger = LoggerFactory
@@ -57,7 +61,7 @@ public class QueryFormController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, @ModelAttribute("queryString") QueryString queryString) {
-		/*	logger.info("Welcome home! the client locale is " + locale.toString());*/
+	/*	logger.info("Welcome home! the client locale is " + locale.toString());*/
 
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -73,6 +77,7 @@ public class QueryFormController {
 			queryString=new QueryString();
 			queryString.setqSource("pubmed");
 		}
+		model.addAttribute("queryString", queryString);
 		model.addAttribute("serverTime", formattedDate);
 
 		return "home";
@@ -142,37 +147,37 @@ public class QueryFormController {
 		model.addAttribute("queryString", queryString);
 		return "selects";
 	}
-	/*	@RequestMapping(value = "/getOrganisms/{term}", method = RequestMethod.GET)
-    //	public String getOrganisms(@RequestBody @RequestParam("term") String term, Model model, HttpServletRequest request) throws Exception {
-        public String getOrganisms(@RequestBody @PathVariable("term") String term, Model model) throws Exception {
-            System.out.println("HELLO:" +term);
-            String regex="[0-9]+";
-            URI uri = new URI("http://hansen.rgd.mcw.edu:8080preprintSolr/select?q=rat&facet.field=organism_term_s&wt=json" );
-            String solrQueryStr = uri.toASCIIString();
-            String terms= BasicUtils.restGet(solrQueryStr);
-            JSONObject obj=new JSONObject(terms);
-            JSONObject facetObj=new JSONObject(obj.get("facet_counts").toString());
-            JSONObject orgObj= new JSONObject(facetObj.get("facet_fields").toString());
-            JSONArray array=(JSONArray) orgObj.get("organism_term_s");
-            Iterator i= array.iterator();
-            List<Object> orgObjects= new ArrayList<>();
-            List<String> organisms= new ArrayList<>();
-            while (i.hasNext()){
-                orgObjects.add(i.next());
-            }
-            for(Object org:orgObjects){
-                if(!org.toString().matches(regex))
-                organisms.add(org.toString());
-            }
-            model.addAttribute("organisms", organisms);
-        return "getOrganisms";
-        }*/
+/*	@RequestMapping(value = "/getOrganisms/{term}", method = RequestMethod.GET)
+//	public String getOrganisms(@RequestBody @RequestParam("term") String term, Model model, HttpServletRequest request) throws Exception {
+	public String getOrganisms(@RequestBody @PathVariable("term") String term, Model model) throws Exception {
+		System.out.println("HELLO:" +term);
+		String regex="[0-9]+";
+		URI uri = new URI("http://hansen.rgd.mcw.edu:8080preprintSolr/select?q=rat&facet.field=organism_term_s&wt=json" );
+		String solrQueryStr = uri.toASCIIString();
+		String terms= BasicUtils.restGet(solrQueryStr);
+		JSONObject obj=new JSONObject(terms);
+		JSONObject facetObj=new JSONObject(obj.get("facet_counts").toString());
+		JSONObject orgObj= new JSONObject(facetObj.get("facet_fields").toString());
+		JSONArray array=(JSONArray) orgObj.get("organism_term_s");
+		Iterator i= array.iterator();
+		List<Object> orgObjects= new ArrayList<>();
+		List<String> organisms= new ArrayList<>();
+		while (i.hasNext()){
+			orgObjects.add(i.next());
+		}
+		for(Object org:orgObjects){
+			if(!org.toString().matches(regex))
+			organisms.add(org.toString());
+		}
+		model.addAttribute("organisms", organisms);
+	return "getOrganisms";
+	}*/
 	@RequestMapping(value = "/getResult", method = RequestMethod.GET)
 	public String getResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
 		String solrQString = "";
 		String sortString = "";
-		String messageLabel = "";
+		String messageLabel = ""; 
 		String tmpStr = "";
 		if (queryString.getqPMID()!=null && queryString.getqPMID().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("pmid",
@@ -257,40 +262,40 @@ public class QueryFormController {
 					}
 
 				}
-
+				
 				if (fqc.getFieldName().equals("ontology")) {
 					String fieldName = SolrQueryStringService.getIndexTermField(termStr.getCat());
 					fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
 				}
 
 				if (!fqc.getFieldValue().equals("*")){
-					if (fqc.getFieldName().equals("rgd_gene_term")) {
-						int iGeneRgdId =termStr.getId().intValue();
-						solrQString += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
-						messageLabel +=	SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
-					} else if (fqc.getFieldName().equals("mt_term")) {
-						solrQString += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
-						messageLabel += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
-					} else if (fqc.getFieldName().equals("organism_term")) {
-						solrQString += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"organism_term", fqc.getFieldValue()
-								//.replaceAll("\\s","")
-						);
-						messageLabel += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue()
-										//	.replaceAll("\\s","")
-								));
-					} else if (true || fqc.isIncludeSynonyms()) {
+				if (fqc.getFieldName().equals("rgd_gene_term")) {
+					int iGeneRgdId =termStr.getId().intValue();
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
+					messageLabel +=	SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+				} else if (fqc.getFieldName().equals("mt_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				} else if (fqc.getFieldName().equals("organism_term")) {
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"organism_term", fqc.getFieldValue()
+									//.replaceAll("\\s","")
+							);
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Organism", SolrQueryStringService.getHtmlValue(fqc.getFieldValue()
+								//	.replaceAll("\\s","")
+							));
+				} else if (true || fqc.isIncludeSynonyms()) {
 
 						/*
 						 * extend to include all synonyms OntologyXDAO xdao =
@@ -298,14 +303,14 @@ public class QueryFormController {
 						 * SolrQueryStringService.getQueryString("",
 						 * fqc.isNotCondition(), fqc.getFieldName(),
 						 * xdao.getTerm(fqc.getFieldValue()).getTerm());
-						 *
+						 * 
 						 * List<TermSynonym> synonyms =
 						 * xdao.getTermSynonyms(fqc.getFieldValue()); for
 						 * (TermSynonym syn : synonyms) { solrQString +=
 						 * SolrQueryStringService.getQueryString("OR",
 						 * fqc.isNotCondition(), fqc.getFieldName(),
 						 * syn.getName()); } solrQString += ")";
-						 *
+						 * 
 						 * } catch (Exception e) { e.printStackTrace(); }
 						 */
 						messageLabel += SolrQueryStringService.getQueryString(
@@ -316,22 +321,22 @@ public class QueryFormController {
 						String idFieldName = SolrQueryStringService
 								.getOntIDField(fqc.getFieldName());
 						String qString = SolrQueryStringService.getQueryBooleans(fqc.getBooleanOpt(),
-								fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR ");
+										fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR "); 
 						solrQString += qString;
 					} } else {
 
-					messageLabel += SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
+						messageLabel += SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
+						
+						solrQString += SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
+					}
 
-					solrQString += SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
+
 				}
-
-
-			}
-
+			
 		}
 
 		if (queryString.getqSortConditions().size() > 0) {
@@ -355,26 +360,25 @@ public class QueryFormController {
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
 		if(queryString.getqSource()!=null) {
 			if (queryString.getqSource().equalsIgnoreCase("pubmed")) {
-				model.addAttribute("source", "/solr/OntoMate");
+				model.addAttribute("source", "solr/OntoMate");
 			} else if (queryString.getqSource().equalsIgnoreCase("preprint")) {
-				model.addAttribute("source", "/solr/preprintSolr");
+				model.addAttribute("source", "solr/preprintSolr");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai1")) {
-				model.addAttribute("source", "/solr/ai1");
+				model.addAttribute("source", "solr/ai1");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai2")) {
-				model.addAttribute("source", "/solr/ai2");
+				model.addAttribute("source", "solr/ai2");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai3")) {
-				model.addAttribute("source", "/solr/ai3");
+				model.addAttribute("source", "solr/ai3");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai4")) {
-				model.addAttribute("source", "/solr/ai4");
+				model.addAttribute("source", "solr/ai4");
 			} else if (queryString.getqSource().equalsIgnoreCase("ai5")) {
-				model.addAttribute("source", "/solr/ai5");
+				model.addAttribute("source", "solr/ai5");
 			}
 		}else{
 
-			model.addAttribute("source", "/solr/OntoMate");
+				model.addAttribute("source", "solr/OntoMate");
 
 		}
-		System.out.println("STANDALONE QUERY:"+ solrQString);
 		return "getResult";
 	}
 	public Map<String, String> getSolrQueryString(String fieldValue){
@@ -385,10 +389,10 @@ public class QueryFormController {
 		Map<String , OntoTermIdStr> catMap= new HashMap<>();
 		if (fullterms != null) {
 			for(String t: fullterms){
-				OntoTermIdStr termStr = new OntoTermIdStr(t);
+              	OntoTermIdStr termStr = new OntoTermIdStr(t);
 				if(!t.equals(""))
-					catMap.putIfAbsent(termStr.getCat(), termStr);
-			}
+				catMap.putIfAbsent(termStr.getCat(), termStr);
+	        }
 
 			for(Map.Entry e: catMap.entrySet()){
 				FieldQueryCondition fqc= new FieldQueryCondition();
@@ -447,34 +451,32 @@ public class QueryFormController {
 		System.out.print("REF RGD ID: "+refRgdId);
 		response.getWriter().print(refRgdId);
 		return null;
-	}
+}
 	@RequestMapping(value = "/getResultForCuration", method = RequestMethod.GET)
 	public String getResultForCuration(
 			@ModelAttribute("curationQueryString") CurationQueryString queryString, Model model) {
-		String source= queryString.getqSource();
-		System.out.println("CORE:"+source);
 		String defaultBoolConn = " OR ";
 //		String solrQString = "((-organism_term_s:(*)) OR (organism_term_s:(\"Rattus sp.\"^3 OR \"Rattus norvegicus\"^3 OR \"Homo sapiens\"^2 OR \"Mus musculus\"^1))) AND ((-mt_term:(*)) OR (mt_term:(*))^200)";
 		String solrQString = "((-organism_term_s:(*)) OR (organism_term_s:(\"Rattus sp.\"^3 OR \"Rattus norvegicus\"^3 OR \"Homo sapiens\"^2 OR \"Mus musculus\"^1)))";
 		String messageLabel = "";
 		StringBuilder termMessageLabel = new StringBuilder();
 		String geneMessageLabel = new String();
-
+		
 		/*logger.info("omid0 ======================================");
 		logger.info(queryString.toString());
 		logger.info("======================================");*/
-
+		
 		String singleGeneQStr = "";
 		String allGeneQStr = "";
 		try {
 			for (RgdIdCondition ric : queryString.getqRgdIds()) {
-
+				
 			/*	logger.info("omid1 ======================================");
 				logger.info(ric.toString());
 				logger.info(ric.getRgdId());
 				logger.info("======================================");*/
-
-
+				
+				
 				if (ric.getRgdId() != null && ric.getRgdId().length() > 0) {
 					int iRgdId = Integer.parseInt(ric.getRgdId());
 					singleGeneQStr += getGeneQueryString(iRgdId, defaultBoolConn, termMessageLabel, queryString.getqLooseMatch(), true);
@@ -489,11 +491,11 @@ public class QueryFormController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 	/*	logger.info("omid2 ======================================");
 		logger.info(queryString.getqGeneCond());
 		logger.info("======================================");*/
-
+		
 		if (queryString.getqGeneCond() != null && queryString.getqGeneCond().length() > 0) {
 			allGeneQStr = "(" + allGeneQStr + ")" + topLevelBooleanConnect(allGeneQStr, "gene:(" + queryString.getqGeneCond() + ") AND text:(" + queryString.getqGeneCond() + ")");
 			geneMessageLabel = "(" + geneMessageLabel + ")" + topLevelBooleanConnect(geneMessageLabel, "(" + queryString.getqGeneCond() + ")");
@@ -503,7 +505,7 @@ public class QueryFormController {
 			solrQString += topLevelBooleanConnect(solrQString, "(" + allGeneQStr + ")");
 			messageLabel += topLevelBooleanConnect(messageLabel, "(" + geneMessageLabel + ")");
 		}
-
+		
 		XdbIdDAO xdao = new XdbIdDAO();
 		String refQString = "";
 		try {
@@ -528,8 +530,8 @@ public class QueryFormController {
 				OntoTermIdStr termStr = new OntoTermIdStr(oic.getOntoId());
 				// Try search for ont_id directly
 				String idFieldName = SolrQueryStringService
-						.getOntIdField(oic.getOntoId());
-				String qString = getTermQueryString(idFieldName, termStr, termMessageLabel, defaultBoolConn);
+					.getOntIdField(oic.getOntoId());
+				String qString = getTermQueryString(idFieldName, termStr, termMessageLabel, defaultBoolConn); 
 				allOntoQStr += secondLevelBooleanConnect(allOntoQStr, qString);
 			}
 		}
@@ -543,27 +545,21 @@ public class QueryFormController {
 
 		if (termMessageLabel.length() > 0) messageLabel += topLevelBooleanConnect(messageLabel, "(" + termMessageLabel.toString() + ")");
 
-
-//		solrQString += " OR (title:\"not\")^-50";
-//		solrQString += " OR (title:\"not\") OR -(title:\"not\")";
-//		System.out.println("Curation query String:" + solrQString);
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("curHost", queryString.getCurHost().trim());
 		model.addAttribute("message_label", messageLabel.toString());
 		model.addAttribute("userKey", queryString.getUserKey().trim());
 		model.addAttribute("userId", queryString.getUserId().trim());
 		model.addAttribute("userFullName", queryString.getUserFullName().trim());
-		if(source!=null && source.equalsIgnoreCase("old")) {
-			model.addAttribute("source", "/solr/ai1");
+		if(queryString.getqSource()!=null && queryString.getqSource().equalsIgnoreCase("old")) {
+			model.addAttribute("source", "solr/ai1");
 		}else{
-			model.addAttribute("source", "/solr/OntoMate");
+			model.addAttribute("source", "solr/OntoMate");
 		}
-
+		
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
-		System.out.println("CURATION QUERY STRING:"+solrQString);
-
 		return "getResultForCuration";
 	}
 
@@ -575,7 +571,7 @@ public class QueryFormController {
 				OntoTermIdStr termStr = new OntoTermIdStr(oic.getOntoId());
 				// Try search for ont_id directly
 				String idFieldName = SolrQueryStringService
-						.getOntIdField(oic.getOntoId());
+					.getOntIdField(oic.getOntoId());
 			}
 		}
 
@@ -614,30 +610,30 @@ public class QueryFormController {
 				+ ":("
 				+ SolrQueryStringService.getValueQueryString(
 				FieldType.ONT_ID, termStr.getFullId());
-		StringBuilder textQueryStr = new StringBuilder();
+		    StringBuilder textQueryStr = new StringBuilder();
 		if(termStr.getFullId()!=null)
-			textQueryStr.append(getTermTextQueryStr(termStr.getFullId(), defaultBoolConn));
-		OntologyXDAO xdao = new OntologyXDAO();
-		try {
-			if(termStr.getFullId()!=null )
+		    textQueryStr.append(getTermTextQueryStr(termStr.getFullId(), defaultBoolConn));
+			OntologyXDAO xdao = new OntologyXDAO();
+			try {
+				if(termStr.getFullId()!=null )
 				termStr.setTerm(xdao.getTermByAccId(termStr.getFullId()).getTerm());
-			termMessageLabel.append((termMessageLabel.length()>0 ? defaultBoolConn : "") +
-					termStr.getTerm());
-			List<Term> childTerms = xdao.getAllActiveTermDescendants(
-					termStr.getFullId());
-			for (Term term : childTerms) {
-				qString += defaultBoolConn
-						+ SolrQueryStringService
-						.getValueQueryString(
-								FieldType.ONT_ID,
-								term.getAccId());
-				textQueryStr.append(defaultBoolConn).append(getTermTextQueryStr(term.getAccId(), defaultBoolConn));
-			}
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		};
+				termMessageLabel.append((termMessageLabel.length()>0 ? defaultBoolConn : "") +
+						termStr.getTerm());
+				List<Term> childTerms = xdao.getAllActiveTermDescendants(
+								termStr.getFullId());
+				for (Term term : childTerms) {
+					qString += defaultBoolConn
+							+ SolrQueryStringService
+									.getValueQueryString(
+											FieldType.ONT_ID,
+											term.getAccId());
+				    textQueryStr.append(defaultBoolConn).append(getTermTextQueryStr(term.getAccId(), defaultBoolConn));
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			};
 //			return "(" + textQueryStr.toString() + ")";
 //			return "(" + qString + ") OR text:(" + textQueryStr.toString() + "))";
 		return "(" + qString + "))";
@@ -653,7 +649,7 @@ public class QueryFormController {
 			textQueryStr.append("\"").append(term.getTerm().toLowerCase().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", "").trim()).append("\"");
 			textQueryStr.append(defaultBoolConn).append(
 					term.getTerm().toLowerCase().replaceAll("[=',\"<>?!@#$%^&*()-./:;]", "").trim().replaceAll("\\s+", " OR "));
-
+			
 			List<TermSynonym> synonyms = xdao.getTermSynonyms(termOntId);
 			for (TermSynonym synonym : synonyms) {
 				textQueryStr.append(defaultBoolConn).append("\"").append(synonym.getName().toLowerCase().replaceAll("[',\"<>?!@#$%^&*()-=./:;\\[\\]]", "").trim()).append("\"");
@@ -706,32 +702,32 @@ public class QueryFormController {
 			String geneQString = "";
 			AliasDAO adao = new AliasDAO();
 
-			geneQString +=
+			geneQString += 
 					(looseMatch ? "(":"\"") +
-							SolrQueryStringService.getValueQueryString(
-									FieldType.TEXT_FIELD, gene.getName().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
-							+ (looseMatch ? ")^15":"\"^5");
+					SolrQueryStringService.getValueQueryString(
+							FieldType.TEXT_FIELD, gene.getName().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
+					+ (looseMatch ? ")^15":"\"^5");
 			if (gene.getSymbol().length()>2) {
 				geneQString += defaultBoolean
 						+ (looseMatch ? "(":"\"")
 						+ SolrQueryStringService.getValueQueryString(
-						FieldType.TEXT_FIELD, gene.getSymbol().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
-						+ (looseMatch ? ")^15":"\"^5");
-			}
-
+								FieldType.TEXT_FIELD, gene.getSymbol().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim()) 
+								+ (looseMatch ? ")^15":"\"^5");
+				}
+					
 			List<Alias> aliases = adao.getAliases(iRgdId, "old_gene_name");
 			aliases.addAll(adao.getAliases(iRgdId, "old_gene_symbol"));
 			if (aliases.size() > 0) {
 				for (Alias alias : aliases) {
-					if (alias.getValue() != null && alias.getValue().length()>2
+					if (alias.getValue() != null && alias.getValue().length()>2 
 							&& !alias.getValue().startsWith("OTTHUM")
 							&& !alias.getValue().startsWith("OTTMUS")) {
 						geneQString += defaultBoolean
 								+ (looseMatch ? "(":"\"")
 								+ SolrQueryStringService.getValueQueryString(
-								FieldType.TEXT_FIELD, alias.getValue().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
+										FieldType.TEXT_FIELD, alias.getValue().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
 								+ (looseMatch ? ")":"\"")
-						;
+								;
 					}
 				}
 			}
@@ -742,17 +738,19 @@ public class QueryFormController {
 		}
 		return "";
 	}
-
+	
 	private String guessConcept(String termStr, String termCat) {
-
+		
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 
+
 		try {
-			URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
-					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
+
+			URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
-			String ontoSolrQueryStr = uri.toASCIIString();
+			String ontoSolrQueryStr = uri.toASCIIString(); 
 
 			String fullTerm = BasicUtils.restGet(ontoSolrQueryStr);
 
@@ -762,11 +760,20 @@ public class QueryFormController {
 		}
 		return null;
 	}
+	public String getHostName() throws UnknownHostException {
+		String hostName="";
+		if(RgdContext.isDev()){
+			hostName+="dev.rgd.mcw.edu";
+		}else {
+			hostName+="ontomate.rgd.mcw.edu";
+		}
+		return hostName;
+	}
 	private List<String> guessConcept1(String termStr, String termCat) {
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {
-			URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
@@ -787,20 +794,20 @@ public class QueryFormController {
 		String termCat = null;
 
 		try {
-//			URI uri = new URI("http","fox.hmgc.mcw.edu", "/solr/OntoSolr/select", "q=cat:(RDO^5 OR UMLS^4 OR HP^3 OR MP^2) AND (term_str:(\""
+//			URI uri = new URI("http","fox.hmgc.mcw.edu", "/OntoSolr/select", "q=cat:(RDO^5 OR UMLS^4 OR HP^3 OR MP^2) AND (term_str:(\""
 //		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 //					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ") ) AND def:(*)&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 //					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=csv&fl=def&csv.header=false&csv.separator=|", null);
-			URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
-					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
+			URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=(cat:(RDO^20 OR UMLS^15 OR HP^10 OR MP^2) AND (term_str:(\""
+		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR term_en:("
 					+ termStrBoolean + ")^20 OR synonym_en:(" + termStrBoolean + ") OR term_en:(" + termStr + ")  OR synonym_en:(" + termStr + ") ))&defType=edismax&rows=10&qf=term_en^30+term_str^50+term^30+synonym_en^4.5+synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&qf=&v.template=termdef&mm=75%", null);
-			String ontoSolrQueryStr = uri.toASCIIString();
+			String ontoSolrQueryStr = uri.toASCIIString(); 
 
 			String fullTerm = BasicUtils.restGet(ontoSolrQueryStr);
 
 			model.addAttribute("message", fullTerm.trim());
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("message", "");
@@ -870,7 +877,7 @@ public class QueryFormController {
 		String messageLabel = "";
 		StringBuilder termMessageLabel = new StringBuilder();
 		String geneMessageLabel = new String();
-
+		
 		String singleGeneQStr = "";
 		String allGeneQStr = "";
 		try {
@@ -889,15 +896,15 @@ public class QueryFormController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		solrQString += topLevelBooleanConnect(solrQString, "(" + allGeneQStr + ")");
 		messageLabel += topLevelBooleanConnect(messageLabel, "(" + geneMessageLabel + ")");
-
+		
 
 		model.addAttribute("q", solrQString.trim());
 		model.addAttribute("message_label", messageLabel.toString());
 		return "getBulkGeneResult";
-	}
+	} 
 
 	@RequestMapping(value = "/geneticsGeneQuery", method = RequestMethod.GET)
 	public String geneticsGeneQuery(@ModelAttribute("bulkGeneString") BulkGeneString genes, Model model) {
@@ -905,29 +912,29 @@ public class QueryFormController {
 		for (String rgdId : RgdTermSearchService.getGeneRgdIds(genes.getqString(), true)) {
 			if (rgdId != null && rgdId.trim().length() > 0) rgdIds.add(rgdId);
 		}
-		return getSkygenResult(rgdIds, (rgdIds.size() == 0 ?
+		return getSkygenResult(rgdIds, (rgdIds.size() == 0 ? 
 				Arrays.asList(genes.getqString().replace(",", " ").
-						split(" ")) : null), new ArrayList<String>(), model);
-	}
+				split(" ")) : null), new ArrayList<String>(), model);
+	} 
 
 	@RequestMapping(value = "/bulkGene", method = RequestMethod.GET)
 	public String bulkGene(Locale locale, Model model) {
 		return "bulkGeneForm";
 	}
-
-
+	
+	
 	@RequestMapping(value = "/geneticsHome", method = RequestMethod.GET)
 	public String geneticsHome(Locale locale, Model model) {
 		return "genetics_home";
 	}
-
+	
 	@RequestMapping(value = "/getGeneticsResult", method = RequestMethod.GET)
 	public String getGeneticsResult(
 			@ModelAttribute("queryString") QueryString queryString, Model model) {
 		String solrQString = "";
 		String hlQString = "";
 		String sortString = "";
-		String messageLabel = "";
+		String messageLabel = ""; 
 		String tmpStr = "";
 		if (queryString.getqPMID().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("pmid",
@@ -944,7 +951,7 @@ public class QueryFormController {
 			hlQString += tmpStr;
 			messageLabel += tmpStr;
 		}
-
+			
 
 		if (queryString.getqAuthorStr().length() > 0) {
 			tmpStr = SolrQueryStringService.getQueryString("authors",
@@ -1005,30 +1012,30 @@ public class QueryFormController {
 						termStr = new OntoTermIdStr(fqc.getFieldValue());
 					}
 				}
-
+				
 				if (fqc.getFieldName().equals("ontology")) {
 					String fieldName = SolrQueryStringService.getIndexTermField(termStr.getCat());
 					fqc.setFieldName(fieldName.equals("null_term") ? "*" : fieldName);
 				}
 
 				if (!fqc.getFieldValue().equals("*")) {
+					
+				if (fqc.getFieldName().equals("rgd_gene_term")) {
+					int iGeneRgdId =termStr.getId().intValue();
+					String mendelian_disease_ids = "*";
+					try {
+						URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+						String ontoSolrStr = uri.toASCIIString(); 
+						mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
+					} catch (Exception e) {
+						System.err.println("Exception in getting mendelian disease terms!");
+						e.printStackTrace();
+					}
 
-					if (fqc.getFieldName().equals("rgd_gene_term")) {
-						int iGeneRgdId =termStr.getId().intValue();
-						String mendelian_disease_ids = "*";
-						try {
-							URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
-							String ontoSolrStr = uri.toASCIIString();
-							mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
-						} catch (Exception e) {
-							System.err.println("Exception in getting mendelian disease terms!");
-							e.printStackTrace();
-						}
-
-						String basicGeneStr = getGeneQueryString(iGeneRgdId, " OR ", null, false, false);
-						String geneStr = SolrQueryStringService.getQueryString(
-								"", fqc.isNotCondition(),
-								"GENE", basicGeneStr);
+					String basicGeneStr = getGeneQueryString(iGeneRgdId, " OR ", null, false, false);
+					String geneStr = SolrQueryStringService.getQueryString(
+							"", fqc.isNotCondition(),
+							"GENE", basicGeneStr);
 //					String keywordsGeneStr = SolrQueryStringService.getQueryString(
 //							"", fqc.isNotCondition(),
 //							"keywords", basicGeneStr);
@@ -1036,27 +1043,27 @@ public class QueryFormController {
 //							"", fqc.isNotCondition(),
 //							"chemicals", basicGeneStr);
 //					geneStr = "(" + geneStr + " OR " + keywordsGeneStr + " OR " + chemicalsGeneStr + ")";
-						solrQString += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(), "-", "(((-organism_term_s:(*)) OR (organism_term_s:(\"Homo sapiens\"))) AND (rdo_id:("+mendelian_disease_ids+")^20000 OR rdo_id:(*)^10000 OR "+geneStr+") AND "+geneStr+")");
-						messageLabel +=	SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"GENE", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
-						String hlqGeneStr = SolrQueryStringService.getQueryString(
-								"", fqc.isNotCondition(),
-								"Gene", basicGeneStr);
+					solrQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(), "-", "(((-organism_term_s:(*)) OR (organism_term_s:(\"Homo sapiens\"))) AND (rdo_id:("+mendelian_disease_ids+")^20000 OR rdo_id:(*)^10000 OR "+geneStr+") AND "+geneStr+")");
+					messageLabel +=	SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"GENE", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+					String hlqGeneStr = SolrQueryStringService.getQueryString(
+							"", fqc.isNotCondition(),
+							"Gene", basicGeneStr);
 //					hlqGeneStr = "(" + hlqGeneStr + " OR " + keywordsGeneStr + " OR " + chemicalsGeneStr + ")";
-						hlQString += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(), "-", "(rdo_id:("+mendelian_disease_ids+") OR "+hlqGeneStr+")");
-					} else if (fqc.getFieldName().equals("mt_term")) {
-						tmpStr = SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
-						solrQString += tmpStr;
-						hlQString += tmpStr;
-						messageLabel += SolrQueryStringService.getQueryString(
-								fqc.getBooleanOpt(), fqc.isNotCondition(),
-								"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
-					} else if (true || fqc.isIncludeSynonyms()) {
+					hlQString += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(), "-", "(rdo_id:("+mendelian_disease_ids+") OR "+hlqGeneStr+")");
+				} else if (fqc.getFieldName().equals("mt_term")) {
+					tmpStr = SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"mt_term", fqc.getFieldValue().replaceAll("\\s",""));
+					solrQString += tmpStr;
+					hlQString += tmpStr;
+					messageLabel += SolrQueryStringService.getQueryString(
+							fqc.getBooleanOpt(), fqc.isNotCondition(),
+							"Mutation", SolrQueryStringService.getHtmlValue(fqc.getFieldValue().replaceAll("\\s","")));
+				} else if (true || fqc.isIncludeSynonyms()) {
 
 						/*
 						 * extend to include all synonyms OntologyXDAO xdao =
@@ -1064,14 +1071,14 @@ public class QueryFormController {
 						 * SolrQueryStringService.getQueryString("",
 						 * fqc.isNotCondition(), fqc.getFieldName(),
 						 * xdao.getTerm(fqc.getFieldValue()).getTerm());
-						 *
+						 * 
 						 * List<TermSynonym> synonyms =
 						 * xdao.getTermSynonyms(fqc.getFieldValue()); for
 						 * (TermSynonym syn : synonyms) { solrQString +=
 						 * SolrQueryStringService.getQueryString("OR",
 						 * fqc.isNotCondition(), fqc.getFieldName(),
 						 * syn.getName()); } solrQString += ")";
-						 *
+						 * 
 						 * } catch (Exception e) { e.printStackTrace(); }
 						 */
 						messageLabel += SolrQueryStringService.getQueryString(
@@ -1082,22 +1089,22 @@ public class QueryFormController {
 						String idFieldName = SolrQueryStringService
 								.getOntIDField(fqc.getFieldName());
 						String qString = SolrQueryStringService.getQueryBooleans(fqc.getBooleanOpt(),
-								fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR ");
+										fqc.isNotCondition()) + getTermQueryString(idFieldName, termStr, new StringBuilder(), " OR "); 
 						solrQString += qString;
 						hlQString += qString;
 					} } else {
-					messageLabel += SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
-					tmpStr = SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
-					solrQString += tmpStr;
-					hlQString += tmpStr;
+						messageLabel += SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								SolrQueryStringService.getOntoCatLabelMap().get(fqc.getFieldName()), "*");
+						tmpStr = SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								fqc.getFieldName().equals("rgd_gene_term") ? "gene" : fqc.getFieldName(), "*");
+						solrQString += tmpStr;
+						hlQString += tmpStr;
+					}
+
 				}
-
-			}
-
+			
 		}
 
 		if (queryString.getqSortConditions().size() > 0) {
@@ -1140,10 +1147,10 @@ public class QueryFormController {
 				termAccs.add(oic.getOntoId());
 			}
 		}
-
+		
 		return getSkygenResult(rgdIds, null, termAccs, model);
 	}
-
+	
 	public String getSkygenResult(List<String> rgdIds, List<String> geneTexts, List<String> termAccs, Model model) {
 		String defaultBoolConn = " OR ";
 //		String solrQString = "((-organism_term_s:(*)) OR (organism_term_s:(\"Rattus sp.\"^3 OR \"Rattus norvegicus\"^3 OR \"Homo sapiens\"^2 OR \"Mus musculus\"^1))) AND ((-mt_term:(*)) OR (mt_term:(*))^200)";
@@ -1151,14 +1158,14 @@ public class QueryFormController {
 		String messageLabel = "";
 		StringBuilder termMessageLabel = new StringBuilder();
 		String geneMessageLabel = new String();
-
+		
 		String singleGeneQStr = "";
 		String allGeneQStr = "";
 		String hlQString = "";
 		String mendelian_disease_ids = "*";
 		try {
-			URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
-			String ontoSolrStr = uri.toASCIIString();
+			URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=mendelian+OR+inheritance+OR+familial+OR+genetic+OR+ancestral+OR+patrimonial+OR+familial&fq=cat:\"RDO\"&fl=id&wt=velocity&v.template=idstring&rows=1000000", null);
+			String ontoSolrStr = uri.toASCIIString(); 
 			mendelian_disease_ids = BasicUtils.restGet(ontoSolrStr, null);
 		} catch (Exception e) {
 			System.err.println("Exception in getting mendelian disease terms!");
@@ -1167,16 +1174,16 @@ public class QueryFormController {
 
 		try {
 			for (String ric : rgdIds) {
-				int iRgdId = Integer.parseInt(ric);
-				singleGeneQStr += getGeneQueryString(iRgdId, defaultBoolConn, termMessageLabel, false, true);
-				if (singleGeneQStr.length() > 0) {
-					allGeneQStr += secondLevelBooleanConnect(allGeneQStr, "gene:(" + singleGeneQStr + ") OR text:(" + singleGeneQStr + ")");
-					geneMessageLabel += secondLevelBooleanConnect(geneMessageLabel, "(" + termMessageLabel + ")");
-					termMessageLabel = new StringBuilder();
-					singleGeneQStr = "";
-				}
+					int iRgdId = Integer.parseInt(ric);
+					singleGeneQStr += getGeneQueryString(iRgdId, defaultBoolConn, termMessageLabel, false, true);
+					if (singleGeneQStr.length() > 0) {
+						allGeneQStr += secondLevelBooleanConnect(allGeneQStr, "gene:(" + singleGeneQStr + ") OR text:(" + singleGeneQStr + ")");
+						geneMessageLabel += secondLevelBooleanConnect(geneMessageLabel, "(" + termMessageLabel + ")");
+						termMessageLabel = new StringBuilder();
+						singleGeneQStr = "";
+					}
 			}
-
+			
 			if (geneTexts != null) {
 				for (String geneText : geneTexts) {
 					allGeneQStr += secondLevelBooleanConnect(allGeneQStr, "gene:(" + geneText + ") OR text:(" + geneText + ")");
@@ -1187,7 +1194,7 @@ public class QueryFormController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		if (allGeneQStr.length()>0) {
 			String geneStr = SolrQueryStringService.getQueryString(
 					"", false,
@@ -1206,16 +1213,16 @@ public class QueryFormController {
 //			solrQString += topLevelBooleanConnect(solrQString, "(" + allGeneQStr + ")");
 			messageLabel += topLevelBooleanConnect(messageLabel, "(" + geneMessageLabel + ")");
 		}
-
+		
 		termMessageLabel = new StringBuilder();
 		String allOntoQStr = "";
 		for (String oic : termAccs) {
-			OntoTermIdStr termStr = new OntoTermIdStr(oic);
-			// Try search for ont_id directly
-			String idFieldName = SolrQueryStringService
+				OntoTermIdStr termStr = new OntoTermIdStr(oic);
+				// Try search for ont_id directly
+				String idFieldName = SolrQueryStringService
 					.getOntIdField(oic);
-			String qString = getTermQueryString(idFieldName, termStr, termMessageLabel, defaultBoolConn);
-			allOntoQStr += secondLevelBooleanConnect(allOntoQStr, qString);
+				String qString = getTermQueryString(idFieldName, termStr, termMessageLabel, defaultBoolConn); 
+				allOntoQStr += secondLevelBooleanConnect(allOntoQStr, qString);
 		}
 
 //		if (queryString.getqCond().length() > 0) {
@@ -1230,18 +1237,18 @@ public class QueryFormController {
 
 		if (termMessageLabel.length() > 0) messageLabel += topLevelBooleanConnect(messageLabel, "(" + termMessageLabel.toString() + ")");
 
-
+		
 		model.addAttribute("hlq", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
 						.finalQueryString(hlQString.trim())));
 		model.addAttribute("q", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
 						.finalQueryString(solrQString.trim())));
-
+		
 		model.addAttribute("message_label", StringEscapeUtils
 				.escapeHtml4(SolrQueryStringService
 						.finalQueryString(messageLabel.replaceAll("^\\s*(OR|AND)\\s*",""))));
-
+		
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
 //						.finalQueryString(sortString.trim())));
@@ -1273,7 +1280,7 @@ public class QueryFormController {
 	public String getSkynetCuratable(@ModelAttribute("CuratableCondition") CuratableCondition curCond, Model model) {
 		String curatable = PubMedDbService.getSkynetCuratableFromHbase(curCond);
 		model.addAttribute("message", curatable);
-
+		
 		return "SimpleMessage";
 	}
 
@@ -1283,9 +1290,5 @@ public class QueryFormController {
 		model.addAttribute("message", curatable);
 		return "SimpleMessage";
 	}
-	public static void main(String[] args){
-		QueryFormController ctrl= new QueryFormController();
-		ctrl.getSolrQueryString("hypertension");
-		System.out.println("DONE!!!!");
-	}
+
 }
