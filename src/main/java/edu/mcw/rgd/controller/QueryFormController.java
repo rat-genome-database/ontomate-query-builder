@@ -539,7 +539,11 @@ public class QueryFormController {
 		model.addAttribute("userKey", queryString.getUserKey().trim());
 		model.addAttribute("userId", queryString.getUserId().trim());
 		model.addAttribute("userFullName", queryString.getUserFullName().trim());
-		
+		if(queryString.getqSource()!=null && queryString.getqSource().equalsIgnoreCase("old")) {
+			model.addAttribute("source", "solr/ai1");
+		}else{
+			model.addAttribute("source", "solr/OntoMate");
+		}
 		
 //		model.addAttribute("sort", StringEscapeUtils
 //				.escapeHtml4(SolrQueryStringService
