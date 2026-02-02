@@ -251,6 +251,30 @@
 						<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
 						<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
 					</div>
+					<%
+						if(RgdContext.isDev()){
+					%>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai1" path="qSource" value="ai1"/>
+						<label class="form-check-label" for="ai1" style="font-size: medium">AI 1</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai2" path="qSource" value="ai2"/>
+						<label class="form-check-label" for="ai2" style="font-size: medium">AI 2</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai3" path="qSource" value="ai3"/>
+						<label class="form-check-label" for="ai3" style="font-size: medium">AI 3</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai4" path="qSource" value="ai4"/>
+						<label class="form-check-label" for="ai4" style="font-size: medium">AI 4</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai5" path="qSource" value="ai5"/>
+						<label class="form-check-label" for="ai5" style="font-size: medium">AI 5</label>
+					</div>
+					<%}%>
 				</div>
 				<div class="form-row row">
 					<div class="form-group col-md-4" id="selOnt0">
