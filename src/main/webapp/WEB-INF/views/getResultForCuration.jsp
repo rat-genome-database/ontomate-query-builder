@@ -1,5 +1,6 @@
+<%@ page import="edu.mcw.rgd.services.RgdContext" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,8 +8,16 @@
 <title>Getting Result</title>
 </head>
 <body onload='document.forms[0].submit()'>
+<%
+ String hostURL="";
+ if(RgdContext.isDev()){
+  hostURL+="https://dev.rgd.mcw.edu";
+ }else {
+  hostURL+="https://ontomate.rgd.mcw.edu";
+ }
+%>
 Searching... Condition: <span style="color:brown;">${message_label}</span> 
-<form action="https://ontomate.rgd.mcw.edu/solr/browse" method="post">
+<form action="<%=hostURL%>/${source}/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>
  <input type="hidden" name="sort" value = "${sort}"/>
  <!--input type="hidden" name="sort" value = "p_date desc"/-->

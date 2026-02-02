@@ -1,3 +1,4 @@
+<%@ page import="edu.mcw.rgd.services.RgdContext" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%  String pageTitle =  "OntoMate - Literature search engine";
 	String pageDescription ="OntoMate";
@@ -18,11 +19,19 @@
 		background-color: #D1F2EB;
 	}
 </style>
-
+<%
+	String hostURL="";
+	if(RgdContext.isDev()){
+		hostURL+="https://dev.rgd.mcw.edu";
+	}else {
+		hostURL+="https://ontomate.rgd.mcw.edu";
+	}
+%>
 <script type="text/javascript">
 
 	var row_count=0;
 	var sort_row_count = 0;
+	var autocompleteURL='<%=hostURL%>/solr/OntoSolr/select';
 
 	$(document).ready(function(){
 		$('#qb-options').hide();
@@ -65,8 +74,8 @@
 						var col_name="#inTerm"+(row_id-1)+" input";
 						$(col_name).flushCache();
 
-						//	   $(col_name).autocomplete('/OntoSolr/select', {
-						$(col_name).autocomplete('/OntoSolr/select', {
+						//	   $(col_name).autocomplete('/solr/OntoSolr/select', {
+						$(col_name).autocomplete(autocompleteURL, {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -167,7 +176,7 @@
 	function update_autocomplete(obj_name, ont_cat) {
 		$(obj_name).flushCache();
 		$(obj_name).unautocomplete();
-		//  $(obj_name).autocomplete('/OntoSolr/select', {
+		//  $(obj_name).autocomplete('/solr/OntoSolr/select', {
 		console.log(obj_name + '\t' + ont_cat +"\t"+ $(obj_name).value);
 		if (ont_cat.trim() == "organism_term") {
 			console.log(obj_name + '\t' + ont_cat + "\t INSIDE");
@@ -177,7 +186,7 @@
                                 term:"rat " 				}
                         }
                 );
-    */		$(obj_name).autocomplete('/solr/select', {
+    */		$(obj_name).autocomplete('/solr/OntoMate/select', {
 						extraParams: {
 							'qf': 'organism_term^5',
 							'wt': 'velocity',
@@ -189,7 +198,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('/OntoSolr/select', {
+			$(obj_name).autocomplete(autocompleteURL, {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
@@ -225,11 +234,11 @@
 </script>
 <div class="container-fluid">
 	<div style="text-align: center">
-		<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>ntoMate </span> </p>
+		<p><span style="color:#24619c;font-size: 40px;text-decoration: none;"><img src="/QueryBuilder/common/logo.png" width="100px; height:100px"/>OntoMate </span> </p>
 		<p class="lead" style="color:#2865A3">An ontology-driven, concept-based literature search engine developed at RGD.</p>
 	</div>
 	<hr>
-	<form:form id="qForm" action="/QueryBuilder/getResult/" method="get"  commandName="queryString" target="_blank">
+	<form:form id="qForm" action="/QueryBuilder/getResult" method="get"   modelAttribute="queryString" target="_blank">
 		<div class="jumbotron">
 			<div class="container"  >
 				<div class="form-row row" style="text-align: center;margin-bottom: 2%;margin-left:40%" >
@@ -242,6 +251,30 @@
 						<form:radiobutton class="form-check-input"  name="qSource" id="preprint" path="qSource" value="preprint"/>
 						<label class="form-check-label" for="preprint" style="font-size: medium">COVID-19 Preprint</label>
 					</div>
+					<%
+						if(RgdContext.isDev()){
+					%>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai1" path="qSource" value="ai1"/>
+						<label class="form-check-label" for="ai1" style="font-size: medium">AI 1</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai2" path="qSource" value="ai2"/>
+						<label class="form-check-label" for="ai2" style="font-size: medium">AI 2</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai3" path="qSource" value="ai3"/>
+						<label class="form-check-label" for="ai3" style="font-size: medium">AI 3</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai4" path="qSource" value="ai4"/>
+						<label class="form-check-label" for="ai4" style="font-size: medium">AI 4</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<form:radiobutton class="form-check-input"  name="qSource" id="ai5" path="qSource" value="ai5"/>
+						<label class="form-check-label" for="ai5" style="font-size: medium">AI 5</label>
+					</div>
+					<%}%>
 				</div>
 				<div class="form-row row">
 					<div class="form-group col-md-4" id="selOnt0">
@@ -283,7 +316,7 @@
 								</button>
 							</div>
 						</div>
-						<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult/?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
+						<small class="form-text text-muted">Examples: <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=hypertension" target="_blank">Hypertension</a>, <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=cancer" target="_blank">Cancer</a>, <a href="/QueryBuilder/getResult?qFieldConditions%5B0%5D.fieldName=ontology&qFieldConditions%5B0%5D.fieldValue=a2m" target="_blank">A2m</a></small>
 					</div>
 				</div>
 			</div>
@@ -430,7 +463,7 @@
 	$(function () {
 		var qbinput=$('#qb-ac-input');
 		$(qbinput).autocomplete();
-		/*$(qbinput).autocomplete('https://rgd.mcw.edu/OntoSolr/select', {
+		/*$(qbinput).autocomplete('https://rgd.mcw.edu/solr/OntoSolr/select', {
 			extraParams:{
 				'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 				'fq': 'NOT cat:(CUSTOM HP MP)',

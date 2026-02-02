@@ -9,6 +9,7 @@ public class CurationQueryString {
 	private String qCond;
 	private String qGeneCond;
 	private Boolean qLooseMatch = false;
+	private String qSource;
 	/**
 	 * @return the qLooseMatch
 	 */
@@ -142,5 +143,13 @@ public class CurationQueryString {
 	 */
 	public void setqGeneCond(String qGeneCond) {
 		this.qGeneCond = qGeneCond;
+	}
+
+	public String getqSource() {
+		return qSource;
+	}
+
+	public void setqSource(String qSource) {
+		this.qSource = qSource;
 	}
 }
