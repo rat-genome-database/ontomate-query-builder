@@ -2,6 +2,7 @@ package edu.mcw.rgd.service;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
+import edu.mcw.rgd.controller.QueryFormController;
 
 import java.net.URI;
 
@@ -19,7 +20,7 @@ public class RgdTermSearchService {
 	geneQueryString +") OR id_s:(" + geneQueryString + ")) AND cat:(RGD_GENE)&fl=id_s&wt=csv&csv.header=false&rows=1000000&csv.newline= ";
 		try {
 		//	URI uri = new URI("http","dev.rgd.mcw.edu:8983", "/OntoSolr/collection1/select", solrQueryString, null);
-			URI uri = new URI("http","ontomate.rgd.mcw.edu", "/OntoSolr/collection1/select", solrQueryString, null);
+			URI uri = new URI("https", QueryFormController.getHostName(), "/OntoSolr/collection1/select", solrQueryString, null);
 			String value = BasicUtils.restGet(uri.toString(), null);
 			return value.split(" ");
 		} catch (Exception e) {

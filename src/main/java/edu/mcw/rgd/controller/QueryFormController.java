@@ -750,7 +750,7 @@ public class QueryFormController {
 		}
 		return null;
 	}
-	public String getHostName() throws UnknownHostException {
+	public static String getHostName() throws UnknownHostException {
 		String hostName="";
 		if(RgdContext.isDev()){
 			hostName+="dev.rgd.mcw.edu";
