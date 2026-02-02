@@ -1,6 +1,7 @@
 package edu.mcw.rgd.controller;
 
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -773,7 +774,7 @@ public class QueryFormController {
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 		List<String> fullterms= new ArrayList<>();
 		try {
-			URI uri = new URI("http","localhost:8080", "/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
+			URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 					+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
 					+ termStrBoolean + ")&defType=edismax&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
