@@ -1,3 +1,4 @@
+<%@ page import="edu.mcw.rgd.services.RgdContext" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%  String pageTitle =  "OntoMate - Literature search engine";
 	String pageDescription ="OntoMate";
@@ -18,11 +19,19 @@
 		background-color: #D1F2EB;
 	}
 </style>
-
+<%
+	String hostURL="";
+	if(RgdContext.isDev()){
+		hostURL+="https://dev.rgd.mcw.edu";
+	}else {
+		hostURL+="https://ontomate.rgd.mcw.edu";
+	}
+%>
 <script type="text/javascript">
 
 	var row_count=0;
 	var sort_row_count = 0;
+	var autocompleteURL='<%=hostURL%>/solr/OntoSolr/select';
 
 	$(document).ready(function(){
 		$('#qb-options').hide();
@@ -66,7 +75,7 @@
 						$(col_name).flushCache();
 
 						//	   $(col_name).autocomplete('/solr/OntoSolr/select', {
-						$(col_name).autocomplete('https://ontomate.rgd.mcw.edu/solr/OntoSolr/select', {
+						$(col_name).autocomplete(autocompleteURL, {
 									extraParams:{
 										'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
 										'fq': 'NOT cat:(CUSTOM HP MP)',
@@ -189,7 +198,7 @@
 			);
 
 		} else {
-			$(obj_name).autocomplete('https://ontomate.rgd.mcw.edu/solr/OntoSolr/select', {
+			$(obj_name).autocomplete(autocompleteURL, {
 						extraParams: {
 							'qf': 'term_en^5 term_str^3 term^3 term_ws^2 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
 							'fq': 'cat:' + (ont_cat == "ontology" ? "(NOT CUSTOM NOT HP)" : ont_cat.substring(0, ont_cat.length - 5).toUpperCase()),
