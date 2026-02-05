@@ -186,6 +186,12 @@ public class QueryFormController {
 			solrQString += tmpStr;
 			messageLabel += tmpStr;
 		}
+		if (queryString.getqOrganismNcbiId()!=null && queryString.getqOrganismNcbiId().length() > 0) {
+			tmpStr = SolrQueryStringService.getQueryString("organism_ncbi_id",
+					FieldType.NUMERIC_FIELD, queryString.getqOrganismNcbiId());
+			solrQString += tmpStr;
+			messageLabel += tmpStr;
+		}
 
 		if ( queryString.getqString()!=null && queryString.getqString().length() > 0){
 			tmpStr = SolrQueryStringService.getQueryString("*",

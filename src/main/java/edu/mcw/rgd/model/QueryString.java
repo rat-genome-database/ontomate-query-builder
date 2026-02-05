@@ -7,6 +7,7 @@ public class QueryString {
 	private String qString;
 	private String qAuthorStr;
 	public String qSource;
+	public String qOrganismNcbiId;
 	private AutoPopulatingList<FieldQueryCondition> qFieldConditions;
 	/**
 	 * @return the qSortConditions
@@ -165,5 +166,13 @@ public class QueryString {
 
 	public void setqSource(String qSource) {
 		this.qSource = qSource;
+	}
+
+	public String getqOrganismNcbiId() {
+		return qOrganismNcbiId;
+	}
+
+	public void setqOrganismNcbiId(String qOrganismNcbiId) {
+		this.qOrganismNcbiId = qOrganismNcbiId;
 	}
 }
