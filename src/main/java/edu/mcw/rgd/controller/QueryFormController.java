@@ -5,8 +5,11 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Map;
 
 
+import edu.mcw.rgd.datamodel.*;
+import edu.mcw.rgd.model.*;
 import edu.mcw.rgd.service.PubMedReference;
 import edu.mcw.rgd.services.RgdContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,23 +31,8 @@ import edu.mcw.rgd.dao.impl.GeneDAO;
 import edu.mcw.rgd.dao.impl.OntologyXDAO;
 import edu.mcw.rgd.dao.impl.OrthologDAO;
 import edu.mcw.rgd.dao.impl.XdbIdDAO;
-import edu.mcw.rgd.datamodel.Alias;
-import edu.mcw.rgd.datamodel.Gene;
-import edu.mcw.rgd.datamodel.Ortholog;
-import edu.mcw.rgd.datamodel.XdbId;
 import edu.mcw.rgd.datamodel.ontologyx.Term;
 import edu.mcw.rgd.datamodel.ontologyx.TermSynonym;
-import edu.mcw.rgd.model.BulkGeneString;
-import edu.mcw.rgd.model.CuratableCondition;
-import edu.mcw.rgd.model.CurationQueryString;
-import edu.mcw.rgd.model.FieldQueryCondition;
-import edu.mcw.rgd.model.FieldSortCondition;
-import edu.mcw.rgd.model.OntoIdCondition;
-import edu.mcw.rgd.model.OntoTermIdStr;
-import edu.mcw.rgd.model.QueryString;
-import edu.mcw.rgd.model.RefRgdIdCondition;
-import edu.mcw.rgd.model.RgdIdCondition;
-import edu.mcw.rgd.model.SolrQueryCondition;
 import edu.mcw.rgd.service.PubMedDbService;
 import edu.mcw.rgd.service.RgdTermSearchService;
 import edu.mcw.rgd.service.SolrQueryStringService;
@@ -190,7 +178,7 @@ public class QueryFormController {
 			tmpStr = SolrQueryStringService.getQueryString("organism_ncbi_id",
 					FieldType.NUMERIC_FIELD, queryString.getqOrganismNcbiId());
 			solrQString += tmpStr;
-			messageLabel += tmpStr;
+			messageLabel +=  Species.getByTaxonId(Integer.parseInt(queryString.qOrganismNcbiId)).getDisplayName() +" (Taxon ID:"+queryString.getqOrganismNcbiId()+")";
 		}
 
 		if ( queryString.getqString()!=null && queryString.getqString().length() > 0){
