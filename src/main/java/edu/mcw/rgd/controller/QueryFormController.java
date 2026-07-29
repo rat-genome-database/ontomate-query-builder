@@ -269,9 +269,12 @@ public class QueryFormController {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
 							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
-					messageLabel +=	SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+					// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
+					// getQueryString() expand it into the boosted solr clause
+					// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
+					messageLabel += SolrQueryStringService.getQueryBooleans(
+							fqc.getBooleanOpt(), fqc.isNotCondition())
+							+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
 				} else if (fqc.getFieldName().equals("mt_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
@@ -400,9 +403,12 @@ public class QueryFormController {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
 							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
-					messageLabel +=	SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"gene", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+					// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
+					// getQueryString() expand it into the boosted solr clause
+					// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
+					messageLabel += SolrQueryStringService.getQueryBooleans(
+							fqc.getBooleanOpt(), fqc.isNotCondition())
+							+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
 				} else if (fqc.getFieldName().equals("mt_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
@@ -1040,9 +1046,9 @@ public class QueryFormController {
 //					geneStr = "(" + geneStr + " OR " + keywordsGeneStr + " OR " + chemicalsGeneStr + ")";
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(), "-", "(((-organism_term_s:(*)) OR (organism_term_s:(\"Homo sapiens\"))) AND (rdo_id:("+mendelian_disease_ids+")^20000 OR rdo_id:(*)^10000 OR "+geneStr+") AND "+geneStr+")");
-					messageLabel +=	SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"GENE", SolrQueryStringService.getHtmlValue(termStr.getTerm()));
+					messageLabel += SolrQueryStringService.getQueryBooleans(
+							fqc.getBooleanOpt(), fqc.isNotCondition())
+							+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
 					String hlqGeneStr = SolrQueryStringService.getQueryString(
 							"", fqc.isNotCondition(),
 							"Gene", basicGeneStr);
