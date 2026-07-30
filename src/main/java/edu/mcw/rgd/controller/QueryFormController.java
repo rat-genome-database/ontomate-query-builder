@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+import com.google.gson.Gson;
 import edu.mcw.rgd.datamodel.*;
 import edu.mcw.rgd.model.*;
 import edu.mcw.rgd.service.PubMedReference;
@@ -268,15 +269,18 @@ public class QueryFormController {
 				if (!fqc.getFieldValue().equals("*")){
 				if (fqc.getFieldName().equals("rgd_gene_term")) {
 					int iGeneRgdId =termStr.getId().intValue();
-					solrQString += SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
-					// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
-					// getQueryString() expand it into the boosted solr clause
-					// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
-					messageLabel += SolrQueryStringService.getQueryBooleans(
-							fqc.getBooleanOpt(), fqc.isNotCondition())
-							+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
+					String geneQStr = getGeneQueryStringOrTerm(iGeneRgdId, termStr, true);
+					if (geneQStr.length() > 0) {
+						solrQString += SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								"gene", geneQStr);
+						// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
+						// getQueryString() expand it into the boosted solr clause
+						// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
+						messageLabel += SolrQueryStringService.getQueryBooleans(
+								fqc.getBooleanOpt(), fqc.isNotCondition())
+								+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
+					}
 				} else if (fqc.getFieldName().equals("mt_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
@@ -392,7 +396,10 @@ public class QueryFormController {
 			for(String t: fullterms){
 				if(t.equals("")) continue;
               	OntoTermIdStr termStr = new OntoTermIdStr(t);
-				catMap.putIfAbsent(termStr.getCat(), termStr);
+				// the top hit for a category takes the slot, but never a gene of a species we cannot search
+				if (!catMap.containsKey(termStr.getCat()) && isSearchableGene(termStr)) {
+					catMap.put(termStr.getCat(), termStr);
+				}
 				if (termStr.getTerm() != null && termStr.getTerm().trim().equalsIgnoreCase(fieldValue.trim())) {
 					exactMatchesByCat.computeIfAbsent(termStr.getCat(), k -> new ArrayList<>()).add(t);
 				}
@@ -400,7 +407,8 @@ public class QueryFormController {
 			// same ranking caveat as guessConcept(): the top hit for a category is not
 			// necessarily the term that was typed, so let an exact match take the slot
 			for (Map.Entry<String, List<String>> exact : exactMatchesByCat.entrySet()) {
-				catMap.put(exact.getKey(), new OntoTermIdStr(preferredCandidate(exact.getValue())));
+				String preferred = preferredCandidate(exact.getValue());
+				if (preferred != null) catMap.put(exact.getKey(), new OntoTermIdStr(preferred));
 			}
 
 			for(Map.Entry e: catMap.entrySet()){
@@ -411,15 +419,18 @@ public class QueryFormController {
 
 				if (fqc.getFieldName().equals("rgd_gene_term")) {
 					int iGeneRgdId =termStr.getId().intValue();
-					solrQString += SolrQueryStringService.getQueryString(
-							fqc.getBooleanOpt(), fqc.isNotCondition(),
-							"gene", getGeneQueryString(iGeneRgdId, " OR ", null, false, true));
-					// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
-					// getQueryString() expand it into the boosted solr clause
-					// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
-					messageLabel += SolrQueryStringService.getQueryBooleans(
-							fqc.getBooleanOpt(), fqc.isNotCondition())
-							+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
+					String geneQStr = getGeneQueryStringOrTerm(iGeneRgdId, termStr, true);
+					if (geneQStr.length() > 0) {
+						solrQString += SolrQueryStringService.getQueryString(
+								fqc.getBooleanOpt(), fqc.isNotCondition(),
+								"gene", geneQStr);
+						// build the label directly: a field name of "gene"/"Gene"/"GENE" makes
+						// getQueryString() expand it into the boosted solr clause
+						// (gene:(..)^10 OR text:(..)), which is not what we want to show the user
+						messageLabel += SolrQueryStringService.getQueryBooleans(
+								fqc.getBooleanOpt(), fqc.isNotCondition())
+								+ " Gene:(" + SolrQueryStringService.getHtmlValue(termStr.getTerm()) + ")";
+					}
 				} else if (fqc.getFieldName().equals("mt_term")) {
 					solrQString += SolrQueryStringService.getQueryString(
 							fqc.getBooleanOpt(), fqc.isNotCondition(),
@@ -679,23 +690,26 @@ public class QueryFormController {
 	}
 
 	private String getGeneQueryString(int iRgdId, String defaultBoolConn, StringBuilder termMessageLabel, boolean looseMatch, boolean includeOrtholog) {
+		Gson gson=new Gson();
 		StringBuilder geneQString = new StringBuilder();
 		GeneDAO gdao = new GeneDAO();
 		OrthologDAO odao = new OrthologDAO();
+		System.out.println("iRGDID:"+ iRgdId);
 		try {
 			Gene gene = gdao.getGene(iRgdId);
-			if (termMessageLabel != null) termMessageLabel.append((termMessageLabel.length()>0 ? defaultBoolConn : "") +
-					gene.getSymbol());
+			System.out.println("GENE:" + gene.getName()+"\n"+ gson.toJson(gene));
 			if (gene != null) {
-				if (geneQString.length() > 0) geneQString.append(defaultBoolConn);
-				geneQString.append(SolrQueryStringService.addSpeciesCondition(gene.getSpeciesTypeKey(),
+				if (termMessageLabel != null && gene.getSymbol() != null) termMessageLabel.append((termMessageLabel.length()>0 ? defaultBoolConn : "") +
+						gene.getSymbol());
+				appendGeneClause(geneQString, defaultBoolConn, SolrQueryStringService.addSpeciesCondition(gene.getSpeciesTypeKey(),
 						getGeneQueryString(gene, defaultBoolConn, looseMatch)));
 				if (includeOrtholog) {
 					List<Ortholog> ortList = odao.getOrthologsForSourceRgdId(iRgdId);
 					if (ortList.size() > 0) {
 						for (Ortholog ort : ortList) {
 							gene = gdao.getGene(ort.getDestRgdId());
-							geneQString.append(defaultBoolConn + SolrQueryStringService.addSpeciesCondition(ort.getDestSpeciesTypeKey(),
+							if (gene == null) continue;
+							appendGeneClause(geneQString, defaultBoolConn, SolrQueryStringService.addSpeciesCondition(ort.getDestSpeciesTypeKey(),
 									getGeneQueryString(gene, defaultBoolConn, looseMatch)));
 						}
 					}
@@ -708,49 +722,72 @@ public class QueryFormController {
 		return geneQString.toString();
 	}
 
+	/**
+	 * An empty gene condition used to be handed to solr as "gene:()", which does not parse - edismax
+	 * then escapes the whole query and runs it as plain text, so every gene search came back with the
+	 * same ~80k hits. Never emit an empty condition: fall back to the term the user actually typed.
+	 */
+	private String getGeneQueryStringOrTerm(int iGeneRgdId, OntoTermIdStr termStr, boolean includeOrtholog) {
+		String geneQStr = getGeneQueryString(iGeneRgdId, " OR ", null, false, includeOrtholog);
+		if (geneQStr.trim().length() > 0) return geneQStr;
+
+		String term = termStr == null || termStr.getTerm() == null ? "" : termStr.getTerm();
+		String fallback = geneValueClause(term, false, "^5");
+		System.err.println("no query string could be built for gene RGD:" + iGeneRgdId
+				+ (fallback.length() > 0 ? "; falling back to the typed term " + fallback : "; the gene condition is dropped"));
+		return fallback;
+	}
+
 	private String getGeneQueryString(Gene gene, String defaultBoolean, boolean looseMatch) {
 		try {
 			int iRgdId = gene.getRgdId();
-			String geneQString = "";
+			StringBuilder geneQString = new StringBuilder();
 			AliasDAO adao = new AliasDAO();
 
-			geneQString += 
-					(looseMatch ? "(":"\"") +
-					SolrQueryStringService.getValueQueryString(
-							FieldType.TEXT_FIELD, gene.getName().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
-					+ (looseMatch ? ")^15":"\"^5");
-			if (gene.getSymbol().length()>2) {
-				geneQString += defaultBoolean
-						+ (looseMatch ? "(":"\"")
-						+ SolrQueryStringService.getValueQueryString(
-								FieldType.TEXT_FIELD, gene.getSymbol().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim()) 
-								+ (looseMatch ? ")^15":"\"^5");
-				}
-					
+			// a gene record can come back with a null name (or symbol) - dereferencing it threw an
+			// NPE that was swallowed further up, leaving an empty gene condition, and an empty
+			// condition becomes the unparseable "gene:()". Take whatever fields we do have.
+			appendGeneClause(geneQString, defaultBoolean, geneValueClause(gene.getName(), looseMatch, "^5"));
+			if (gene.getSymbol() != null && gene.getSymbol().length()>2) {
+				appendGeneClause(geneQString, defaultBoolean, geneValueClause(gene.getSymbol(), looseMatch, "^5"));
+			}
+
 			List<Alias> aliases = adao.getAliases(iRgdId, "old_gene_name");
 			aliases.addAll(adao.getAliases(iRgdId, "old_gene_symbol"));
 			if (aliases.size() > 0) {
 				for (Alias alias : aliases) {
-					if (alias.getValue() != null && alias.getValue().length()>2 
+					if (alias.getValue() != null && alias.getValue().length()>2
 							&& !alias.getValue().startsWith("OTTHUM")
 							&& !alias.getValue().startsWith("OTTMUS")) {
-						geneQString += defaultBoolean
-								+ (looseMatch ? "(":"\"")
-								+ SolrQueryStringService.getValueQueryString(
-										FieldType.TEXT_FIELD, alias.getValue().replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim())
-								+ (looseMatch ? ")":"\"")
-								;
+						appendGeneClause(geneQString, defaultBoolean, geneValueClause(alias.getValue(), looseMatch, ""));
 					}
 				}
 			}
 
-			return geneQString;
+			return geneQString.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "";
 	}
-	
+
+	/** one quoted (or, for a loose match, grouped) value of a gene condition; empty when there is no value */
+	private String geneValueClause(String value, boolean looseMatch, String exactBoost) {
+		if (value == null) return "";
+		String cleaned = SolrQueryStringService.getValueQueryString(FieldType.TEXT_FIELD,
+				value.replaceAll("[=',\"<>?!@#$%^&*()-./:;\\[\\]]", " ").trim());
+		if (cleaned.trim().length() == 0) return "";
+		return looseMatch ? "(" + cleaned + ")" + (exactBoost.length() > 0 ? "^15" : "")
+				: "\"" + cleaned + "\"" + exactBoost;
+	}
+
+	/** adds a clause to a gene condition, keeping the boolean connector out of the string when either side is empty */
+	private void appendGeneClause(StringBuilder geneQString, String defaultBoolean, String clause) {
+		if (clause == null || clause.trim().length() == 0) return;
+		if (geneQString.length() > 0) geneQString.append(defaultBoolean);
+		geneQString.append(clause);
+	}
+
 	/** matches one "term (CAT:ID)" candidate returned by the termmatch template */
 	static private final Pattern TERM_CANDIDATE_PATTERN = Pattern.compile("([^()]*)\\((\\w+):(\\d+)\\)");
 
@@ -762,12 +799,13 @@ public class QueryFormController {
 	 * nothing matches (a real free text guess, e.g. a disease description).
 	 */
 	private String guessConcept(String termStr, String termCat) {
-		// 30 rows: the rat gene can sit well down the list ("Cttn" ranks the rat gene 21st)
+		// 30 rows: the candidate whose term is what was typed can sit well down the list
 		String candidates = matchConcepts(termStr, termCat, 30);
 		if (candidates == null || candidates.trim().length() == 0) return null;
 
 		String wanted = termStr.trim();
 		String topHit = null;
+		List<String> allMatches = new ArrayList<>();
 		List<String> exactMatches = new ArrayList<>();
 		List<String> looseMatches = new ArrayList<>();
 		Matcher m = TERM_CANDIDATE_PATTERN.matcher(candidates);
@@ -776,49 +814,53 @@ public class QueryFormController {
 			if (topHit == null) topHit = candidates.substring(0, m.end()).trim();
 			String term = m.group(1).trim();
 			String candidate = term + " (" + m.group(2) + ":" + m.group(3) + ")";
+			allMatches.add(candidate);
 			if (term.equals(wanted)) exactMatches.add(candidate);
 			else if (term.equalsIgnoreCase(wanted)) looseMatches.add(candidate);
 		}
-		if (!exactMatches.isEmpty()) return preferredCandidate(exactMatches);
-		if (!looseMatches.isEmpty()) return preferredCandidate(looseMatches);
-		return topHit != null ? topHit : candidates;
+		String preferred = exactMatches.isEmpty() ? null : preferredCandidate(exactMatches);
+		if (preferred == null && !looseMatches.isEmpty()) preferred = preferredCandidate(looseMatches);
+		if (preferred != null) return preferred;
+		if (topHit == null) return candidates;
+		// the top hit keeps its verbatim form; only when it is a gene of a species we cannot
+		// search do we have to look further down the list for one we can
+		if (!isSearchableGene(new OntoTermIdStr(topHit))) {
+			for (String candidate : allMatches) {
+				if (isSearchableGene(new OntoTermIdStr(candidate))) return candidate;
+			}
+		}
+		return topHit;
 	}
 
 	/**
-	 * The same symbol exists for several species ("Cttn" is rat, mouse, chinchilla, ...).
-	 * Pick the one we can expand the furthest from, since getGeneQueryString() grows the
-	 * query through the orthologs of whichever rgd id ends up being used.
+	 * The same symbol exists for several species ("Cttn" is rat, mouse, chinchilla, ...). Keep
+	 * OntoSolr's own ranking and take the first candidate we can actually search. Returns null
+	 * when every candidate is a gene of a species that is not searchable.
 	 */
 	private String preferredCandidate(List<String> candidates) {
-		if (candidates.size() == 1) return candidates.get(0);
-		GeneDAO gdao = new GeneDAO();
-		String best = candidates.get(0);
-		int bestRank = Integer.MAX_VALUE;
 		for (String candidate : candidates) {
 			OntoTermIdStr termStr = new OntoTermIdStr(candidate);
 			if (!"RGD_GENE".equals(termStr.getCat()) || termStr.getId() == null) return candidates.get(0);
-			try {
-				Gene gene = gdao.getGene(termStr.getId().intValue());
-				int rank = speciesRank(gene == null ? 0 : gene.getSpeciesTypeKey());
-				if (rank < bestRank) {
-					bestRank = rank;
-					best = candidate;
-					if (rank == 0) break;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			if (isSearchableGene(termStr)) return candidate;
 		}
-		return best;
+		return null;
 	}
 
-	private int speciesRank(int speciesTypeKey) {
-		switch (speciesTypeKey) {
-		case SpeciesType.RAT: return 0;
-		case SpeciesType.HUMAN: return 1;
-		case SpeciesType.MOUSE: return 2;
-		default: return 3;
+	/**
+	 * A species with SPECIES_TYPES.IS_SEARCHABLE = 0 is not part of the searchable set, so a gene
+	 * of that species expands to a condition that matches nothing useful - RGD:640879158 (species
+	 * 16) is how "Magi2" ended up being built from a gene that is not searchable at all.
+	 */
+	private boolean isSearchableGene(OntoTermIdStr termStr) {
+		// only genes carry a species; anything else stays eligible
+		if (termStr == null || !"RGD_GENE".equals(termStr.getCat()) || termStr.getId() == null) return true;
+		try {
+			Gene gene = new GeneDAO().getGene(termStr.getId().intValue());
+			return gene != null && SpeciesType.isSearchable(gene.getSpeciesTypeKey());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return false;
 	}
 
 	private String matchConcepts(String termStr, String termCat, int rows) {
@@ -1114,7 +1156,7 @@ public class QueryFormController {
 						e.printStackTrace();
 					}
 
-					String basicGeneStr = getGeneQueryString(iGeneRgdId, " OR ", null, false, false);
+					String basicGeneStr = getGeneQueryStringOrTerm(iGeneRgdId, termStr, false);
 					String geneStr = SolrQueryStringService.getQueryString(
 							"", fqc.isNotCondition(),
 							"GENE", basicGeneStr);
