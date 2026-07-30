@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import edu.mcw.rgd.datamodel.*;
@@ -386,11 +388,20 @@ public class QueryFormController {
 		Map<String, String> resultString=new HashMap<>();
 		Map<String , OntoTermIdStr> catMap= new HashMap<>();
 		if (fullterms != null) {
+			Map<String, List<String>> exactMatchesByCat = new HashMap<>();
 			for(String t: fullterms){
+				if(t.equals("")) continue;
               	OntoTermIdStr termStr = new OntoTermIdStr(t);
-				if(!t.equals(""))
 				catMap.putIfAbsent(termStr.getCat(), termStr);
+				if (termStr.getTerm() != null && termStr.getTerm().trim().equalsIgnoreCase(fieldValue.trim())) {
+					exactMatchesByCat.computeIfAbsent(termStr.getCat(), k -> new ArrayList<>()).add(t);
+				}
 	        }
+			// same ranking caveat as guessConcept(): the top hit for a category is not
+			// necessarily the term that was typed, so let an exact match take the slot
+			for (Map.Entry<String, List<String>> exact : exactMatchesByCat.entrySet()) {
+				catMap.put(exact.getKey(), new OntoTermIdStr(preferredCandidate(exact.getValue())));
+			}
 
 			for(Map.Entry e: catMap.entrySet()){
 				FieldQueryCondition fqc= new FieldQueryCondition();
@@ -740,8 +751,78 @@ public class QueryFormController {
 		return "";
 	}
 	
+	/** matches one "term (CAT:ID)" candidate returned by the termmatch template */
+	static private final Pattern TERM_CANDIDATE_PATTERN = Pattern.compile("([^()]*)\\((\\w+):(\\d+)\\)");
+
+	/**
+	 * OntoSolr ranks candidates by score, and a longer symbol can outrank the one that was
+	 * actually typed - searching for "Cttn" returns "cttnl (RGD_GENE:12761884)" as the top hit,
+	 * so the whole query used to be built for the wrong gene. Look at several candidates and
+	 * keep the one whose term is what the user typed; only fall back to the top hit when
+	 * nothing matches (a real free text guess, e.g. a disease description).
+	 */
 	private String guessConcept(String termStr, String termCat) {
-		
+		// 30 rows: the rat gene can sit well down the list ("Cttn" ranks the rat gene 21st)
+		String candidates = matchConcepts(termStr, termCat, 30);
+		if (candidates == null || candidates.trim().length() == 0) return null;
+
+		String wanted = termStr.trim();
+		String topHit = null;
+		List<String> exactMatches = new ArrayList<>();
+		List<String> looseMatches = new ArrayList<>();
+		Matcher m = TERM_CANDIDATE_PATTERN.matcher(candidates);
+		while (m.find()) {
+			// keep the top hit verbatim, so a term with brackets of its own survives untouched
+			if (topHit == null) topHit = candidates.substring(0, m.end()).trim();
+			String term = m.group(1).trim();
+			String candidate = term + " (" + m.group(2) + ":" + m.group(3) + ")";
+			if (term.equals(wanted)) exactMatches.add(candidate);
+			else if (term.equalsIgnoreCase(wanted)) looseMatches.add(candidate);
+		}
+		if (!exactMatches.isEmpty()) return preferredCandidate(exactMatches);
+		if (!looseMatches.isEmpty()) return preferredCandidate(looseMatches);
+		return topHit != null ? topHit : candidates;
+	}
+
+	/**
+	 * The same symbol exists for several species ("Cttn" is rat, mouse, chinchilla, ...).
+	 * Pick the one we can expand the furthest from, since getGeneQueryString() grows the
+	 * query through the orthologs of whichever rgd id ends up being used.
+	 */
+	private String preferredCandidate(List<String> candidates) {
+		if (candidates.size() == 1) return candidates.get(0);
+		GeneDAO gdao = new GeneDAO();
+		String best = candidates.get(0);
+		int bestRank = Integer.MAX_VALUE;
+		for (String candidate : candidates) {
+			OntoTermIdStr termStr = new OntoTermIdStr(candidate);
+			if (!"RGD_GENE".equals(termStr.getCat()) || termStr.getId() == null) return candidates.get(0);
+			try {
+				Gene gene = gdao.getGene(termStr.getId().intValue());
+				int rank = speciesRank(gene == null ? 0 : gene.getSpeciesTypeKey());
+				if (rank < bestRank) {
+					bestRank = rank;
+					best = candidate;
+					if (rank == 0) break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return best;
+	}
+
+	private int speciesRank(int speciesTypeKey) {
+		switch (speciesTypeKey) {
+		case SpeciesType.RAT: return 0;
+		case SpeciesType.HUMAN: return 1;
+		case SpeciesType.MOUSE: return 2;
+		default: return 3;
+		}
+	}
+
+	private String matchConcepts(String termStr, String termCat, int rows) {
+
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");
 
 
@@ -749,9 +830,9 @@ public class QueryFormController {
 
 			URI uri = new URI("https",getHostName(), "/solr/OntoSolr/select", "q=cat:(RDO RGD_GENE) OR term_str:(\""
 		+termStr+"\")^50 OR synonym_str:(\"" + termStr + "\")^45 OR ("
-					+ termStrBoolean + ")&defType=edismax&rows=1&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
+					+ termStrBoolean + ")&defType=edismax&rows="+rows+"&qf=term_en^5+term_str^3+term^3+synonym_en^4.5++synonym_str^2+synonym^2+def^1"+
 					(termCat == null ? "":"&fq=cat:"+termCat) + "&wt=velocity&bf=term_len_l^.001&v.template=termmatch&cacheLength=0", null);
-			String ontoSolrQueryStr = uri.toASCIIString(); 
+			String ontoSolrQueryStr = uri.toASCIIString();
 
 			String fullTerm = BasicUtils.restGet(ontoSolrQueryStr);
 
