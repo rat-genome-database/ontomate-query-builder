@@ -95,7 +95,7 @@ group 'rgd.mcw.edu'
                 implementation group: 'org.springframework', name: 'spring-webmvc', version: '6.1.14'
                 implementation group: 'org.springframework', name: 'spring-webmvc-portlet', version: '4.3.30.RELEASE'
 
-                implementation 'com.oracle.database.jdbc:ojdbc11:23.2.0.0'
+                implementation 'org.postgresql:postgresql:42.7.5'
         }
 
 
