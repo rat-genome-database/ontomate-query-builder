@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import edu.mcw.rgd.datamodel.*;
 import edu.mcw.rgd.model.*;
 import edu.mcw.rgd.service.PubMedReference;
-import edu.mcw.rgd.services.RgdContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import edu.mcw.rgd.Utils.BasicUtils;
+import edu.mcw.rgd.Utils.UrlUtils;
 import edu.mcw.rgd.dao.impl.AliasDAO;
 import edu.mcw.rgd.dao.impl.GeneDAO;
 import edu.mcw.rgd.dao.impl.OntologyXDAO;
@@ -885,13 +885,7 @@ public class QueryFormController {
 		return null;
 	}
 	public static String getHostName() throws UnknownHostException {
-		String hostName="";
-		if(RgdContext.isDev()){
-			hostName+="dev.rgd.mcw.edu";
-		}else {
-			hostName+="ontomate.rgd.mcw.edu";
-		}
-		return hostName;
+		return UrlUtils.getSiteHostName();
 	}
 	private List<String> guessConcept1(String termStr, String termCat) {
 		String termStrBoolean = termStr.replaceAll(" ", " AND ");

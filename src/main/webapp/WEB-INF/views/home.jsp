@@ -1,4 +1,5 @@
 <%@ page import="edu.mcw.rgd.services.RgdContext" %>
+<%@ page import="edu.mcw.rgd.Utils.UrlUtils" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%  String pageTitle =  "OntoMate - Literature search engine";
 	String pageDescription ="OntoMate";
@@ -19,14 +20,7 @@
 		background-color: #D1F2EB;
 	}
 </style>
-<%
-	String hostURL="";
-	if(RgdContext.isDev()){
-		hostURL+="https://dev.rgd.mcw.edu";
-	}else {
-		hostURL+="https://ontomate.rgd.mcw.edu";
-	}
-%>
+<% String hostURL = UrlUtils.getSiteUrl(); %>
 <script type="text/javascript">
 
 	var row_count=0;

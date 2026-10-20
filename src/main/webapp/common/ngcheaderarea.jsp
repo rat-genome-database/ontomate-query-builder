@@ -1,5 +1,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="edu.mcw.rgd.Utils.UrlUtils" %>
+<%-- rgdweb.war is deployed next to QueryBuilder on dev, but not on ontomate --%>
+<% String rgdWebUrl = UrlUtils.getRgdWebUrl(); %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -11,7 +14,7 @@
 
     <link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.css" type="text/css" media="all" />
 <link rel="SHORTCUT ICON" href="https://rgd.mcw.edu/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="/https://rgd.mcw.educommon/modalDialog/subModal.css" />
+<link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/common/modalDialog/subModal.css" />
 <link rel="stylesheet" type="text/css" href="https://rgd.mcw.edu/common/modalDialog/style.css" />
 <link href="https://rgd.mcw.edu/common/style/ngc_styles.css" rel="stylesheet" type="text/css" />
 <!-- CSS for Tab Menu #4 -->
@@ -19,9 +22,9 @@
 
     <script type="text/javascript" src="/QueryBuilder/js/jquery-3.7.1.min.js"></script>
 
-    <script type="text/javascript" src="https://rgd.mcw.edu/rgdweb/js/elasticsearch/elasticsearchcommon.js"></script>
+    <script type="text/javascript" src="<%=rgdWebUrl%>/js/elasticsearch/elasticsearchcommon.js"></script>
     <script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.js"></script>
-<script src="https://rgd.mcw.edu/rgdweb/js/jquery/jquery_combo_box.js"></script>
+<script src="<%=rgdWebUrl%>/js/jquery/jquery_combo_box.js"></script>
 <script type="text/javascript" src="https://rgd.mcw.edu/common/js/ddtabmenu.js">
 
 /***********************************************
@@ -71,7 +74,7 @@
 <tr>
     <td>
     <table><tr><td>
-<a class="homeLink" href="https://rgd.mcw.edu/rgdweb/ngcindex.jsp"><img border="0" src="https://rgd.mcw.edu/common/images/ngcLogo.jpg"></a>
+<a class="homeLink" href="<%=rgdWebUrl%>/ngcindex.jsp"><img border="0" src="https://rgd.mcw.edu/common/images/ngcLogo.jpg"></a>
 </td>
         <td style="font-size:26; font-style:italic; font-weight:700;color:#9D0F15;">Chinchilla&nbsp;Research&nbsp;Resource&nbsp;Database</td>
 </tr>
@@ -84,7 +87,7 @@
 
 <div class="searchBorder">
 <table border=0 cellpadding=0 cellspacing=0 >
-<form method="post" action='https://rgd.mcw.edu/rgdweb/search/search.html' onSubmit="return verify(this);">
+<form method="post" action='<%=rgdWebUrl%>/search/search.html' onSubmit="return verify(this);">
 <input type="hidden" name="type" value="nav" />
 <tr>
      <td class="searchKeywordLabel">Keyword</td>
@@ -104,10 +107,10 @@
 
 <div id="ddtabs4" class="ddcolortabs">
 <ul>
-<li class="current" style="margin-left: 1px"><a href="https://rgd.mcw.edu/rgdweb/ngcindex.jsp" rel="ct1"><span>Home</span></a></li>
-<li><a href="https://rgd.mcw.edu/rgdweb/search/genes.html" rel="ct2"><span>Genes</span></a></li>
-<li><a href="https://rgd.mcw.edu/rgdweb/ga/start.jsp" rel="ct3"><span>Gene Annotator</span></a></li>
-<li><a href="https://rgd.mcw.edu/rgdweb/ontology/search.html" rel="ct4"><span>Ontology Browser</span></a></li>
+<li class="current" style="margin-left: 1px"><a href="<%=rgdWebUrl%>/ngcindex.jsp" rel="ct1"><span>Home</span></a></li>
+<li><a href="<%=rgdWebUrl%>/search/genes.html" rel="ct2"><span>Genes</span></a></li>
+<li><a href="<%=rgdWebUrl%>/ga/start.jsp" rel="ct3"><span>Gene Annotator</span></a></li>
+<li><a href="<%=rgdWebUrl%>/ontology/search.html" rel="ct4"><span>Ontology Browser</span></a></li>
     <li><a href="https://rgd.mcw.edu/jbrowse/?data=data_cl1_0&tracks=GFF3_track" rel="ct4"><span>Genome Browser</span></a></li>
    <!-- <li><a href="/phenotypesChin" rel="ct5"><span>Phenominer</span></a></li>-->
 </ul>

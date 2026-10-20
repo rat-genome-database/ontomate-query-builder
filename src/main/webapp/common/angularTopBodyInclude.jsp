@@ -1,3 +1,4 @@
+<%@ page import="edu.mcw.rgd.Utils.UrlUtils" %>
 
 
 <div ng-controller="RGDPageController as rgd" id="RGDPageController">
@@ -23,14 +24,14 @@
 
                     <div style="padding-bottom:20px;">
                     <div style="float:left; margin-right:10px; min-width: 600px;">Welcome <span style="font-weight:700; font-size:16px;">{{ username}}</span></div>
-                    <input  value="Update Account" type="button"  style="margin-right:10px;border:0px solid black; background-color:#4584ED; color:white; font-weight:700;padding:8px;" onClick="location.href='/rgdweb/my/account.html'"/>
+                    <input  value="Update Account" type="button"  style="margin-right:10px;border:0px solid black; background-color:#4584ED; color:white; font-weight:700;padding:8px;" onClick="location.href='<%=UrlUtils.getRgdWebUrl()%>/my/account.html'"/>
                     <input  value="Sign Out" type="button"  ng-click="rgd.logout()"  data-dismiss="modal" style="margin-right:10px;border:0px solid black; background-color:#4584ED; color:white; font-weight:700;padding:8px;"/>
                     </div>
 
                     <div style="text-decoration:underline;font-weight:700; background-color:#e0e2e1;min-width:690px;">Message Center</div>
                     <div style="display:table-row;">
                     <div style="display: table-cell; float:left; margin-right:10px; min-width: 600px;font-size:13px;padding-bottom: 10px;">{{ messageCount }} Messages</div>
-                    <div style="display: table-cell; float:left; margin-right:10px;min-width: 90px"><a href="/rgdweb/my/account.html">Go to Message Center</a></div>
+                    <div style="display: table-cell; float:left; margin-right:10px;min-width: 90px"><a href="<%=UrlUtils.getRgdWebUrl()%>/my/account.html">Go to Message Center</a></div>
                     </div>
 
                     <div style="text-decoration:underline;font-weight:700; background-color:#e0e2e1;">Watched Genes</div>
@@ -166,10 +167,10 @@
         <table align="center" border="0">
             <tr>
                 <td>
-                    <a href="/rgdweb/my/account.html?submit=Create" style="font-size:16px; margin-right:10px;">Create New Account</a>
+                    <a href="<%=UrlUtils.getRgdWebUrl()%>/my/account.html?submit=Create" style="font-size:16px; margin-right:10px;">Create New Account</a>
                 </td>
                 <td>
-                    <a href="/rgdweb/my/lookup.html" style="font-size:16px;">Recover Password</a>
+                    <a href="<%=UrlUtils.getRgdWebUrl()%>/my/lookup.html" style="font-size:16px;">Recover Password</a>
                 </td>
             </tr>
         </table>
@@ -241,9 +242,9 @@
 
                             <table width="90%" align="center" border="0">
                                 <tr>
-                                    <td align="center"><div ng-if="oKey==1"><img src="https://rgd.mcw.edu/rgdweb/common/images/functionalAnnotation.png" border="0"  style="cursor:pointer;padding:5px; margin-right:0px;margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('ga')"/></div><div ng-if="oKey!=1">Functional Annotation<br>unavailable</div></td>
-                                    <td align="center"><div ng-if="oKey==1"> <img src="https://rgd.mcw.edu/rgdweb/common/images/gaTool.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('distribution')"/></div><div ng-if="oKey!=1">Annotation Distribution<br>unavailable</div></td>
-                                    <td align="center"><div ng-if="oKey==1"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3" ><img src="https://rgd.mcw.edu/rgdweb/common/images/variantVisualizer.png" border="0"  style="cursor:pointer;padding:5px; margin-right:0px;margin-bottom:5px; border:1px solid black;"  ng-click="rgd.toolSubmit('vv')"/></div><div ng-if="speciesTypeKey!=1 && speciesTypeKey!=3">Genomic Variants<br> unavailble for Mouse</div></div><div ng-if="oKey!=1">Genomic Variants<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"><img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/functionalAnnotation.png" border="0"  style="cursor:pointer;padding:5px; margin-right:0px;margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('ga')"/></div><div ng-if="oKey!=1">Functional Annotation<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"> <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/gaTool.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('distribution')"/></div><div ng-if="oKey!=1">Annotation Distribution<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3" ><img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/variantVisualizer.png" border="0"  style="cursor:pointer;padding:5px; margin-right:0px;margin-bottom:5px; border:1px solid black;"  ng-click="rgd.toolSubmit('vv')"/></div><div ng-if="speciesTypeKey!=1 && speciesTypeKey!=3">Genomic Variants<br> unavailble for Mouse</div></div><div ng-if="oKey!=1">Genomic Variants<br>unavailable</div></td>
                                 </tr>
                                 <tr>
                                     <td align="center"  style="cursor:pointer;font-size:16px;font-weight:400;" ng-click="rgd.toolSubmit('ga')"><div ng-if="oKey==1">Functional Annotation</div></td>
@@ -254,9 +255,9 @@
                                 </tr>
                                 <tr><td>&nbsp;</td></tr>
                                 <tr>
-                                    <td align="center"><div ng-if="oKey==1"><img src="https://rgd.mcw.edu/rgdweb/common/images/interviewer.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('interviewer')"/></div><div ng-if="oKey!=1">Protein-Protein Interactions<br>unavailable</div></td>
-                                    <td align="center"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3 || speciesTypeKey==2" ><div ng-if="oKey==1"> <img src="https://rgd.mcw.edu/rgdweb/common/images/gviewer.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('gviewer')"/></div></div><div ng-if="oKey!=1 || speciesTypeKey > 3">Genome Viewer<br>unavailable</div></td>
-                                    <td align="center"><div ng-if="oKey==1"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3" > <img src="https://rgd.mcw.edu/rgdweb/common/images/damaging.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('damage')"/></div><div ng-if="speciesTypeKey!=1 && speciesTypeKey!=3">Damaging Variants unavailble for Mouse</div></div><div ng-if="oKey!=1">Damaging Variants<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"><img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/interviewer.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('interviewer')"/></div><div ng-if="oKey!=1">Protein-Protein Interactions<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3 || speciesTypeKey==2" ><div ng-if="oKey==1"> <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/gviewer.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('gviewer')"/></div></div><div ng-if="oKey!=1 || speciesTypeKey > 3">Genome Viewer<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"><div ng-if="speciesTypeKey==1 || speciesTypeKey==3" > <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/damaging.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('damage')"/></div><div ng-if="speciesTypeKey!=1 && speciesTypeKey!=3">Damaging Variants unavailble for Mouse</div></div><div ng-if="oKey!=1">Damaging Variants<br>unavailable</div></td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="cursor:pointer;font-size:16px;font-weight:400;" ng-click="rgd.toolSubmit('interviewer')"><div ng-if="oKey==1">Protein-Protein Interactions</div></td>
@@ -265,9 +266,9 @@
                                 </tr>
                                 <tr><td>&nbsp;</td></tr>
                                 <tr>
-                                    <td align="center"><div ng-if="oKey==1"> <img src="https://rgd.mcw.edu/rgdweb/common/images/annotCompare.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('annotCompare')"/></div><div ng-if="oKey!=1">Annotation Comparison<br>unavailable</div></td>
-                                    <td align="center"><div ng-if="oKey==1"> <img src="https://rgd.mcw.edu/rgdweb/common/images/olga.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('olga')"/></div><div ng-if="oKey!=1">OLGA<br>unavailable</div></td>
-                                    <td align="center"> <img src="https://rgd.mcw.edu/rgdweb/common/images/excel.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('excel')"/></td>
+                                    <td align="center"><div ng-if="oKey==1"> <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/annotCompare.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('annotCompare')"/></div><div ng-if="oKey!=1">Annotation Comparison<br>unavailable</div></td>
+                                    <td align="center"><div ng-if="oKey==1"> <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/olga.png" border="0" style="cursor:pointer;padding:5px; margin-bottom:5px; border:1px solid black;" ng-click="rgd.toolSubmit('olga')"/></div><div ng-if="oKey!=1">OLGA<br>unavailable</div></td>
+                                    <td align="center"> <img src="<%=UrlUtils.getRgdWebUrl()%>/common/images/excel.png" border="0" style="cursor:pointer;padding:5px; margin-right:0px; border:1px solid black;" ng-click="rgd.toolSubmit('excel')"/></td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="cursor:pointer;font-size:16px;font-weight:400;" ng-click="rgd.toolSubmit('annotCompare')"><div ng-if="oKey==1">Annotation Comparison</div></td>

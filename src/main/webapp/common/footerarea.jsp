@@ -6,7 +6,7 @@
 <br>
 <div class="bottom-bar" >
     <table align=center class="headerTable"> <tr><td align="left" style="color:white;">
-        <a href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact Us</a>&nbsp;|&nbsp;
+        <a href="<%=rgdWebUrl%>/contact/contactus.html">Contact Us</a>&nbsp;|&nbsp;
         <a href="https://rgd.mcw.edu/wg/about-us">About Us</a>&nbsp;|&nbsp;
         <a href="https://creativecommons.org/licenses/by/4.0/">License CC BY 4.0</a>&nbsp;|&nbsp;
         <a href="https://rgd.mcw.edu/wg/home/disclaimer">Legal Disclaimer</a>&nbsp;|&nbsp;
@@ -18,10 +18,10 @@
 
 <table align="center">
     <tr>
-        <td width=100 align="center"><a href="https://www.nhlbi.nih.gov/"><img src="https://rgd.mcw.edu/rgdweb/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute"></a><br><br></td>
-        <td width=100 align="center"><a href="https://www.nih.gov/"><img src="https://rgd.mcw.edu/rgdweb/common/images/nih.png" alt="NHLBI Logo" title="National Institue of Health"></a><br><br></td>
-        <td width=100 align="center"><a href="http://alliancegenome.org"><img src="https://rgd.mcw.edu/rgdweb/common/images/alliance_logo.png" height="80" width="133" border=0/></a></td>
-        <td width=100 align="center"><a href="https://globalbiodata.org/scientific-activities/global-core-biodata-resources"><img src="https://rgd.mcw.edu/rgdweb/common/images/gbc-main.svg" height="80" width="133" border=0/></a></td>
+        <td width=100 align="center"><a href="https://www.nhlbi.nih.gov/"><img src="<%=rgdWebUrl%>/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute"></a><br><br></td>
+        <td width=100 align="center"><a href="https://www.nih.gov/"><img src="<%=rgdWebUrl%>/common/images/nih.png" alt="NHLBI Logo" title="National Institue of Health"></a><br><br></td>
+        <td width=100 align="center"><a href="http://alliancegenome.org"><img src="<%=rgdWebUrl%>/common/images/alliance_logo.png" height="80" width="133" border=0/></a></td>
+        <td width=100 align="center"><a href="https://globalbiodata.org/scientific-activities/global-core-biodata-resources"><img src="<%=rgdWebUrl%>/common/images/gbc-main.svg" height="80" width="133" border=0/></a></td>
     </tr>
 </table>
 

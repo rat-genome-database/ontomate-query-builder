@@ -1,4 +1,4 @@
-<%@ page import="edu.mcw.rgd.services.RgdContext" %>
+<%@ page import="edu.mcw.rgd.Utils.UrlUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,14 +8,7 @@
 <title>Getting Result</title>
 </head>
 <body onload='document.forms[0].submit()'>
-<%
- String hostURL="";
- if(RgdContext.isDev()){
-  hostURL+="https://dev.rgd.mcw.edu";
- }else {
-  hostURL+="https://ontomate.rgd.mcw.edu";
- }
-%>
+<% String hostURL = UrlUtils.getSiteUrl(); %>
 Searching... Condition: <span style="color:brown;">${message_label}</span> 
 <form action="<%=hostURL%>/${source}/browse" method="post">
 <input type="hidden" name="q" value = '${q}'/>

@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="edu.mcw.rgd.Utils.UrlUtils" %>
+<%-- rgdweb.war is deployed next to QueryBuilder on dev, but not on ontomate --%>
+<% String rgdWebUrl = UrlUtils.getRgdWebUrl(); %>
 
 <div id="app">
 
@@ -9,7 +12,7 @@
   <div class="container-fluid" id="container" style="height:36px;">
 
     <div class="row" style=";margin-top:2px;margin-left:35%;margin-bottom:2px;">
-      <form  name="elasticSearchForm" class="form-inline" action="https://rgd.mcw.edu/rgdweb/elasticResults.html" id="elasticSearchForm" role="search" method="post">
+      <form  name="elasticSearchForm" class="form-inline" action="<%=rgdWebUrl%>/elasticResults.html" id="elasticSearchForm" role="search" method="post">
         <input type="hidden" name="log" value="true"/>
         <input type="hidden" name="category" id="category" value="General"/>
 
@@ -25,7 +28,7 @@
                 </button>&nbsp;&nbsp;
               </div>
             </div>
-            <small class="form-text text-muted"><a href="https://rgd.mcw.edu/rgdweb/generator/list.html" >Advanced Search (OLGA)</a></small>
+            <small class="form-text text-muted"><a href="<%=rgdWebUrl%>/generator/list.html" >Advanced Search (OLGA)</a></small>
           </div>
         </div>
       </form>
