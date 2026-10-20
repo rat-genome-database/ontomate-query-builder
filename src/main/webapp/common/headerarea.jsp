@@ -186,6 +186,7 @@
 
                                         <div class="rgd-dropdown-content">
                                             <a href="<%=rgdWebUrl%>/search/genes.html?100">Genes</a>
+                                            <a href="<%=rgdWebUrl%>/rgdweb/search/variants.html">Variants</a>
                                             <a href="<%=rgdWebUrl%>/projects/project.html">Community Projects</a>
                                             <a href="<%=rgdWebUrl%>/search/qtls.html?100">QTLs</a>
                                             <a href="<%=rgdWebUrl%>/search/strains.html?100">Strains</a>
@@ -226,6 +227,7 @@
 
                                         <div class="rgd-dropdown-content">
                                             <a href="<%=rgdWebUrl%>/portal/home.jsp?p=1">Aging & Age-Related Disease</a>
+                                            <a href="<%=rgdWebUrl%>/rgdweb/portal/home.jsp?p=16">Behavioral & Substance Use Disorder</a>
                                             <a href="<%=rgdWebUrl%>/portal/home.jsp?p=2">Cancer & Neoplastic Disease</a>
                                             <a href="<%=rgdWebUrl%>/portal/home.jsp?p=3">Cardiovascular Disease</a>
                                             <a href="<%=rgdWebUrl%>/portal/home.jsp?p=14">Coronavirus Disease</a>
