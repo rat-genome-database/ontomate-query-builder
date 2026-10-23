@@ -152,7 +152,6 @@
 
                                 <a href="https://download.rgd.mcw.edu">Download</a>&nbsp;|&nbsp;
                                 <a href="https://rest.rgd.mcw.edu/rgdws/swagger-ui/index.html">REST API</a>&nbsp;|&nbsp;
-                                <a href="https://rgd.mcw.edu/assistant/">Rat Chat</a>&nbsp;|&nbsp;
                                 <a href="https://rgd.mcw.edu/wg/citing-rgd">Citing RGD</a>&nbsp;|&nbsp;
                                 <a href="<%=rgdWebUrl%>/contact/contactus.html">Contact</a>&nbsp;&nbsp;&nbsp;
 
@@ -214,7 +213,6 @@
                                             <a href="<%=rgdWebUrl%>/ortholog/start.html">Gene-Ortholog Location Finder (GOLF)</a>
                                             <a href="<%=rgdWebUrl%>/cytoscape/query.html">InterViewer (Protein-Protein Interactions)</a>
                                             <a href="<%=rgdWebUrl%>/phenominer/ontChoices.html?species=3">PhenoMiner (Quantitative Phenotypes)</a>
-                                            <a href="<%=rgdWebUrl%>/expressMiner/config.html">Expression Miner</a>
                                             <a href="<%=rgdWebUrl%>/ga/start.jsp">Gene Annotator</a>
                                             <a href="<%=rgdWebUrl%>/generator/list.html">OLGA (Gene List Generator)</a>
                                             <a href="https://www.alliancegenome.org/bluegenes/alliancemine">AllianceMine</a>
