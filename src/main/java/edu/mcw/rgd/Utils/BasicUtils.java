@@ -1,6 +1,5 @@
 package edu.mcw.rgd.Utils;
 
-import edu.mcw.rgd.database.ncbi.pubmed.DocDBConnection;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -11,7 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,38 +21,6 @@ import java.util.regex.Pattern;
  */
 public class BasicUtils {
     public static String hostname;
-    public static String strExceptionStackTrace(Exception e) {
-        StringWriter writer = new StringWriter();
-        e.printStackTrace(new PrintWriter(writer));
-        return writer.toString();
-    }
-
-    public static String getUTFstr(String input_str) {
-        byte[] input_bytes = input_str.getBytes();
-        try {
-            String output_str = new String(input_bytes, "UTF-8");
-            return output_str;
-        } catch (UnsupportedEncodingException e) {
-            return "";
-        }
-    }
-
-    public static String EscapeSQLStringValue(String input_value) {
-        if (input_value != null) {
-            return "'" + DocDBConnection.escapeSQL(input_value) + "'";
-        } else {
-            return "null";
-        }
-    }
-
-    public static String EscapeSQLStringValueEmpty(String input_value) {
-        if (input_value != null) {
-            return "'" + DocDBConnection.escapeSQL(input_value) + "'";
-        } else {
-            return "";
-        }
-    }
-
     public static String restGet(String url, String contentType) throws Exception {
         try {
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -181,24 +147,9 @@ public class BasicUtils {
 
             hostname = InetAddress.getLocalHost().getHostName().toLowerCase();
 
-
-          /*  isProduction = hostname.contains("hancock") || hostname.contains("owen");
-            isPipelines = hostname.contains("reed");
-            isDev = hostname.contains("hastings");
-            isCurator = isPipelines || isDev;
-            isTest = hostname.contains("rgd-27p8tr1") || hostname.contains("rgd-c6vhv52");
-*/
-            //System.out.println("RgdContext: HOSTNAME="+hostname);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return hostname;
     }
-    public static String removeEmptyLines(String inputStr) {
-        String returnStr = inputStr.replaceAll("(?ms)^\\s*", "");
-        return returnStr;
-    }
-public static void main(String[] args) throws UnknownHostException {
-    System.out.println(BasicUtils.parseHostName());
-}
 }

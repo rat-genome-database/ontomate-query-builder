@@ -9,11 +9,11 @@ tr.alt td {
 </style>
 <head>
 	<link rel="stylesheet" href="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.css" type="text/css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
-	<link rel="stylesheet" href="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/solr/OntoSolr/admin/file?file=/velocity/main.css&contentType=text/css"/>
+	<link rel="stylesheet" href="/solr/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
 	<script type="text/javascript" src="/QueryBuilder/js/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/QueryBuilder/js/jquery-ui-1.13.3/jquery-ui.js"></script>
-  	<script type="text/javascript" src="/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
+  	<script type="text/javascript" src="/solr/OntoSolr/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
 
 
 
@@ -59,7 +59,7 @@ $(document).ready(function(){
 					var col_name="#inTerm"+(row_id-1)+" input";
 					$(col_name).flushCache();
 				
-				//	   $(col_name).autocomplete('/solr/OntoSolr/select', {
+				//	   $(col_name).autocomplete('/OntoSolr/select', {
 					$(col_name).autocomplete('/solr/OntoSolr/select', {
 						extraParams:{
 				             'qf': 'term_en^5 term_str^3 term^3 synonym_en^4.5  synonym_str^2 synonym^2 def^1',
@@ -140,7 +140,7 @@ function removeSortRow(rowId) {
 function update_autocomplete(obj_name, ont_cat) {
 	$(obj_name).flushCache();
 	$(obj_name).unautocomplete();
-	 //  $(obj_name).autocomplete('/solr/OntoSolr/select', {
+	 //  $(obj_name).autocomplete('/OntoSolr/select', {
 	$(obj_name).autocomplete('/solr/OntoSolr/select', {
 		extraParams:{
           'qf': 'term_en^5 term_str^3 term^3 synonym_en^4.5 synonym_str^2 synonym^2 def^1',
